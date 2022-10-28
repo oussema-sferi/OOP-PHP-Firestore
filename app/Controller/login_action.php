@@ -1,0 +1,27 @@
+<?php
+namespace App\Controller;
+require_once "../../vendor/autoload.php";
+use App\Model\Firestore_honeydoo;
+
+/*require_once "../Model/Firestore_honeydoo.php";*/
+/*$test = new Authentication();
+$test->loginCheck();*/
+$email = $_POST["email"];
+$password = $_POST["password"];
+$database = new Firestore_honeydoo('realtor');
+if($email == "")
+{
+    echo "Email is required!";
+} elseif ($password == "")
+{
+    echo "Password is required!";
+} else {
+    $user = $database->fetchUser($email, $password);
+    if(!$user)
+    {
+        $_SESSION['login_error_flash_message'] = "Invalid Credentials !";
+    } else {
+        $_SESSION["user"] = $user;
+    }
+    header("Location: ../View/dashboard.php");
+}
