@@ -14,7 +14,6 @@ class Firestore_honeydoo
             'keyFilePath' => '../../hondeydoo-19eb1_credentials.json',
             'projectId' => 'hondeydoo-19eb1'
         ]);
-
         $this->name = $collection;
     }
 
@@ -76,16 +75,24 @@ class Firestore_honeydoo
         $res = [];
         $query = $this->db->collection('blogPost')->where('realtor_id', '=', $userId);
         $documents = $query->documents();
-        /*print_r($documents);
-        die();*/
         foreach ($documents as $document) {
             if ($document->exists()) {
-
                 $res[] = $document->data();
             }
         }
-        /*print_r($res);
-        die();*/
+        return $res;
+    }
+
+    public function fetchProServices($userId)
+    {
+        $res = [];
+        $query = $this->db->collection('realtor_home_pro_service')->where('realtor_id', '=', $userId);
+        $documents = $query->documents();
+        foreach ($documents as $document) {
+            if ($document->exists()) {
+                $res[] = $document->data();
+            }
+        }
         return $res;
     }
 }
