@@ -103,7 +103,7 @@ $loggedUserProServices = $database->fetchProServices($_SESSION["user"]["realtor_
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
-                                <th>Blog Title</th>
+                                <th>Pro Service Title</th>
 
                                 <th class="text-center">Actions</th>
                             </tr>
