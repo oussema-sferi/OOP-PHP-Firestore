@@ -23,5 +23,5 @@ if($email == "")
     } else {
         $_SESSION["user"] = $user;
     }
-    header("Location: ../View/dashboard.php");
+    header("Location: ../View/blog_posts.php");
 }

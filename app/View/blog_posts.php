@@ -7,7 +7,8 @@ if(!isset($_SESSION["user"]))
 }
 
 $loggedUserBlogPosts = $database->fetchBlogPosts($_SESSION["user"]["realtor_id"]);
-die();
+/*print_r($loggedUserBlogPosts[0]["title"]);
+die();*/
 
 ?>
 <!DOCTYPE html>
@@ -18,7 +19,7 @@ die();
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Honeydoo" />
     <meta name="author" content="Honeydoo" />
-    <title>Dashboard</title>
+    <title>My Blog Posts</title>
     <link href="../Ressources/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="../Ressources/assets/img/favicon.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -71,8 +72,67 @@ die();
     </div>
     <div id="layoutSidenav_content">
         <main>
-            <!--{% block body %}
-            {% endblock %}-->
+            <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+                <div class="container-fluid px-4">
+                    <div class="page-header-content">
+                        <div class="row align-items-center justify-content-between pt-3">
+                            <div class="col-auto mb-3">
+                                <h1 class="page-header-title">
+                                    <div class="page-header-icon"><i data-feather="list"></i></div>
+                                    All My Blog Posts
+                                </h1>
+                            </div>
+                            <div class="col-12 col-xl-auto mb-3">
+                                <a class="btn btn-sm btn-light text-primary" href="#">
+                                    <i class="me-1" data-feather="plus"></i>
+                                    Create New Blog Post
+                                </a>
+                            <div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- Main page content-->
+            <div class="container-fluid px-4">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                            <tr>
+                                <th>Blog Title</th>
+
+                                <th class="text-center">Actions</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Title</th>
+
+                                <th class="text-center">Actions</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+
+                            <?php
+                            foreach ($loggedUserBlogPosts as $blogPost)
+                                {
+                                    $title = $blogPost["title"];
+                                    echo "
+                                <tr>
+                                    <td>$title</td>
+                                                           
+                                    <td class='text-center'>                                 
+                                        <a class='btn btn-sm btn-success mt-1' href='#'>Show Blog Post</a>
+                                        <!--<a class='btn btn-sm btn-secondary mt-1' href='#'>Edit</a>-->
+                                    </td>
+                                </tr>";
+                                };
+                            ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </main>
         <footer class="footer-admin mt-auto footer-light">
             <div class="container-xl px-4">
@@ -83,6 +143,8 @@ die();
         </footer>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="../Ressources/js/datatables/datatables-simple-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="../Ressources/js/scripts.js"></script>
 </body>

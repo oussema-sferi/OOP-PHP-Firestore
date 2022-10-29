@@ -73,18 +73,19 @@ class Firestore_honeydoo
 
     public function fetchBlogPosts($userId)
     {
+        $res = [];
         $query = $this->db->collection('blogPost')->where('realtor_id', '=', $userId);
         $documents = $query->documents();
         /*print_r($documents);
         die();*/
         foreach ($documents as $document) {
             if ($document->exists()) {
-                printf('Document data for document %s:' . PHP_EOL, $document->id());
-                print_r($document->data());
-                printf(PHP_EOL);
-            } else {
-                printf('Document %s does not exist!' . PHP_EOL, $document->id());
+
+                $res[] = $document->data();
             }
         }
+        /*print_r($res);
+        die();*/
+        return $res;
     }
 }

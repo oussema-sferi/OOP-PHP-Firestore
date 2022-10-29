@@ -40,7 +40,7 @@ if(!isset($_SESSION["user"]))
                     </div>
                 </h6>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="<?php echo 'logout.php' ?>">
+                <a class="dropdown-item" href="<?='logout.php'?>">
                     <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
                     Logout
                 </a>
@@ -56,7 +56,7 @@ if(!isset($_SESSION["user"]))
                     <!-- Sidenav Heading (Custom)-->
                     <div class="sidenav-menu-heading">Dashboard</div>
                     <!-- Sidenav Link (Users)-->
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="<?='blog_posts.php'?>">
                         <div class="nav-link-icon"><i data-feather="list"></i></div>
                         My Blog Posts
                     </a>

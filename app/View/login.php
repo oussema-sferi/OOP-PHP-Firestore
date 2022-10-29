@@ -1,6 +1,6 @@
 <?php
 if(isset($_SESSION['user'])) {
-    header("Location: dashboard.php");
+    header("Location: blog_posts.php");
 }
 if(isset($_SESSION['login_error_flash_message'])) {
     $errorMessage = $_SESSION['login_error_flash_message'];
