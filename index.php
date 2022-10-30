@@ -1,14 +1,8 @@
 <?php
 require_once "vendor/autoload.php";
-use App\Model\Firestore_honeydoo;
+use App\Model\Firestore_index;
 
-/*$db = new Firestore();
-print_r($db->test());*/
-
-$fs = new Firestore_honeydoo('user');
-  // echo var_dump($fs->getDocument());
-print_r($fs->getDocument());
-die();
+$fs = new Firestore_index();
 ?>
 <!DOCTYPE html>
 <html lang="en">
