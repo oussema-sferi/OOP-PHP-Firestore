@@ -7,7 +7,7 @@ if(!isset($_SESSION["user"]))
 {
     header("Location: login.php");
 }
-$database = new Firestore_honeydoo('blogPosts');
+$database = new Firestore_honeydoo();
 $loggedUserBlogPosts = $database->fetchBlogPosts($_SESSION["user"]["realtor_id"]);
 /*print_r($loggedUserBlogPosts);
 die();*/
@@ -90,7 +90,7 @@ die();*/
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="#">
+                                <a class="btn btn-sm btn-light text-primary" href="<?='blog_add.php'?>">
                                     <i class="me-1" data-feather="plus"></i>
                                     Create New Blog Post
                                 </a>

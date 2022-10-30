@@ -7,7 +7,7 @@ if(!isset($_SESSION["user"]))
 {
     header("Location: login.php");
 }
-$database = new Firestore_honeydoo('blogPosts');
+$database = new Firestore_honeydoo();
 $loggedUserProServices = $database->fetchProServices($_SESSION["user"]["realtor_id"]);
 ?>
 <!DOCTYPE html>

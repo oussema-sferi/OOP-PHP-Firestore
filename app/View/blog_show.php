@@ -8,13 +8,11 @@ if(!isset($_SESSION["user"]))
     header("Location: login.php");
 }
 $blogId = $_GET["blog_id"];
-$database = new Firestore_honeydoo('blogPosts');
+$database = new Firestore_honeydoo();
 $blogToShow = $database->fetchBlogById($blogId);
 $blogPostTitle = $blogToShow["title"];
 $blogPostDistribution = $blogToShow["distribution"];
-$blogPostImage = $blogToShow["img"];
-/*print_r($blogToShow["title"]);
-die();*/
+$blogPostImage = $blogToShow["img"] ?? "";
 
 ?>
 <!DOCTYPE html>

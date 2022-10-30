@@ -7,54 +7,12 @@ use Google\Cloud\Firestore\FirestoreClient;
 class Firestore_honeydoo
 {
     protected $db;
-    protected $name;
-    public function __construct($collection)
+    public function __construct()
     {
         $this->db = new FirestoreClient([
             'keyFilePath' => '../../hondeydoo-19eb1_credentials.json',
             'projectId' => 'hondeydoo-19eb1'
         ]);
-        $this->name = $collection;
-    }
-
-    /*public function getDocument()
-    {
-        $res = [];
-        $query = $this->db->collection($this->name)->documents()->rows();
-        if(!empty($query)) {
-            foreach ($query as $item) {
-                $res[] = $item->data();
-            }
-        }
-        return $res;
-    }*/
-    public function getDocument()
-    {
-        $res = [];
-        $query = $this->db->collection('realtor')->documents()->rows();
-        if(!empty($query)) {
-            foreach ($query as $item) {
-                $res[] = $item->data();
-            }
-        }
-        return $res;
-        /*$query = $this->db->collection('realtor')->where('portalp', '=', 'testpass77');
-        $documents = $query->documents();
-        foreach ($documents as $document) {
-            if ($document->exists()) {
-                printf('Document data for document %s:' . PHP_EOL, $document->id());
-                print_r($document->data());
-                printf(PHP_EOL);
-            } else {
-                printf('Document %s does not exist!' . PHP_EOL, $document->id());
-            }
-        }*/
-       /* if(!empty($query)) {
-            foreach ($query as $item) {
-                $res[] = $item->data();
-            }
-        }
-        return $res;*/
     }
 
     public function fetchUser($email, $password)
@@ -80,20 +38,20 @@ class Firestore_honeydoo
                 $obj_merged = (object) array_merge(
                     ["doc_id" => $document->id()], (array) $document->data());
                 $res[] = $obj_merged;
-                /*print_r($document->data());
-                die();*/
             }
         }
         return $res;
     }
 
+    public function createNewBlogPost($data)
+    {
+        return $this->db->collection('blogPost')->add($data);
+    }
+
     public function fetchBlogById($docId)
     {
-        $res = [];
         $query = $this->db->collection('blogPost')->document($docId);
-        $snapshot = $query->snapshot();
-        return $snapshot->data();
-
+        return $query->snapshot();
     }
 
     public function fetchProServices($userId)

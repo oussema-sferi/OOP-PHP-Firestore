@@ -7,15 +7,6 @@ if(!isset($_SESSION["user"]))
 {
     header("Location: login.php");
 }
-$blogId = $_GET["blog_id"];
-$database = new Firestore_honeydoo('blogPosts');
-$blogToShow = $database->fetchBlogById($blogId);
-$blogPostTitle = $blogToShow["title"];
-$blogPostDistribution = $blogToShow["distribution"];
-$blogPostImage = $blogToShow["img"];
-/*print_r($blogToShow["title"]);
-die();*/
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -90,7 +81,7 @@ die();*/
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="list"></i></div>
-                                    Blog Post Details
+                                    Create Blog Post
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
@@ -105,46 +96,39 @@ die();*/
             </header>
             <!-- Main page content-->
             <div class="container-fluid px-4">
-                <div class="row gx-4">
-                    <div class="col-lg-2">
+                <form action="<?='../Controller/add_blog_action.php'?>" method="post" enctype="multipart/form-data">
+                    <div class="row gx-4">
+                        <div class="col-lg-8">
+                            <div class="card mb-4">
+                                <div class="card-header">Blog Post Title</div>
+                                <div class="card-body"><input class="form-control" id="postTitleInput" type="text" placeholder="Enter your post title..." name="blogPostTitle" required/></div>
+                            </div>
+                            <div class="card card-header-actions mb-4">
+                                <div class="card-header">
+                                    Blog Post Distribution
+                                    <i class="text-muted"></i>
+                                </div>
+                                <div class="card-body"><textarea class="lh-base form-control" type="text" placeholder="Enter your post distribution text..." rows="10" name="blogPostDistribution" required></textarea></div>
+                            </div>
+                            <div class="card card-header-actions mb-4 mb-lg-0">
+                                <div class="card-header">
+                                    Blog Post Image
+                                    <i class="text-muted"></i>
+                                </div>
+                                <div class="card-body">
+                                    <input type="file" accept="image/jpeg/png" name="blogPostImage">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card card-header-actions">
+                                <div class="card-body">
+                                    <div class="d-grid"><input class="fw-500 btn btn-primary" type="submit" value="Save"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-8">
-                        <div class="card mb-4">
-                            <div class="card-header">Blog Post Title</div>
-                            <div class="card-body"><input class="form-control" id="postTitleInput" type="text" value="<?=$blogPostTitle?>" disabled/></div>
-                        </div>
-                        <div class="card card-header-actions mb-4">
-                            <div class="card-header">
-                                Blog Post Distribution
-                                <i class="text-muted" title="The post preview text shows below the post title, and is the post summary on blog pages."></i>
-                            </div>
-                            <div class="card-body"><textarea class="lh-base form-control" type="text" rows="10" style="resize: none" disabled><?=$blogPostDistribution?></textarea></div>
-                        </div>
-                        <div class="card card-header-actions mb-4 mb-lg-0">
-                            <div class="card-header">
-                                Blog Post Image
-                                <i class="text-muted" title="Markdown is supported within the post content editor."></i>
-                            </div>
-                            <div class="card-body">
-                                <img src="<?=$blogPostImage?><" alt="" height="150px" width="200px">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2">
-                    </div>
-                    <!--<div class="col-lg-4">
-                        <div class="card card-header-actions">
-                            <div class="card-header">
-                                Publish
-                                <i class="text-muted" data-feather="info" data-bs-toggle="tooltip" data-bs-placement="left" title="After submitting, your post will be published once it is approved by a moderator."></i>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-grid mb-3"><button class="fw-500 btn btn-primary-soft text-primary">Save as Draft</button></div>
-                                <div class="d-grid"><button class="fw-500 btn btn-primary">Submit for Approval</button></div>
-                            </div>
-                        </div>
-                    </div>-->
-                </div>
+                </form>
             </div>
         </main>
         <footer class="footer-admin mt-auto footer-light">
