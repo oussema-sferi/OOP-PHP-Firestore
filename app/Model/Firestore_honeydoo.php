@@ -77,10 +77,23 @@ class Firestore_honeydoo
         $documents = $query->documents();
         foreach ($documents as $document) {
             if ($document->exists()) {
-                $res[] = $document->data();
+                $obj_merged = (object) array_merge(
+                    ["doc_id" => $document->id()], (array) $document->data());
+                $res[] = $obj_merged;
+                /*print_r($document->data());
+                die();*/
             }
         }
         return $res;
+    }
+
+    public function fetchBlogById($docId)
+    {
+        $res = [];
+        $query = $this->db->collection('blogPost')->document($docId);
+        $snapshot = $query->snapshot();
+        return $snapshot->data();
+
     }
 
     public function fetchProServices($userId)

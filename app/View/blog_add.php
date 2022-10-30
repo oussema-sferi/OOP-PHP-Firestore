@@ -7,9 +7,13 @@ if(!isset($_SESSION["user"]))
 {
     header("Location: login.php");
 }
+$blogId = $_GET["blog_id"];
 $database = new Firestore_honeydoo('blogPosts');
-$loggedUserBlogPosts = $database->fetchBlogPosts($_SESSION["user"]["realtor_id"]);
-/*print_r($loggedUserBlogPosts);
+$blogToShow = $database->fetchBlogById($blogId);
+$blogPostTitle = $blogToShow["title"];
+$blogPostDistribution = $blogToShow["distribution"];
+$blogPostImage = $blogToShow["img"];
+/*print_r($blogToShow["title"]);
 die();*/
 
 ?>
@@ -21,7 +25,7 @@ die();*/
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Honeydoo" />
     <meta name="author" content="Honeydoo" />
-    <title>My Blog Posts</title>
+    <title>Blog Show</title>
     <link href="../Ressources/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="../Ressources/assets/img/favicon.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -86,13 +90,13 @@ die();*/
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="list"></i></div>
-                                    All My Blog Posts
+                                    Blog Post Details
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="#">
+                                <a class="btn btn-sm btn-light text-primary" href="<?='blog_posts.php'?>">
                                     <i class="me-1" data-feather="plus"></i>
-                                    Create New Blog Post
+                                    Back to All Blog Posts
                                 </a>
                             <div>
                         </div>
@@ -101,42 +105,45 @@ die();*/
             </header>
             <!-- Main page content-->
             <div class="container-fluid px-4">
-                <div class="card">
-                    <div class="card-body">
-                        <table id="datatablesSimple">
-                            <thead>
-                            <tr>
-                                <th>Blog Title</th>
-                                <th class="text-center">Actions</th>
-                            </tr>
-                            </thead>
-                            <tfoot>
-                            <tr>
-                                <th>Title</th>
-                                <th class="text-center">Actions</th>
-                            </tr>
-                            </tfoot>
-                            <tbody>
-                            <?php
-                            foreach ($loggedUserBlogPosts as $blogPost)
-                                {
-                                    $title = $blogPost->title;
-                                    $blogPostId = $blogPost->doc_id;
-                                    $blogPostLink = "blog_show.php?blog_id=$blogPostId";
-                                    echo "
-                                <tr>
-                                    <td>$title</td>
-                                                           
-                                    <td class='text-center'>                                 
-                                        <a class='btn btn-sm btn-success mt-1' href=$blogPostLink>Show Blog Post</a>
-                                        <!--<a class='btn btn-sm btn-secondary mt-1' href='#'>Edit</a>-->
-                                    </td>
-                                </tr>";
-                                };
-                            ?>
-                            </tbody>
-                        </table>
+                <div class="row gx-4">
+                    <div class="col-lg-2">
                     </div>
+                    <div class="col-lg-8">
+                        <div class="card mb-4">
+                            <div class="card-header">Blog Post Title</div>
+                            <div class="card-body"><input class="form-control" id="postTitleInput" type="text" value="<?=$blogPostTitle?>" disabled/></div>
+                        </div>
+                        <div class="card card-header-actions mb-4">
+                            <div class="card-header">
+                                Blog Post Distribution
+                                <i class="text-muted" title="The post preview text shows below the post title, and is the post summary on blog pages."></i>
+                            </div>
+                            <div class="card-body"><textarea class="lh-base form-control" type="text" rows="10" style="resize: none" disabled><?=$blogPostDistribution?></textarea></div>
+                        </div>
+                        <div class="card card-header-actions mb-4 mb-lg-0">
+                            <div class="card-header">
+                                Blog Post Image
+                                <i class="text-muted" title="Markdown is supported within the post content editor."></i>
+                            </div>
+                            <div class="card-body">
+                                <img src="<?=$blogPostImage?><" alt="" height="150px" width="200px">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                    </div>
+                    <!--<div class="col-lg-4">
+                        <div class="card card-header-actions">
+                            <div class="card-header">
+                                Publish
+                                <i class="text-muted" data-feather="info" data-bs-toggle="tooltip" data-bs-placement="left" title="After submitting, your post will be published once it is approved by a moderator."></i>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-grid mb-3"><button class="fw-500 btn btn-primary-soft text-primary">Save as Draft</button></div>
+                                <div class="d-grid"><button class="fw-500 btn btn-primary">Submit for Approval</button></div>
+                            </div>
+                        </div>
+                    </div>-->
                 </div>
             </div>
         </main>

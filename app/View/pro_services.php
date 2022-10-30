@@ -104,19 +104,16 @@ $loggedUserProServices = $database->fetchProServices($_SESSION["user"]["realtor_
                             <thead>
                             <tr>
                                 <th>Pro Service Title</th>
-
                                 <th class="text-center">Actions</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
                                 <th>Title</th>
-
                                 <th class="text-center">Actions</th>
                             </tr>
                             </tfoot>
                             <tbody>
-
                             <?php
                             foreach ($loggedUserProServices as $proService)
                                 {
