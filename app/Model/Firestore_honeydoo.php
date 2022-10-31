@@ -31,7 +31,7 @@ class Firestore_honeydoo
     public function fetchBlogPosts($userId)
     {
         $res = [];
-        $query = $this->db->collection('blogPost')->where('realtor_id', '=', $userId);
+        $query = $this->db->collection('blogPost')->orderBy('date', 'DESC')->where('realtor_id', '=', $userId);
         $documents = $query->documents();
         foreach ($documents as $document) {
             if ($document->exists()) {
