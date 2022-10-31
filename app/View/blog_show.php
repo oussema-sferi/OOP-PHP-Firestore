@@ -124,7 +124,7 @@ $blogPostImage = $blogToShow["img"] ?? "";
                                 <i class="text-muted" title="Markdown is supported within the post content editor."></i>
                             </div>
                             <div class="card-body">
-                                <img src="<?=$blogPostImage?><" alt="" height="150px" width="200px">
+                                <img src="<?=$blogPostImage?>" alt="" height="150px" width="200px">
                             </div>
                         </div>
                     </div>
