@@ -1,11 +1,18 @@
 <?php
 namespace App\View;
+use App\Model\Firestore_honeydoo;
 require_once "../../vendor/autoload.php";
 
 if(!isset($_SESSION["user"]))
 {
     header("Location: login.php");
 }
+$blogId = $_GET["blog_id"];
+$database = new Firestore_honeydoo();
+$blogToEdit = $database->fetchBlogById($blogId);
+$blogPostTitle = $blogToEdit["title"];
+$blogPostDistribution = $blogToEdit["distribution"];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +22,7 @@ if(!isset($_SESSION["user"]))
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Honeydoo" />
     <meta name="author" content="Honeydoo" />
-    <title>Create Blog Post</title>
+    <title>Edit Blog Post</title>
     <link href="../Ressources/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="../Ressources/assets/img/favicon.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -80,7 +87,7 @@ if(!isset($_SESSION["user"]))
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="list"></i></div>
-                                    Create Blog Post
+                                    Edit Blog Post
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
@@ -95,19 +102,19 @@ if(!isset($_SESSION["user"]))
             </header>
             <!-- Main page content-->
             <div class="container-fluid px-4">
-                <form action="<?='../Controller/add_blog_action.php'?>" method="post" enctype="multipart/form-data">
+                <form action="<?='../Controller/edit_blog_action.php?blog_id=' . $blogId?>" method="post" enctype="multipart/form-data">
                     <div class="row gx-4">
                         <div class="col-lg-8">
                             <div class="card mb-4">
                                 <div class="card-header">Blog Post Title</div>
-                                <div class="card-body"><input class="form-control" id="postTitleInput" type="text" placeholder="Enter your post title..." name="blogPostTitle" required/></div>
+                                <div class="card-body"><input class="form-control" id="postTitleInput" type="text" value="<?=$blogPostTitle?>" name="blogPostTitle" required/></div>
                             </div>
                             <div class="card card-header-actions mb-4">
                                 <div class="card-header">
                                     Blog Post Distribution
-                                    <i class="text-muted"></i>
+                                    <i class="text-muted" title="The post preview text shows below the post title, and is the post summary on blog pages."></i>
                                 </div>
-                                <div class="card-body"><textarea class="lh-base form-control" type="text" placeholder="Enter your post distribution text..." rows="10" name="blogPostDistribution" required></textarea></div>
+                                <div class="card-body"><textarea class="lh-base form-control" type="text" rows="10" style="resize: none" name="blogPostDistribution" required><?=$blogPostDistribution?></textarea></div>
                             </div>
                             <div class="card card-header-actions mb-4 mb-lg-0">
                                 <div class="card-header">

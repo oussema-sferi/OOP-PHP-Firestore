@@ -23,7 +23,7 @@ $blogPostImage = $blogToShow["img"] ?? "";
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Honeydoo" />
     <meta name="author" content="Honeydoo" />
-    <title>Blog Show</title>
+    <title>Blog Post Details</title>
     <link href="../Ressources/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="../Ressources/assets/img/favicon.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -93,7 +93,7 @@ $blogPostImage = $blogToShow["img"] ?? "";
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
                                 <a class="btn btn-sm btn-light text-primary" href="<?='blog_posts.php'?>">
-                                    <i class="me-1" data-feather="plus"></i>
+                                    <i class="me-1" data-feather="arrow-left"></i>
                                     Back to All Blog Posts
                                 </a>
                             <div>

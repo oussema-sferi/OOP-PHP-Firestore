@@ -48,6 +48,12 @@ class Firestore_honeydoo
         return $this->db->collection('blogPost')->add($data);
     }
 
+    public function updateBlogPost($blogId, $data)
+    {
+        $blogRef = $this->db->collection('blogPost')->document($blogId);
+        return $blogRef->update($data);
+    }
+
     public function fetchBlogById($docId)
     {
         $query = $this->db->collection('blogPost')->document($docId);

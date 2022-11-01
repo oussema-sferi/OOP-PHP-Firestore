@@ -122,13 +122,15 @@ die();*/
                                 {
                                     $title = $blogPost->title;
                                     $blogPostId = $blogPost->doc_id;
-                                    $blogPostLink = "blog_show.php?blog_id=$blogPostId";
+                                    $showBlogPostLink = "blog_show.php?blog_id=$blogPostId";
+                                    $editBlogPostLink = "blog_edit.php?blog_id=$blogPostId";
                                     echo "
                                 <tr>
                                     <td>$title</td>
                                                            
                                     <td class='text-center'>                                 
-                                        <a class='btn btn-sm btn-success mt-1' href=$blogPostLink>Show Blog Post</a>
+                                        <a class='btn btn-sm btn-success mt-1' href=$showBlogPostLink>Show Blog Post</a>
+                                        <a class='btn btn-sm btn-primary mt-1' href=$editBlogPostLink>Edit Blog Post</a>
                                         <!--<a class='btn btn-sm btn-secondary mt-1' href='#'>Edit</a>-->
                                     </td>
                                 </tr>";

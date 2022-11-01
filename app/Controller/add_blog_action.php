@@ -9,7 +9,7 @@ use Google\Cloud\Core\Timestamp;
     {
         header("Location: login.php");
     }
-    $imagePath =  "/app/blog_posts_images/" . $_FILES["blogPostImage"]["name"];
+    $imagePath =  "/app/blog_posts_images/" . md5(uniqid()) . $_FILES["blogPostImage"]["name"];
     move_uploaded_file(
         $_FILES["blogPostImage"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . $imagePath
     );
