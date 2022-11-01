@@ -54,6 +54,12 @@ class Firestore_honeydoo
         return $blogRef->update($data);
     }
 
+    public function deleteBlogPost($blogId)
+    {
+        $blogRef = $this->db->collection('blogPost')->document($blogId);
+        return $blogRef->delete();
+    }
+
     public function fetchBlogById($docId)
     {
         $query = $this->db->collection('blogPost')->document($docId);

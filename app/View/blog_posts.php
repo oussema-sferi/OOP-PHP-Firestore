@@ -124,6 +124,7 @@ die();*/
                                     $blogPostId = $blogPost->doc_id;
                                     $showBlogPostLink = "blog_show.php?blog_id=$blogPostId";
                                     $editBlogPostLink = "blog_edit.php?blog_id=$blogPostId";
+                                    $deleteBlogPostLink = "../Controller/delete_blog_action.php?blog_id=$blogPostId";
                                     echo "
                                 <tr>
                                     <td>$title</td>
@@ -131,9 +132,28 @@ die();*/
                                     <td class='text-center'>                                 
                                         <a class='btn btn-sm btn-success mt-1' href=$showBlogPostLink>Show Blog Post</a>
                                         <a class='btn btn-sm btn-primary mt-1' href=$editBlogPostLink>Edit Blog Post</a>
-                                        <!--<a class='btn btn-sm btn-secondary mt-1' href='#'>Edit</a>-->
+                                        <a class='btn btn-sm btn-danger mt-1' data-bs-toggle='modal' data-bs-target='#approveUserModal$blogPostId'>Delete Blog Post</a>                                
                                     </td>
-                                </tr>";
+                                </tr>
+                                
+                                <div class='modal fade' id='approveUserModal$blogPostId' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
+                                    <div class='modal-dialog modal-dialog-centered' role='document'>
+                                        <div class='modal-content'>
+                                            <div class='modal-header d-block'>
+                                                <button class='btn-close float-end' type='button' data-bs-dismiss='modal' aria-label='Close'></button>
+                                                <h5 class='modal-title text-center' id='exampleModalCenterTitle'>Removal Confirmation</h5>
+                                            </div>
+                                            <div class='modal-body text-center'>
+                                                Do you really want to delete this blog post ?
+                                            </div>
+                                            <div class='modal-footer justify-content-center'>
+                                                <a class='btn btn-secondary' type='button' data-bs-dismiss='modal'>No</a>
+                                                <a class='btn btn-success' type='button' href='$deleteBlogPostLink'>Yes</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                ";
                                 };
                             ?>
                             </tbody>
