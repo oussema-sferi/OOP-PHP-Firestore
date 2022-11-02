@@ -46,7 +46,7 @@ if(isset($_SESSION['login_error_flash_message'])) {
                                     <!-- Form Group (password)-->
                                     <div class="mb-3">
                                         <label class="small mb-1" for="password">Password</label>
-                                        <input class="form-control" type="text" name="password" placeholder="Enter your password" required/>
+                                        <input class="form-control" type="password" name="password" placeholder="Enter your password" required/>
                                     </div>
                                     <!-- Form Group (login box)-->
                                     <div class="mt-4 mb-0 text-center">
