@@ -7,10 +7,12 @@ if(!isset($_SESSION["user"]))
 {
     header("Location: login.php");
 }
+$proServiceId = $_GET["pro_service_id"];
 $database = new Firestore_honeydoo();
-$loggedUserProServices = $database->fetchProServices($_SESSION["user"]["realtor_id"]);
-/*print_r($loggedUserProServices);
-die();*/
+$proServiceToEdit = $database->fetchProServiceById($proServiceId);
+$proServiceTitle = $proServiceToEdit["title"];
+$proServiceSubTitle = $proServiceToEdit["sub_title"];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +22,7 @@ die();*/
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Honeydoo" />
     <meta name="author" content="Honeydoo" />
-    <title>My Pro Services</title>
+    <title>Edit Pro Service</title>
     <link href="../Ressources/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="../Ressources/assets/img/favicon.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -85,13 +87,13 @@ die();*/
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="list"></i></div>
-                                    All My Pro Services
+                                    Edit Pro Service
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="<?='pro_service_add.php'?>">
-                                    <i class="me-1" data-feather="plus"></i>
-                                    Create New Pro Service
+                                <a class="btn btn-sm btn-light text-primary" href="<?='pro_services.php'?>"">
+                                    <i class="me-1" data-feather="arrow-left"></i>
+                                    Back to All Pro Services
                                 </a>
                             <div>
                         </div>
@@ -100,65 +102,36 @@ die();*/
             </header>
             <!-- Main page content-->
             <div class="container-fluid px-4">
-                <div class="card">
-                    <div class="card-body">
-                        <table id="datatablesSimple">
-                            <thead>
-                            <tr>
-                                <th>Pro Service Title</th>
-                                <th class="text-center">Actions</th>
-                            </tr>
-                            </thead>
-                            <tfoot>
-                            <tr>
-                                <th>Title</th>
-                                <th class="text-center">Actions</th>
-                            </tr>
-                            </tfoot>
-                            <tbody>
-                            <?php
-                            foreach ($loggedUserProServices as $proService)
-                            {
-                                $title = $proService->title;
-                                $proServiceId = $proService->doc_id;
-                                $showProServiceLink = "pro_service_show.php?pro_service_id=$proServiceId";
-                                $editProServiceLink = "pro_service_edit.php?pro_service_id=$proServiceId";
-                                $deleteProServiceLink = "../Controller/delete_pro_service_action.php?pro_service_id=$proServiceId";
-                                echo "
-                                <tr>
-                                    <td>$title</td>
-                                                           
-                                    <td class='text-center'>                                 
-                                        <a class='btn btn-sm btn-success mt-1' href=$showProServiceLink>Show Pro Service</a>
-                                        <a class='btn btn-sm btn-primary mt-1' href=$editProServiceLink>Edit Pro Service</a>
-                                        <a class='btn btn-sm btn-danger mt-1' data-bs-toggle='modal' data-bs-target='#approveUserModal$proServiceId'>Delete Pro Service</a>                                
-                                    </td>
-                                </tr>
-                                
-                                <div class='modal fade' id='approveUserModal$proServiceId' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
-                                    <div class='modal-dialog modal-dialog-centered' role='document'>
-                                        <div class='modal-content'>
-                                            <div class='modal-header d-block'>
-                                                <button class='btn-close float-end' type='button' data-bs-dismiss='modal' aria-label='Close'></button>
-                                                <h5 class='modal-title text-center' id='exampleModalCenterTitle'>Removal Confirmation</h5>
-                                            </div>
-                                            <div class='modal-body text-center'>
-                                                Do you really want to delete this pro service ?
-                                            </div>
-                                            <div class='modal-footer justify-content-center'>
-                                                <a class='btn btn-secondary' type='button' data-bs-dismiss='modal'>No</a>
-                                                <a class='btn btn-success' type='button' href='$deleteProServiceLink'>Yes</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                <form action="<?='../Controller/edit_pro_service_action.php?pro_service_id=' . $proServiceId?>" method="post" enctype="multipart/form-data">
+                    <div class="row gx-4">
+                        <div class="col-lg-8">
+                            <div class="card mb-4">
+                                <div class="card-header">Pro Service Title</div>
+                                <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" value="<?=$proServiceTitle?>" name="proServiceTitle" required/></div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header">Pro Service Sub Title</div>
+                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$proServiceSubTitle?>" name="proServiceSubTitle" required/></div>
+                            </div>
+                            <div class="card card-header-actions mb-4 mb-lg-0">
+                                <div class="card-header">
+                                    Pro Service Image
+                                    <i class="text-muted"></i>
                                 </div>
-                                ";
-                            };
-                            ?>
-                            </tbody>
-                        </table>
+                                <div class="card-body">
+                                    <input type="file" accept="image/jpeg/png" name="proServiceImage">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card card-header-actions">
+                                <div class="card-body">
+                                    <div class="d-grid"><input class="fw-500 btn btn-primary" type="submit" value="Save"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </main>
         <footer class="footer-admin mt-auto footer-light">

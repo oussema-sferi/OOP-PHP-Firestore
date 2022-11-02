@@ -69,13 +69,38 @@ class Firestore_honeydoo
     public function fetchProServices($userId)
     {
         $res = [];
-        $query = $this->db->collection('realtor_home_pro_service')->where('realtor_id', '=', $userId);
+        $query = $this->db->collection('realtor_home_pro_service')->orderBy('date', 'DESC')->where('realtor_id', '=', $userId);
         $documents = $query->documents();
         foreach ($documents as $document) {
             if ($document->exists()) {
-                $res[] = $document->data();
+                $obj_merged = (object) array_merge(
+                    ["doc_id" => $document->id()], (array) $document->data());
+                $res[] = $obj_merged;
             }
         }
         return $res;
+    }
+
+    public function fetchProServiceById($docId)
+    {
+        $query = $this->db->collection('realtor_home_pro_service')->document($docId);
+        return $query->snapshot();
+    }
+
+    public function createNewProService($data)
+    {
+        return $this->db->collection('realtor_home_pro_service')->add($data);
+    }
+
+    public function updateProService($proServiceId, $data)
+    {
+        $proServiceRef = $this->db->collection('realtor_home_pro_service')->document($proServiceId);
+        return $proServiceRef->update($data);
+    }
+
+    public function deleteProService($proServiceId)
+    {
+        $blogRef = $this->db->collection('realtor_home_pro_service')->document($proServiceId);
+        return $blogRef->delete();
     }
 }
