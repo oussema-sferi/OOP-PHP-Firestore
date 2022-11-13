@@ -69,7 +69,7 @@ class Firestore_honeydoo
     public function fetchProServices($userId)
     {
         $res = [];
-        $query = $this->db->collection('realtor_home_pro_service')->orderBy('date', 'DESC')->where('realtor_id', '=', $userId);
+        $query = $this->db->collection('realtor_home_pro_service')->where('realtor_id', '=', $userId);
         $documents = $query->documents();
         foreach ($documents as $document) {
             if ($document->exists()) {

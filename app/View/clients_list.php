@@ -7,11 +7,11 @@ if(!isset($_SESSION["user"]))
 {
     header("Location: login.php");
 }
-$proServiceId = $_GET["pro_service_id"];
 $database = new Firestore_honeydoo();
-$proServiceToEdit = $database->fetchProServiceById($proServiceId);
-$proServiceTitle = $proServiceToEdit["title"];
-$proServiceSubTitle = $proServiceToEdit["sub_title"];
+/*$loggedUserBlogPosts = $database->fetchBlogPosts($_SESSION["user"]["realtor_id"]);*/
+$loggedUserBlogPosts = [];
+/*print_r($loggedUserBlogPosts);
+die();*/
 
 ?>
 <!DOCTYPE html>
@@ -22,7 +22,7 @@ $proServiceSubTitle = $proServiceToEdit["sub_title"];
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Honeydoo" />
     <meta name="author" content="Honeydoo" />
-    <title>Edit Pro Service</title>
+    <title>Clients List</title>
     <link href="../Ressources/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="../Ressources/assets/img/favicon.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -92,13 +92,13 @@ $proServiceSubTitle = $proServiceToEdit["sub_title"];
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="list"></i></div>
-                                    Edit Pro Service
+                                    All Clients
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="<?='pro_services.php'?>"">
-                                    <i class="me-1" data-feather="arrow-left"></i>
-                                    Back to All Pro Services
+                                <a class="btn btn-sm btn-light text-primary" href="<?='client_add.php'?>">
+                                    <i class="me-1" data-feather="plus"></i>
+                                    Create New Client
                                 </a>
                             <div>
                         </div>
@@ -107,36 +107,71 @@ $proServiceSubTitle = $proServiceToEdit["sub_title"];
             </header>
             <!-- Main page content-->
             <div class="container-fluid px-4">
-                <form action="<?='../Controller/edit_pro_service_action.php?pro_service_id=' . $proServiceId?>" method="post" enctype="multipart/form-data">
-                    <div class="row gx-4">
-                        <div class="col-lg-8">
-                            <div class="card mb-4">
-                                <div class="card-header">Pro Service Title</div>
-                                <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" value="<?=$proServiceTitle?>" name="proServiceTitle" required/></div>
-                            </div>
-                            <div class="card mb-4">
-                                <div class="card-header">Pro Service Sub Title</div>
-                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$proServiceSubTitle?>" name="proServiceSubTitle" required/></div>
-                            </div>
-                            <div class="card card-header-actions mb-4 mb-lg-0">
-                                <div class="card-header">
-                                    Pro Service Image
-                                    <i class="text-muted"></i>
+                <div class="card">
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                            <tr>
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            <?php
+                            foreach ($loggedUserBlogPosts as $blogPost)
+                                {
+                                    $title = $blogPost->title;
+                                    $blogPostId = $blogPost->doc_id;
+                                    $showBlogPostLink = "blog_show.php?blog_id=$blogPostId";
+                                    $editBlogPostLink = "blog_edit.php?blog_id=$blogPostId";
+                                    $deleteBlogPostLink = "../Controller/delete_blog_action.php?blog_id=$blogPostId";
+                                    echo "
+                                <tr>
+                                    <td>$title</td>
+                                                           
+                                    <td class='text-center'>                                 
+                                        <a class='btn btn-sm btn-success mt-1' href=$showBlogPostLink>Show Client</a>
+                                        <a class='btn btn-sm btn-primary mt-1' href=$editBlogPostLink>Edit Client</a>
+                                        <a class='btn btn-sm btn-danger mt-1' data-bs-toggle='modal' data-bs-target='#approveUserModal$blogPostId'>Delete Client</a>                                
+                                    </td>
+                                </tr>
+                                
+                                <div class='modal fade' id='approveUserModal$blogPostId' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
+                                    <div class='modal-dialog modal-dialog-centered' role='document'>
+                                        <div class='modal-content'>
+                                            <div class='modal-header d-block'>
+                                                <button class='btn-close float-end' type='button' data-bs-dismiss='modal' aria-label='Close'></button>
+                                                <h5 class='modal-title text-center' id='exampleModalCenterTitle'>Removal Confirmation</h5>
+                                            </div>
+                                            <div class='modal-body text-center'>
+                                                Do you really want to delete this client ?
+                                            </div>
+                                            <div class='modal-footer justify-content-center'>
+                                                <a class='btn btn-secondary' type='button' data-bs-dismiss='modal'>No</a>
+                                                <a class='btn btn-success' type='button' href='$deleteBlogPostLink'>Yes</a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-body">
-                                    <input type="file" accept="image/jpeg/png" name="proServiceImage">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="card card-header-actions">
-                                <div class="card-body">
-                                    <div class="d-grid"><input class="fw-500 btn btn-primary" type="submit" value="Save"></div>
-                                </div>
-                            </div>
-                        </div>
+                                ";
+                                };
+                            ?>
+                            </tbody>
+                        </table>
                     </div>
-                </form>
+                </div>
             </div>
         </main>
         <footer class="footer-admin mt-auto footer-light">

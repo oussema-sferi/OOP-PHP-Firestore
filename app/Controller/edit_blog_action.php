@@ -29,7 +29,6 @@ $data = [
 ];
 foreach ($data as $key => $value)
 {
-
     if($value !== "") $finalData[] = ['path' => $key, 'value' => $value];
 }
 $database = new Firestore_honeydoo();

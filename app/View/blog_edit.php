@@ -74,6 +74,11 @@ $blogPostDistribution = $blogToEdit["distribution"];
                         <div class="nav-link-icon"><i data-feather="list"></i></div>
                         My Pro Services
                     </a>
+                    <!-- Sidenav Link (Client)-->
+                    <a class="nav-link" href="<?='clients_list.php'?>">
+                        <div class="nav-link-icon"><i data-feather="list"></i></div>
+                        Clients List
+                    </a>
                 </div>
             </div>
         </nav>
