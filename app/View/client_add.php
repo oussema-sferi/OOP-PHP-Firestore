@@ -15,7 +15,7 @@ if(!isset($_SESSION["user"]))
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Honeydoo" />
     <meta name="author" content="Honeydoo" />
-    <title>Create Client</title>
+    <title>Add Client</title>
     <link href="../Ressources/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="../Ressources/assets/img/favicon.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -93,11 +93,11 @@ if(!isset($_SESSION["user"]))
                                     <i class="me-1" data-feather="arrow-left"></i>
                                     Back to All Clients
                                 </a>
-                                <div>
+                            <div>
 
-                                </div>
-                            </div>
                         </div>
+                    </div>
+                </div>
             </header>
             <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
                 <div class="container-xl px-4">
@@ -139,7 +139,7 @@ if(!isset($_SESSION["user"]))
                             <div class="py-5 py-xl-10" id="wizard1">
                                 <div class="row justify-content-center">
                                     <div class="col-xxl-6 col-xl-8">
-                                        <form>
+                                        <form action="<?='../Controller/add_client_collection_action.php'?>" method="post">
                                             <fieldset id="step1Form">
                                                 <div class="row gx-3">
                                                     <div class="col-md-2">
@@ -149,19 +149,19 @@ if(!isset($_SESSION["user"]))
 
                                                         <div class="mb-3">
                                                             <label class="small mb-1" for="firstName1">First name</label>
-                                                            <input class="form-control" id="firstName1" type="text" placeholder="Enter your first name"/>
+                                                            <input class="form-control" id="firstName1" type="text" placeholder="Enter your first name" name="firstName1"/>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="small mb-1" for="lastName1">Last name</label>
-                                                            <input class="form-control" id="lastName1" type="text" placeholder="Enter your last name"/>
+                                                            <input class="form-control" id="lastName1" type="text" placeholder="Enter your last name" name="lastName1"/>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="small mb-1" for="email1">Email</label>
-                                                            <input class="form-control" id="email1" type="email" placeholder="Enter your email address"/>
+                                                            <input class="form-control" id="email1" type="email" placeholder="Enter your email address" name="email1"/>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="small mb-1" for="phoneNumber1">Phone number</label>
-                                                            <input class="form-control" id="phoneNumber1" type="tel" placeholder="Enter your phone number"/>
+                                                            <input class="form-control" id="phoneNumber1" type="tel" placeholder="Enter your phone number" name="phoneNumber1"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -183,19 +183,19 @@ if(!isset($_SESSION["user"]))
 
                                                         <div class="mb-3">
                                                             <label class="small mb-1" for="firstName2">First name</label>
-                                                            <input class="form-control" id="firstName2" type="text" placeholder="Enter your first name" />
+                                                            <input class="form-control" id="firstName2" type="text" placeholder="Enter your first name" name="firstName2"/>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="small mb-1" for="lastName2">Last name</label>
-                                                            <input class="form-control" id="lastName2" type="text" placeholder="Enter your last name" />
+                                                            <input class="form-control" id="lastName2" type="text" placeholder="Enter your last name" name="lastName2"/>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="small mb-1" for="email2">Email</label>
-                                                            <input class="form-control" id="email2" type="email" placeholder="Enter your email address" />
+                                                            <input class="form-control" id="email2" type="email" placeholder="Enter your email address" name="email2"/>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="small mb-1" for="phoneNumber2">Phone number</label>
-                                                            <input class="form-control" id="phoneNumber2" type="tel" placeholder="Enter your phone number" />
+                                                            <input class="form-control" id="phoneNumber2" type="tel" placeholder="Enter your phone number" name="phoneNumber2"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -218,20 +218,20 @@ if(!isset($_SESSION["user"]))
 
                                                         <div class="mb-3">
                                                             <label class="small mb-1" for="address1">Address Line 1</label>
-                                                            <input class="form-control" id="address1" type="text" placeholder="Address Line 1" />
+                                                            <input class="form-control" id="address1" type="text" placeholder="Address Line 1" name="address1"/>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="small mb-1" for="address2">Address Line 2</label>
-                                                            <input class="form-control" id="address2" type="text" placeholder="Address Line 2" />
+                                                            <input class="form-control" id="address2" type="text" placeholder="Address Line 2" name="address2"/>
                                                         </div>
                                                         <div class="row gx-3">
                                                             <div class="mb-3 col-md-6">
                                                                 <label class="small mb-1" for="city">City</label>
-                                                                <input class="form-control" id="city" type="text" placeholder="City" />
+                                                                <input class="form-control" id="city" type="text" placeholder="City" name="city"/>
                                                             </div>
                                                             <div class="mb-3 col-md-6">
                                                                 <label class="small mb-1" for="state">State</label>
-                                                                <select class="form-control" id="state">
+                                                                <select class="form-control" id="state" name="state">
                                                                     <option>Select State</option>
                                                                     <option>1</option>
                                                                     <option>2</option>
@@ -243,11 +243,11 @@ if(!isset($_SESSION["user"]))
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="small mb-1" for="zipCode">Zip Code</label>
-                                                            <input class="form-control" id="zipCode" type="email" placeholder="Zip Code" />
+                                                            <input class="form-control" id="zipCode" placeholder="Zip Code" name="zipCode"/>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="small mb-1" for="homeType">Home Type</label>
-                                                            <select class="form-control" id="homeType">
+                                                            <select class="form-control" id="homeType" name="homeType">
                                                                 <option>Select Home Type</option>
                                                                 <option>1</option>
                                                                 <option>2</option>
@@ -289,7 +289,8 @@ if(!isset($_SESSION["user"]))
                                                 <hr class="my-4" />
                                                 <div class="d-flex justify-content-between">
                                                     <button class="btn btn-light disabled" type="button" disabled>Previous</button>
-                                                    <button class="btn btn-primary" type="button">Add Client</button>
+                                                    <button class="btn btn-primary" type="submit">Add Client</button>
+                                                    <!--<input class="btn btn-primary" type="submit" value="Add Client">-->
                                                 </div>
                                             </fieldset>
                                         </form>
@@ -317,20 +318,21 @@ if(!isset($_SESSION["user"]))
 <script src="../Ressources/js/scripts.js"></script>
 <script>
     $( document ).ready(function() {
+        // From Step 1 to Step 2
         $("#step1button").click(function () {
             $("#step1Form").hide()
             $("#progressbar1").hide()
             $("#step2Form").show()
             $("#progressbar2").show()
         })
-        //
+        // From Step 2 to Step 3
         $("#step2button").click(function () {
             $("#step2Form").hide()
             $("#progressbar2").hide()
             $("#step3Form").show()
             $("#progressbar3").show()
         })
-        //
+        // From Step 3 to Step 4
         $("#step3button").click(function () {
             $("#step3Form").hide()
             $("#progressbar3").hide()

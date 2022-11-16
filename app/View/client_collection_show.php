@@ -7,10 +7,12 @@ if(!isset($_SESSION["user"]))
 {
     header("Location: login.php");
 }
+$blogId = $_GET["blog_id"];
 $database = new Firestore_honeydoo();
-$userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
-/*print_r($userClients);
-die();*/
+$blogToShow = $database->fetchBlogById($blogId);
+$blogPostTitle = $blogToShow["title"];
+$blogPostDistribution = $blogToShow["distribution"];
+$blogPostImage = $blogToShow["img"] ?? "";
 
 ?>
 <!DOCTYPE html>
@@ -21,7 +23,7 @@ die();*/
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Honeydoo" />
     <meta name="author" content="Honeydoo" />
-    <title>Clients List</title>
+    <title>Blog Post Details</title>
     <link href="../Ressources/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="../Ressources/assets/img/favicon.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -91,13 +93,13 @@ die();*/
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="list"></i></div>
-                                    All Clients
+                                    Blog Post Details
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="<?='client_add.php'?>">
-                                    <i class="me-1" data-feather="plus"></i>
-                                    Create New Client
+                                <a class="btn btn-sm btn-light text-primary" href="<?='blog_posts.php'?>">
+                                    <i class="me-1" data-feather="arrow-left"></i>
+                                    Back to All Blog Posts
                                 </a>
                             <div>
                         </div>
@@ -106,91 +108,45 @@ die();*/
             </header>
             <!-- Main page content-->
             <div class="container-fluid px-4">
-                <div class="card">
-                    <div class="card-body">
-                        <table id="datatablesSimple">
-                            <thead>
-                            <tr>
-                                <th>First name 1</th>
-                                <th>Last name 1</th>
-                                <th>Email 1</th>
-                                <th>Phone Number 1</th>
-                                <th>First name 2</th>
-                                <th>Last name 2</th>
-                                <th>Email 2</th>
-                                <th>Phone Number 2</th>
-                                <th class="text-center">Actions</th>
-                            </tr>
-                            </thead>
-                            <tfoot>
-                            <tr>
-                                <th>First name 1</th>
-                                <th>Last name 1</th>
-                                <th>Email 1</th>
-                                <th>Phone Number 1</th>
-                                <th>First name 2</th>
-                                <th>Last name 2</th>
-                                <th>Email 2</th>
-                                <th>Phone Number 2</th>
-                                <th class="text-center">Actions</th>
-                            </tr>
-                            </tfoot>
-                            <tbody>
-                            <?php
-                            foreach ($userClients as $clientCollection)
-                                {
-                                    $firstName1 = $clientCollection->first_name_1;
-                                    $lastName1 = $clientCollection->last_name_1;
-                                    $email1 = $clientCollection->email_1;
-                                    $phoneNumber1 = $clientCollection->phone_1;
-                                    $firstName2 = $clientCollection->first_name_2;
-                                    $lastName2 = $clientCollection->last_name_2;
-                                    $email2 = $clientCollection->email_2;
-                                    $phoneNumber2 = $clientCollection->phone_2;
-                                    $clientCollectionId = $clientCollection->doc_id;
-                                    $showClientCollectionLink = "client_collection_show.php?blog_id=$clientCollectionId";
-                                    $editClientCollectionLink = "client_collection_edit.php?blog_id=$clientCollectionId";
-                                    $deleteClientCollectionLink = "../Controller/delete_client_collection_action.php?blog_id=$clientCollectionId";
-                                    echo "
-                                <tr>
-                                    <td>$firstName1</td>
-                                    <td>$lastName1</td>
-                                    <td>$email1</td>
-                                    <td>$phoneNumber1</td>
-                                    <td>$firstName2</td>
-                                    <td>$lastName2</td>
-                                    <td>$email2</td>
-                                    <td>$phoneNumber2</td>            
-                                    <td class='text-center'>                                 
-                                        <a class='btn btn-sm btn-success mt-1' href=$showClientCollectionLink>Show Client</a>
-                                        <a class='btn btn-sm btn-primary mt-1' href=$editClientCollectionLink>Edit Client</a>
-                                        <a class='btn btn-sm btn-danger mt-1' data-bs-toggle='modal' data-bs-target='#approveUserModal$clientCollectionId'>Delete Client</a>                                
-                                    </td>
-                                </tr>
-                                
-                                <div class='modal fade' id='approveUserModal$clientCollectionId' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
-                                    <div class='modal-dialog modal-dialog-centered' role='document'>
-                                        <div class='modal-content'>
-                                            <div class='modal-header d-block'>
-                                                <button class='btn-close float-end' type='button' data-bs-dismiss='modal' aria-label='Close'></button>
-                                                <h5 class='modal-title text-center' id='exampleModalCenterTitle'>Removal Confirmation</h5>
-                                            </div>
-                                            <div class='modal-body text-center'>
-                                                Do you really want to delete this client ?
-                                            </div>
-                                            <div class='modal-footer justify-content-center'>
-                                                <a class='btn btn-secondary' type='button' data-bs-dismiss='modal'>No</a>
-                                                <a class='btn btn-success' type='button' href='$deleteClientCollectionLink'>Yes</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                ";
-                                };
-                            ?>
-                            </tbody>
-                        </table>
+                <div class="row gx-4">
+                    <div class="col-lg-2">
                     </div>
+                    <div class="col-lg-8">
+                        <div class="card mb-4">
+                            <div class="card-header">Blog Post Title</div>
+                            <div class="card-body"><input class="form-control" id="postTitleInput" type="text" value="<?=$blogPostTitle?>" disabled/></div>
+                        </div>
+                        <div class="card card-header-actions mb-4">
+                            <div class="card-header">
+                                Blog Post Distribution
+                                <i class="text-muted" title="The post preview text shows below the post title, and is the post summary on blog pages."></i>
+                            </div>
+                            <div class="card-body"><textarea class="lh-base form-control" type="text" rows="10" style="resize: none" disabled><?=$blogPostDistribution?></textarea></div>
+                        </div>
+                        <div class="card card-header-actions mb-4 mb-lg-0">
+                            <div class="card-header">
+                                Blog Post Image
+                                <i class="text-muted" title="Markdown is supported within the post content editor."></i>
+                            </div>
+                            <div class="card-body">
+                                <img src="<?=$blogPostImage?>" alt="" height="150px" width="200px">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                    </div>
+                    <!--<div class="col-lg-4">
+                        <div class="card card-header-actions">
+                            <div class="card-header">
+                                Publish
+                                <i class="text-muted" data-feather="info" data-bs-toggle="tooltip" data-bs-placement="left" title="After submitting, your post will be published once it is approved by a moderator."></i>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-grid mb-3"><button class="fw-500 btn btn-primary-soft text-primary">Save as Draft</button></div>
+                                <div class="d-grid"><button class="fw-500 btn btn-primary">Submit for Approval</button></div>
+                            </div>
+                        </div>
+                    </div>-->
                 </div>
             </div>
         </main>
