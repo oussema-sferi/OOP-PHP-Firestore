@@ -123,4 +123,21 @@ class Firestore_honeydoo
     {
         return $this->db->collection('realtor_clients')->add($data);
     }
+
+    public function fetchClientCollectionById($docId)
+    {
+        $query = $this->db->collection('realtor_clients')->document($docId);
+        return $query->snapshot();
+    }
+    public function updateClientCollection($clientCollectionId, $data)
+    {
+        $clientCollectionRef = $this->db->collection('realtor_clients')->document($clientCollectionId);
+        return $clientCollectionRef->update($data);
+    }
+
+    public function deleteClientCollection($clientCollectionId)
+    {
+        $clientCollectionRef = $this->db->collection('realtor_clients')->document($clientCollectionId);
+        return $clientCollectionRef->delete();
+    }
 }

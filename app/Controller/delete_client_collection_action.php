@@ -5,12 +5,12 @@ use App\Model\Firestore_honeydoo;
 use DateTime;
 use Google\Cloud\Core\Timestamp;
 
-    if(!isset($_SESSION["user"]))
-    {
-        header("Location: login.php");
-    }
-    $blogId = $_GET["blog_id"];
-    $database = new Firestore_honeydoo();
-    $database->deleteBlogPost($blogId);
-    header("Location: ../View/blog_posts.php");
+if(!isset($_SESSION["user"]))
+{
+    header("Location: login.php");
+}
+$clientCollectionId = $_GET["client_collection_id"];
+$database = new Firestore_honeydoo();
+$database->deleteClientCollection($clientCollectionId);
+header("Location: ../View/clients_list.php");
 

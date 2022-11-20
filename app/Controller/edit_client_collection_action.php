@@ -9,28 +9,30 @@ if(!isset($_SESSION["user"]))
 {
     header("Location: login.php");
 }
+$clientCollectionId = $_GET["client_collection_id"];
 $finalData = [];
-$blogId = $_GET["blog_id"];
-$title = isset($_POST["blogPostTitle"]) ? $_POST["blogPostTitle"] : "";
-$distribution = isset($_POST["blogPostDistribution"]) ? $_POST["blogPostDistribution"] : "";
-$imagePath = $_FILES["blogPostImage"]["name"] !== "" ? "/app/blog_posts_images/" . md5(uniqid()) . $_FILES["blogPostImage"]["name"] : "";
-$imageDbLink =  $_FILES["blogPostImage"]["name"] !== "" ? (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $imagePath : "";
-if($imagePath !== "")
-{
-    move_uploaded_file(
-        $_FILES["blogPostImage"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . $imagePath
-    );
-}
 $data = [
-    'title' => $title,
-    'distribution' => $distribution,
-    'img' => $imageDbLink,
-    'date' => new Timestamp(new DateTime()),
+    'first_name_1' => $_POST["firstName1"],
+    'last_name_1' => $_POST["lastName1"],
+    'email_1' => $_POST["email1"],
+    'phone_1' => $_POST["phoneNumber1"],
+    'first_name_2' => $_POST["firstName2"],
+    'last_name_2' => $_POST["lastName2"],
+    'email_2' => $_POST["email2"],
+    'phone_2' => $_POST["phoneNumber2"],
+    'address_1' => $_POST["address1"],
+    'address_2' => $_POST["address2"],
+    'city' => $_POST["city"],
+    'state' => $_POST["state"],
+    'zip' => $_POST["zipCode"],
+    'home_type' => $_POST["homeType"],
+    'notes' => $_POST["notes"],
+    'realtor_id' => $_SESSION["user"]["realtor_id"]
 ];
 foreach ($data as $key => $value)
 {
     if($value !== "") $finalData[] = ['path' => $key, 'value' => $value];
 }
 $database = new Firestore_honeydoo();
-$database->updateBlogPost($blogId, $finalData);
-header("Location: ../View/blog_posts.php");
+$database->updateClientCollection($clientCollectionId, $finalData);
+header("Location: ../View/clients_list.php");

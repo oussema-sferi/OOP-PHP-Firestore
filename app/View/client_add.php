@@ -204,7 +204,7 @@ if(!isset($_SESSION["user"]))
                                                 </div>
                                                 <hr class="my-4" />
                                                 <div class="d-flex justify-content-between">
-                                                    <button class="btn btn-light disabled" type="button" disabled>Previous</button>
+                                                    <button class="btn btn-light" type="button" id="step2prev">Previous</button>
                                                     <button class="btn btn-primary" type="button"  id="step2button">Next</button>
                                                 </div>
                                             </fieldset>
@@ -231,6 +231,10 @@ if(!isset($_SESSION["user"]))
                                                             </div>
                                                             <div class="mb-3 col-md-6">
                                                                 <label class="small mb-1" for="state">State</label>
+                                                                <input class="form-control" id="state" placeholder="State" name="state"/>
+                                                            </div>
+                                                            <!--<div class="mb-3 col-md-6">
+                                                                <label class="small mb-1" for="state">State</label>
                                                                 <select class="form-control" id="state" name="state">
                                                                     <option>Select State</option>
                                                                     <option>1</option>
@@ -239,7 +243,7 @@ if(!isset($_SESSION["user"]))
                                                                     <option>4</option>
                                                                     <option>5</option>
                                                                 </select>
-                                                            </div>
+                                                            </div>-->
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="small mb-1" for="zipCode">Zip Code</label>
@@ -249,11 +253,11 @@ if(!isset($_SESSION["user"]))
                                                             <label class="small mb-1" for="homeType">Home Type</label>
                                                             <select class="form-control" id="homeType" name="homeType">
                                                                 <option>Select Home Type</option>
-                                                                <option>1</option>
-                                                                <option>2</option>
-                                                                <option>3</option>
-                                                                <option>4</option>
-                                                                <option>5</option>
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                                <option value="4">4</option>
+                                                                <option value="5">5</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -262,7 +266,7 @@ if(!isset($_SESSION["user"]))
                                                 </div>
                                                 <hr class="my-4" />
                                                 <div class="d-flex justify-content-between">
-                                                    <button class="btn btn-light disabled" type="button" disabled>Previous</button>
+                                                    <button class="btn btn-light" type="button" id="step3prev">Previous</button>
                                                     <button class="btn btn-primary" type="button"  id="step3button">Next</button>
                                                 </div>
                                             </fieldset>
@@ -288,7 +292,7 @@ if(!isset($_SESSION["user"]))
                                                 </div>
                                                 <hr class="my-4" />
                                                 <div class="d-flex justify-content-between">
-                                                    <button class="btn btn-light disabled" type="button" disabled>Previous</button>
+                                                    <button class="btn btn-light" type="button" id="step4prev">Previous</button>
                                                     <button class="btn btn-primary" type="submit">Add Client</button>
                                                     <!--<input class="btn btn-primary" type="submit" value="Add Client">-->
                                                 </div>
@@ -318,6 +322,7 @@ if(!isset($_SESSION["user"]))
 <script src="../Ressources/js/scripts.js"></script>
 <script>
     $( document ).ready(function() {
+        // Next Button
         // From Step 1 to Step 2
         $("#step1button").click(function () {
             $("#step1Form").hide()
@@ -338,6 +343,29 @@ if(!isset($_SESSION["user"]))
             $("#progressbar3").hide()
             $("#step4Form").show()
             $("#progressbar4").show()
+        })
+
+        // Previous Button
+        // From Step 1 to Step 2
+        $("#step2prev").click(function () {
+            $("#step2Form").hide()
+            $("#progressbar2").hide()
+            $("#step1Form").show()
+            $("#progressbar1").show()
+        })
+        // From Step 2 to Step 3
+        $("#step3prev").click(function () {
+            $("#step3Form").hide()
+            $("#progressbar3").hide()
+            $("#step2Form").show()
+            $("#progressbar2").show()
+        })
+        // From Step 3 to Step 4
+        $("#step4prev").click(function () {
+            $("#step4Form").hide()
+            $("#progressbar4").hide()
+            $("#step3Form").show()
+            $("#progressbar3").show()
         })
     });
 </script>

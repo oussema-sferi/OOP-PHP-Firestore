@@ -133,12 +133,11 @@ die();*/
                                     echo "
                                 <tr>
                                     <td>$title</td>
-                                                           
-                                    <td class='text-center'>                                 
-                                        <a class='btn btn-sm btn-success mt-1' href=$showBlogPostLink>Show Blog Post</a>
-                                        <a class='btn btn-sm btn-primary mt-1' href=$editBlogPostLink>Edit Blog Post</a>
-                                        <a class='btn btn-sm btn-danger mt-1' data-bs-toggle='modal' data-bs-target='#approveUserModal$blogPostId'>Delete Blog Post</a>                                
-                                    </td>
+                                    <td class='text-center'>
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$showBlogPostLink><i data-feather='zoom-in'></i></a>
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$editBlogPostLink><i data-feather='edit'></i></a>
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark' data-bs-toggle='modal' data-bs-target='#approveUserModal$blogPostId'><i data-feather='trash-2'></i></a>                                                                                                                              
+                                    </td>                                                      
                                 </tr>
                                 
                                 <div class='modal fade' id='approveUserModal$blogPostId' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>

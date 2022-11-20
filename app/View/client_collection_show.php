@@ -7,13 +7,24 @@ if(!isset($_SESSION["user"]))
 {
     header("Location: login.php");
 }
-$blogId = $_GET["blog_id"];
+$clientCollectionId = $_GET["client_collection_id"];
 $database = new Firestore_honeydoo();
-$blogToShow = $database->fetchBlogById($blogId);
-$blogPostTitle = $blogToShow["title"];
-$blogPostDistribution = $blogToShow["distribution"];
-$blogPostImage = $blogToShow["img"] ?? "";
-
+$clientCollectionToShow = $database->fetchClientCollectionById($clientCollectionId);
+$firstName1 = $clientCollectionToShow["first_name_1"];
+$lastName1 = $clientCollectionToShow["last_name_1"];
+$email1 = $clientCollectionToShow["email_1"];
+$phoneNumber1 = $clientCollectionToShow["phone_1"];
+$firstName2 = $clientCollectionToShow["first_name_2"];
+$lastName2 = $clientCollectionToShow["last_name_2"];
+$email2 = $clientCollectionToShow["email_2"];
+$phoneNumber2 = $clientCollectionToShow["phone_2"];
+$address1 = $clientCollectionToShow["address_1"];
+$address2 = $clientCollectionToShow["address_2"];
+$state = $clientCollectionToShow["state"];
+$city = $clientCollectionToShow["city"];
+$zipCode = $clientCollectionToShow["zip"];
+$homeType = $clientCollectionToShow["home_type"];
+$notes = $clientCollectionToShow["notes"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +34,7 @@ $blogPostImage = $blogToShow["img"] ?? "";
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Honeydoo" />
     <meta name="author" content="Honeydoo" />
-    <title>Blog Post Details</title>
+    <title>Client Details</title>
     <link href="../Ressources/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="../Ressources/assets/img/favicon.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -93,13 +104,13 @@ $blogPostImage = $blogToShow["img"] ?? "";
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="list"></i></div>
-                                    Blog Post Details
+                                    Client Details
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="<?='blog_posts.php'?>">
+                                <a class="btn btn-sm btn-light text-primary" href="<?='clients_list.php'?>">
                                     <i class="me-1" data-feather="arrow-left"></i>
-                                    Back to All Blog Posts
+                                    Back to All Clients
                                 </a>
                             <div>
                         </div>
@@ -107,48 +118,94 @@ $blogPostImage = $blogToShow["img"] ?? "";
                 </div>
             </header>
             <!-- Main page content-->
-            <div class="container-fluid px-4">
-                <div class="row gx-4">
-                    <div class="col-lg-2">
+            <div class="container-sm px-4">
+                        <h6 class="heading-small text-blue mb-3">Client 1</h6>
+                            <div class="pl-lg-4">
+                                <div class="row mb-5">
+                                    <div class="col-md-3">
+                                        <label class="small mb-1" for="firstName1">First name</label>
+                                        <input class="form-control" id="firstName1" type="text" value="<?=$firstName1?>" disabled/>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="small mb-1" for="lastName1">Last name</label>
+                                        <input class="form-control" id="lastName1" type="text" value="<?=$lastName1?>" disabled/>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="small mb-1" for="email1">Email</label>
+                                        <input class="form-control" id="email1" type="text" value="<?=$email1?>" disabled/>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="small mb-1" for="phoneNumber1">Phone Number</label>
+                                        <input class="form-control" id="phoneNumber1" type="text" value="<?=$phoneNumber1?>" disabled/>
+                                    </div>
+                                </div>
+                            </div>
+
+                <h6 class="heading-small text-blue mb-3">Client 2</h6>
+                <div class="pl-lg-4">
+                    <div class="row mb-5">
+                        <div class="col-md-3">
+                            <label class="small mb-1" for="firstName2">First name</label>
+                            <input class="form-control" id="firstName2" type="text" value="<?=$firstName2?>" disabled/>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="small mb-1" for="lastName2">Last name</label>
+                            <input class="form-control" id="lastName2" type="text" value="<?=$lastName2?>" disabled/>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="small mb-1" for="email2">Email</label>
+                            <input class="form-control" id="email2" type="text" value="<?=$email2?>" disabled/>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="small mb-1" for="phoneNumber2">Phone Number</label>
+                            <input class="form-control" id="phoneNumber2" type="text" value="<?=$phoneNumber2?>" disabled/>
+                        </div>
                     </div>
-                    <div class="col-lg-8">
-                        <div class="card mb-4">
-                            <div class="card-header">Blog Post Title</div>
-                            <div class="card-body"><input class="form-control" id="postTitleInput" type="text" value="<?=$blogPostTitle?>" disabled/></div>
-                        </div>
-                        <div class="card card-header-actions mb-4">
-                            <div class="card-header">
-                                Blog Post Distribution
-                                <i class="text-muted" title="The post preview text shows below the post title, and is the post summary on blog pages."></i>
-                            </div>
-                            <div class="card-body"><textarea class="lh-base form-control" type="text" rows="10" style="resize: none" disabled><?=$blogPostDistribution?></textarea></div>
-                        </div>
-                        <div class="card card-header-actions mb-4 mb-lg-0">
-                            <div class="card-header">
-                                Blog Post Image
-                                <i class="text-muted" title="Markdown is supported within the post content editor."></i>
-                            </div>
-                            <div class="card-body">
-                                <img src="<?=$blogPostImage?>" alt="" height="150px" width="200px">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2">
-                    </div>
-                    <!--<div class="col-lg-4">
-                        <div class="card card-header-actions">
-                            <div class="card-header">
-                                Publish
-                                <i class="text-muted" data-feather="info" data-bs-toggle="tooltip" data-bs-placement="left" title="After submitting, your post will be published once it is approved by a moderator."></i>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-grid mb-3"><button class="fw-500 btn btn-primary-soft text-primary">Save as Draft</button></div>
-                                <div class="d-grid"><button class="fw-500 btn btn-primary">Submit for Approval</button></div>
-                            </div>
-                        </div>
-                    </div>-->
                 </div>
-            </div>
+
+                <h6 class="heading-small text-blue mb-3">Home Detail</h6>
+                <div class="pl-lg-4">
+                    <div class="row mb-5">
+                        <div class="col-md-4">
+                            <label class="small mb-1" for="address1">Address 1</label>
+                            <input class="form-control" id="address1" type="text" value="<?=$address1?>" disabled/>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="small mb-1" for="address2">Address 2</label>
+                            <input class="form-control" id="address2" type="text" value="<?=$address2?>" disabled/>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="small mb-1" for="state">State</label>
+                            <input class="form-control" id="state" type="text" value="<?=$state?>" disabled/>
+                        </div>
+                    </div>
+
+                    <div class="row mb-5">
+                        <div class="col-md-4">
+                            <label class="small mb-1" for="city">City</label>
+                            <input class="form-control" id="city" type="text" value="<?=$city?>" disabled/>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="small mb-1" for="zipCode">Zip Code</label>
+                            <input class="form-control" id="zipCode" type="text" value="<?=$zipCode?>" disabled/>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="small mb-1" for="homeType">Home Type</label>
+                            <input class="form-control" id="homeType" type="text" value="<?=$homeType?>" disabled/>
+                        </div>
+                    </div>
+                </div>
+                <h6 class="heading-small text-blue mb-3">Personal Notes/Reminders</h6>
+                <div class="pl-lg-4">
+                    <div class="row mb-5">
+                        <div class="col-md-12">
+                            <label class="small mb-1" for="notes">Notes</label>
+                            <textarea class="lh-base form-control" type="text" rows="5" style="resize: none" disabled><?=$notes?></textarea>
+                        </div>
+                    </div>
+                </div>
         </main>
         <footer class="footer-admin mt-auto footer-light">
             <div class="container-xl px-4">

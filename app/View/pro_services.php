@@ -132,12 +132,11 @@ die();*/
                                 echo "
                                 <tr>
                                     <td>$title</td>
-                                                           
-                                    <td class='text-center'>                                 
-                                        <a class='btn btn-sm btn-success mt-1' href=$showProServiceLink>Show Pro Service</a>
-                                        <a class='btn btn-sm btn-primary mt-1' href=$editProServiceLink>Edit Pro Service</a>
-                                        <a class='btn btn-sm btn-danger mt-1' data-bs-toggle='modal' data-bs-target='#approveUserModal$proServiceId'>Delete Pro Service</a>                                
-                                    </td>
+                                    <td class='text-center'>
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$showProServiceLink><i data-feather='zoom-in'></i></a>
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$editProServiceLink><i data-feather='edit'></i></a>
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark' data-bs-toggle='modal' data-bs-target='#approveUserModal$proServiceId'><i data-feather='trash-2'></i></a>                                                                                                                              
+                                    </td>                                                                                          
                                 </tr>
                                 
                                 <div class='modal fade' id='approveUserModal$proServiceId' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>

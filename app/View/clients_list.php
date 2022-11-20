@@ -114,11 +114,9 @@ die();*/
                                 <th>First name 1</th>
                                 <th>Last name 1</th>
                                 <th>Email 1</th>
-                                <th>Phone Number 1</th>
                                 <th>First name 2</th>
                                 <th>Last name 2</th>
                                 <th>Email 2</th>
-                                <th>Phone Number 2</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </thead>
@@ -127,11 +125,9 @@ die();*/
                                 <th>First name 1</th>
                                 <th>Last name 1</th>
                                 <th>Email 1</th>
-                                <th>Phone Number 1</th>
                                 <th>First name 2</th>
                                 <th>Last name 2</th>
                                 <th>Email 2</th>
-                                <th>Phone Number 2</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </tfoot>
@@ -148,23 +144,21 @@ die();*/
                                     $email2 = $clientCollection->email_2;
                                     $phoneNumber2 = $clientCollection->phone_2;
                                     $clientCollectionId = $clientCollection->doc_id;
-                                    $showClientCollectionLink = "client_collection_show.php?blog_id=$clientCollectionId";
-                                    $editClientCollectionLink = "client_collection_edit.php?blog_id=$clientCollectionId";
-                                    $deleteClientCollectionLink = "../Controller/delete_client_collection_action.php?blog_id=$clientCollectionId";
+                                    $showClientCollectionLink = "client_collection_show.php?client_collection_id=$clientCollectionId";
+                                    $editClientCollectionLink = "client_collection_edit.php?client_collection_id=$clientCollectionId";
+                                    $deleteClientCollectionLink = "../Controller/delete_client_collection_action.php?client_collection_id=$clientCollectionId";
                                     echo "
                                 <tr>
                                     <td>$firstName1</td>
                                     <td>$lastName1</td>
-                                    <td>$email1</td>
-                                    <td>$phoneNumber1</td>
+                                    <td>$email1</td>                                 
                                     <td>$firstName2</td>
                                     <td>$lastName2</td>
-                                    <td>$email2</td>
-                                    <td>$phoneNumber2</td>            
-                                    <td class='text-center'>                                 
-                                        <a class='btn btn-sm btn-success mt-1' href=$showClientCollectionLink>Show Client</a>
-                                        <a class='btn btn-sm btn-primary mt-1' href=$editClientCollectionLink>Edit Client</a>
-                                        <a class='btn btn-sm btn-danger mt-1' data-bs-toggle='modal' data-bs-target='#approveUserModal$clientCollectionId'>Delete Client</a>                                
+                                    <td>$email2</td>                                   
+                                    <td class='text-center'>
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$showClientCollectionLink><i data-feather='zoom-in'></i></a>
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$editClientCollectionLink><i data-feather='edit'></i></a>
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark' data-bs-toggle='modal' data-bs-target='#approveUserModal$clientCollectionId'><i data-feather='trash-2'></i></a>                                                                                                                              
                                     </td>
                                 </tr>
                                 
