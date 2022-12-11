@@ -1,6 +1,7 @@
 {
     "require": {
-        "google/cloud": "^0.191.0"
+        "google/cloud": "^0.191.0",
+        "phpoffice/phpspreadsheet": "^1.25"
     },
     "autoload": {
         "psr-4": {

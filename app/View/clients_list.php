@@ -95,10 +95,23 @@ die();*/
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="<?='client_add.php'?>">
-                                    <i class="me-1" data-feather="plus"></i>
-                                    Create New Client
-                                </a>
+                                <div id="formContainer" style="display: none">
+                                    <form action="<?='../Controller/import_clients_csv_action.php'?>" method="post" enctype="multipart/form-data">
+                                        <input id="excelcontactsfile" type="file" name="excelclientsfile" class="form-control-sm" style="width: 210px" accept=".csv,.ods, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
+                                        <input class="btn btn-sm btn-success" type="submit" name="submit" value="Confirm">
+                                        <a id="backButton" class="btn btn-sm btn-secondary">Back</a>
+                                    </form>
+                                </div>
+                                <div id="buttonsContainer">
+                                    <a id="importClientButton" class="btn btn-sm btn-light text-primary">
+                                        <i class="me-1" data-feather="plus"></i>
+                                        Import Clients
+                                    </a>
+                                    <a class="btn btn-sm btn-light text-primary" href="<?='client_add.php'?>">
+                                        <i class="me-1" data-feather="plus"></i>
+                                        Create New Client
+                                    </a>
+                                </div>
                             <div>
                         </div>
                     </div>
@@ -201,5 +214,18 @@ die();*/
 <script src="../Ressources/js/datatables/datatables-simple-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="../Ressources/js/scripts.js"></script>
+<script>
+    $( document ).ready(function() {
+        $("#importClientButton").click(function () {
+            $("#buttonsContainer").hide()
+            $("#formContainer").show()
+        })
+        $("#backButton").click(function () {
+            $("#formContainer").hide()
+            $("#buttonsContainer").show()
+
+        })
+    });
+</script>
 </body>
 </html>
