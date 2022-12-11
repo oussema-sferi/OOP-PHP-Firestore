@@ -15,7 +15,7 @@ if(!isset($_SESSION["user"]))
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Honeydoo" />
     <meta name="author" content="Honeydoo" />
-    <title>Create Blog Post</title>
+    <title>Create Pro Service</title>
     <link href="../Ressources/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="../Ressources/assets/img/favicon.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -104,14 +104,34 @@ if(!isset($_SESSION["user"]))
                     <div class="row gx-4">
                         <div class="col-lg-8">
                             <div class="card mb-4">
-                                <div class="card-header">Pro Service Title</div>
-                                <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" placeholder="Enter your Pro Service title..." name="proServiceTitle" required/></div>
+                                <div class="card-header">Company Name</div>
+                                <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" placeholder="Enter company name..." name="companyName" required/></div>
                             </div>
                             <div class="card mb-4">
-                                <div class="card-header">Pro Service Sub Title</div>
-                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter your Pro Service sub title..." name="proServiceSubTitle" required/></div>
+                                <div class="card-header">Company Email</div>
+                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter company email..." name="companyEmail" required/></div>
                             </div>
-                            <div class="card card-header-actions mb-4 mb-lg-0">
+                            <div class="card mb-4">
+                                <div class="card-header">Company Phone Number</div>
+                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter company phone number..." name="companyPhoneNumber" required/></div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header">Company Website Link</div>
+                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter company website link..." name="companyWebsiteLink" required/></div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header">Home Pro Type</div>
+                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter home pro type..." name="homeProType" required/></div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header">Comments</div>
+                                <div class="card-body"><textarea class="lh-base form-control" type="text" placeholder="Enter your comments..." rows="5" name="comments" required></textarea></div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header">My Notes</div>
+                                <div class="card-body"><textarea class="lh-base form-control" type="text" placeholder="Enter your notes..." rows="5" name="myNotes" required></textarea></div>
+                            </div>
+                            <!--<div class="card card-header-actions mb-4 mb-lg-0">
                                 <div class="card-header">
                                     Pro Service Image
                                     <i class="text-muted"></i>
@@ -119,7 +139,7 @@ if(!isset($_SESSION["user"]))
                                 <div class="card-body">
                                     <input type="file" accept="image/jpeg/png" name="proServiceImage">
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                         <div class="col-lg-4">
                             <div class="card card-header-actions">

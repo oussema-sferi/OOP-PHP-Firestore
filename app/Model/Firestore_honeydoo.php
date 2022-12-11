@@ -140,4 +140,44 @@ class Firestore_honeydoo
         $clientCollectionRef = $this->db->collection('realtor_clients')->document($clientCollectionId);
         return $clientCollectionRef->delete();
     }
+
+    // hd_pros
+
+    public function fetchHdPros($userId)
+    {
+        $res = [];
+        $query = $this->db->collection('hd_pros')->where('realtor_id', '=', $userId);
+        $documents = $query->documents();
+        foreach ($documents as $document) {
+            if ($document->exists()) {
+                $obj_merged = (object) array_merge(
+                    ["doc_id" => $document->id()], (array) $document->data());
+                $res[] = $obj_merged;
+            }
+        }
+        return $res;
+    }
+
+    public function fetchHdProsById($docId)
+    {
+        $query = $this->db->collection('hd_pros')->document($docId);
+        return $query->snapshot();
+    }
+
+    public function createNewHdPros($data)
+    {
+        return $this->db->collection('hd_pros')->add($data);
+    }
+
+    public function updateHdPros($hdProsId, $data)
+    {
+        $proServiceRef = $this->db->collection('hd_pros')->document($hdProsId);
+        return $proServiceRef->update($data);
+    }
+
+    public function deleteHdPros($hdProsId)
+    {
+        $blogRef = $this->db->collection('hd_pros')->document($hdProsId);
+        return $blogRef->delete();
+    }
 }
