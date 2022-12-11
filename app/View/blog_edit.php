@@ -25,6 +25,7 @@ $blogPostDistribution = $blogToEdit["distribution"];
     <title>Edit Blog Post</title>
     <link href="../Ressources/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="../Ressources/assets/img/favicon.png" />
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -119,7 +120,7 @@ $blogPostDistribution = $blogToEdit["distribution"];
                                     Blog Post Distribution
                                     <i class="text-muted" title="The post preview text shows below the post title, and is the post summary on blog pages."></i>
                                 </div>
-                                <div class="card-body"><textarea class="lh-base form-control" type="text" rows="10" style="resize: none" name="blogPostDistribution" required><?=$blogPostDistribution?></textarea></div>
+                                <div class="card-body"><textarea id="postDistribution" class="lh-base form-control" type="text" rows="10" style="resize: none" name="blogPostDistribution" required><?=$blogPostDistribution?></textarea></div>
                             </div>
                             <div class="card card-header-actions mb-4 mb-lg-0">
                                 <div class="card-header">
@@ -155,5 +156,7 @@ $blogPostDistribution = $blogToEdit["distribution"];
 <script src="../Ressources/js/datatables/datatables-simple-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="../Ressources/js/scripts.js"></script>
+<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+<script src="../Ressources/js/markdown.js"></script>
 </body>
 </html>
