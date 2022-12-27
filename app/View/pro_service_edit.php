@@ -10,8 +10,8 @@ if(!isset($_SESSION["user"]))
 $proServiceId = $_GET["pro_service_id"];
 $database = new Firestore_honeydoo();
 $proServiceToEdit = $database->fetchProServiceById($proServiceId);
-$proServiceTitle = $proServiceToEdit["title"];
-$proServiceSubTitle = $proServiceToEdit["sub_title"];
+$proServiceCompanyName = $proServiceToEdit["company_name"];
+$proServiceNotes = $proServiceToEdit["my_notes"];
 
 ?>
 <!DOCTYPE html>
@@ -111,16 +111,16 @@ $proServiceSubTitle = $proServiceToEdit["sub_title"];
                     <div class="row gx-4">
                         <div class="col-lg-8">
                             <div class="card mb-4">
-                                <div class="card-header">Pro Service Title</div>
-                                <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" value="<?=$proServiceTitle?>" name="proServiceTitle" required/></div>
+                                <div class="card-header">Company Name</div>
+                                <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" value="<?=$proServiceCompanyName?>" name="company_name" required/></div>
                             </div>
                             <div class="card mb-4">
-                                <div class="card-header">Pro Service Sub Title</div>
-                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$proServiceSubTitle?>" name="proServiceSubTitle" required/></div>
+                                <div class="card-header">My Notes</div>
+                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$proServiceNotes?>" name="my_notes" required/></div>
                             </div>
                             <div class="card card-header-actions mb-4 mb-lg-0">
                                 <div class="card-header">
-                                    Pro Service Image
+                                    Image
                                     <i class="text-muted"></i>
                                 </div>
                                 <div class="card-body">

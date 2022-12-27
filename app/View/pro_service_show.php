@@ -10,8 +10,8 @@ if(!isset($_SESSION["user"]))
 $proServiceId = $_GET["pro_service_id"];
 $database = new Firestore_honeydoo();
 $proServiceToShow = $database->fetchProServiceById($proServiceId);
-$proServiceTitle = $proServiceToShow["title"];
-$proServiceSubTitle = $proServiceToShow["sub_title"];
+$proServiceCompanyName = $proServiceToShow["company_name"];
+$proServiceNotes = $proServiceToShow["my_notes"];
 $proServiceImage = $proServiceToShow["img"] ?? "";
 
 ?>
@@ -113,16 +113,16 @@ $proServiceImage = $proServiceToShow["img"] ?? "";
                     </div>
                     <div class="col-lg-8">
                         <div class="card mb-4">
-                            <div class="card-header">Pro Service Title</div>
-                            <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" value="<?=$proServiceTitle?>" disabled/></div>
+                            <div class="card-header">Company Name</div>
+                            <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" value="<?=$proServiceCompanyName?>" disabled/></div>
                         </div>
                         <div class="card mb-4">
-                            <div class="card-header">Pro Service Sub Title</div>
-                            <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$proServiceSubTitle?>" disabled/></div>
+                            <div class="card-header">My Notes</div>
+                            <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$proServiceNotes?>" disabled/></div>
                         </div>
                         <div class="card card-header-actions mb-4 mb-lg-0">
                             <div class="card-header">
-                                Pro Service Image
+                                Image
                                 <i class="text-muted"></i>
                             </div>
                             <div class="card-body">

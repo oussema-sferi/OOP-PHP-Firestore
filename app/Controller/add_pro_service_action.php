@@ -16,8 +16,11 @@ use Google\Cloud\Core\Timestamp;
     $title = $_POST["proServiceTitle"];
     $subTitle = $_POST["proServiceSubTitle"];
     $data = [
-        'title' => $title,
-        'sub_title' => $subTitle,
+        'company_name' => $title,
+        'company_email' => $title,
+        'company_phone_number' => $title,
+        'company_website_link' => $title,
+        'homePro_type' => $subTitle,
         'realtor_id' => $_SESSION["user"]["realtor_id"],
         'img' => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $imagePath,
         'date' => new Timestamp(new DateTime()),

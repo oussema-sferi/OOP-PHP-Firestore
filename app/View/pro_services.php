@@ -110,13 +110,13 @@ die();*/
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
-                                <th>Pro Service Title</th>
+                                <th>Company Name</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
-                                <th>Title</th>
+                                <th>Company Name</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </tfoot>
@@ -124,14 +124,14 @@ die();*/
                             <?php
                             foreach ($loggedUserProServices as $proService)
                             {
-                                $title = $proService->title;
+                                $companyName = $proService->company_name;
                                 $proServiceId = $proService->doc_id;
                                 $showProServiceLink = "pro_service_show.php?pro_service_id=$proServiceId";
                                 $editProServiceLink = "pro_service_edit.php?pro_service_id=$proServiceId";
                                 $deleteProServiceLink = "../Controller/delete_pro_service_action.php?pro_service_id=$proServiceId";
                                 echo "
                                 <tr>
-                                    <td>$title</td>
+                                    <td>$companyName</td>
                                     <td class='text-center'>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$showProServiceLink><i data-feather='zoom-in'></i></a>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$editProServiceLink><i data-feather='edit'></i></a>
