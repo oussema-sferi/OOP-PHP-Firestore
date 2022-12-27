@@ -10,8 +10,13 @@ if(!isset($_SESSION["user"]))
 $proServiceId = $_GET["pro_service_id"];
 $database = new Firestore_honeydoo();
 $proServiceToEdit = $database->fetchProServiceById($proServiceId);
-$proServiceCompanyName = $proServiceToEdit["company_name"];
-$proServiceNotes = $proServiceToEdit["my_notes"];
+$companyName = $proServiceToEdit["company_name"];
+$companyEmail = $proServiceToEdit["company_email"];
+$companyPhoneNumber = $proServiceToEdit["company_phone_number"];
+$companyWebsiteLink = $proServiceToEdit["company_website_link"];
+$homeProType = $proServiceToEdit["homePro_type"];
+$companyComments = $proServiceToEdit["comments"];
+$companyNotes = $proServiceToEdit["my_notes"];
 
 ?>
 <!DOCTYPE html>
@@ -109,14 +114,14 @@ $proServiceNotes = $proServiceToEdit["my_notes"];
             <div class="container-fluid px-4">
                 <form action="<?='../Controller/edit_pro_service_action.php?pro_service_id=' . $proServiceId?>" method="post" enctype="multipart/form-data">
                     <div class="row gx-4">
-                        <div class="col-lg-8">
+                        <!--<div class="col-lg-8">
                             <div class="card mb-4">
                                 <div class="card-header">Company Name</div>
-                                <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" value="<?=$proServiceCompanyName?>" name="company_name" required/></div>
+                                <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" value="<?/*=$proServiceCompanyName*/?>" name="company_name" required/></div>
                             </div>
                             <div class="card mb-4">
                                 <div class="card-header">My Notes</div>
-                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$proServiceNotes?>" name="my_notes" required/></div>
+                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?/*=$proServiceNotes*/?>" name="my_notes" required/></div>
                             </div>
                             <div class="card card-header-actions mb-4 mb-lg-0">
                                 <div class="card-header">
@@ -126,6 +131,40 @@ $proServiceNotes = $proServiceToEdit["my_notes"];
                                 <div class="card-body">
                                     <input type="file" accept="image/jpeg/png" name="proServiceImage">
                                 </div>
+                            </div>
+                        </div>-->
+                        <div class="col-lg-8">
+                            <div class="card mb-4">
+                                <div class="card-header">Company Name</div>
+                                <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" placeholder="Enter company name..." name="companyName" value="<?=$companyName?>" required/></div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header">Company Email</div>
+                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter company email..." name="companyEmail" value="<?=$companyEmail?>" required/></div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header">Company Phone Number</div>
+                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter company phone number..." name="companyPhoneNumber" value="<?=$companyPhoneNumber?>" required/></div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header">Company Website Link</div>
+                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter company website link..." name="companyWebsiteLink" value="<?=$companyWebsiteLink?>" required/></div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header">Home Pro Type</div>
+                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter home pro type..." name="homeProType" value="<?=$homeProType?>" required/></div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header">Comments</div>
+                                <div class="card-body"><textarea class="lh-base form-control" type="text" placeholder="Enter your comments..." rows="5" name="comments" required><?=$companyComments?></textarea></div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header">My Notes</div>
+                                <div class="card-body"><textarea class="lh-base form-control" type="text" placeholder="Enter your notes..." rows="5" name="myNotes" required><?=$companyNotes?></textarea></div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header">Image</div>
+                                <div class="card-body"><input type="file" accept="image/jpeg/png" name="proServiceImage"></div>
                             </div>
                         </div>
                         <div class="col-lg-4">

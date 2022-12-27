@@ -10,10 +10,14 @@ if(!isset($_SESSION["user"]))
 $proServiceId = $_GET["pro_service_id"];
 $database = new Firestore_honeydoo();
 $proServiceToShow = $database->fetchProServiceById($proServiceId);
-$proServiceCompanyName = $proServiceToShow["company_name"];
-$proServiceNotes = $proServiceToShow["my_notes"];
+$companyName = $proServiceToShow["company_name"] ?? "";
+$companyEmail = $proServiceToShow["company_email"] ?? "";
+$companyPhoneNumber = $proServiceToShow["company_phone_number"] ?? "";
+$companyWebsiteLink = $proServiceToShow["company_website_link"] ?? "";
+$homeProType = $proServiceToShow["homePro_type"] ?? "";
+$companyComments = $proServiceToShow["comments"] ?? "";
+$companyNotes = $proServiceToShow["my_notes"] ?? "";
 $proServiceImage = $proServiceToShow["img"] ?? "";
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -114,11 +118,45 @@ $proServiceImage = $proServiceToShow["img"] ?? "";
                     <div class="col-lg-8">
                         <div class="card mb-4">
                             <div class="card-header">Company Name</div>
-                            <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" value="<?=$proServiceCompanyName?>" disabled/></div>
+                            <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" value="<?=$companyName?>" disabled/></div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">Company Email</div>
+                            <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$companyEmail?>" disabled/></div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">Company Phone Number</div>
+                            <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$companyPhoneNumber?>" disabled/></div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">Company Website Link</div>
+                            <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$companyWebsiteLink?>" disabled/></div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">Home Pro Type</div>
+                            <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$homeProType?>" disabled/></div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">Comments</div>
+                            <div class="card-body"><textarea class="lh-base form-control" type="text" rows="5" disabled><?=$companyComments?></textarea></div>
                         </div>
                         <div class="card mb-4">
                             <div class="card-header">My Notes</div>
-                            <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$proServiceNotes?>" disabled/></div>
+                            <div class="card-body"><textarea class="lh-base form-control" type="text" rows="5" disabled><?=$companyNotes?></textarea></div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">Image</div>
+                            <div class="card-body"><img src="<?=$proServiceImage?>" alt="" height="150px" width="200px"></div>
+                        </div>
+                    </div>
+                    <!--<div class="col-lg-8">
+                        <div class="card mb-4">
+                            <div class="card-header">Company Name</div>
+                            <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" value="<?/*=$proServiceCompanyName*/?>" disabled/></div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">My Notes</div>
+                            <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?/*=$proServiceNotes*/?>" disabled/></div>
                         </div>
                         <div class="card card-header-actions mb-4 mb-lg-0">
                             <div class="card-header">
@@ -126,10 +164,10 @@ $proServiceImage = $proServiceToShow["img"] ?? "";
                                 <i class="text-muted"></i>
                             </div>
                             <div class="card-body">
-                                <img src="<?=$proServiceImage?>" alt="" height="150px" width="200px">
+                                <img src="<?/*=$proServiceImage*/?>" alt="" height="150px" width="200px">
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="col-lg-2">
                     </div>
                     <!--<div class="col-lg-4">

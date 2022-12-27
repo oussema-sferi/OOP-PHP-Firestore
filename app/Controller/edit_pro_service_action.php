@@ -11,8 +11,6 @@ if (!isset($_SESSION["user"])) {
 }
 $finalData = [];
 $proServiceId = $_GET["pro_service_id"];
-$companyName = isset($_POST["company_name"]) ? $_POST["company_name"] : "";
-$myNotes = isset($_POST["my_notes"]) ? $_POST["my_notes"] : "";
 $imagePath = $_FILES["proServiceImage"]["name"] !== "" ? "/app/pro_services_images/" . md5(uniqid()) . $_FILES["proServiceImage"]["name"] : "";
 $imageDbLink = $_FILES["proServiceImage"]["name"] !== "" ? (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $imagePath : "";
 if ($imagePath !== "") {
@@ -21,8 +19,14 @@ if ($imagePath !== "") {
     );
 }
 $data = [
-    'company_name' => $companyName,
-    'my_notes' => $myNotes,
+    'company_name' => $_POST["companyName"] ?? "",
+    'company_email' => $_POST["companyEmail"] ?? "",
+    'company_phone_number' => $_POST["companyPhoneNumber"] ?? "",
+    'company_website_link' => $_POST["companyWebsiteLink"] ?? "",
+    'homePro_type' => $_POST["homeProType"] ?? "",
+    'comments' => $_POST["comments"] ?? "",
+    'my_notes' => $_POST["myNotes"] ?? "",
+    'realtor_id' => $_SESSION["user"]["realtor_id"],
     'img' => $imageDbLink,
     'date' => new Timestamp(new DateTime()),
 ];

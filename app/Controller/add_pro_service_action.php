@@ -13,14 +13,14 @@ use Google\Cloud\Core\Timestamp;
     move_uploaded_file(
         $_FILES["proServiceImage"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . $imagePath
     );
-    $title = $_POST["proServiceTitle"];
-    $subTitle = $_POST["proServiceSubTitle"];
     $data = [
-        'company_name' => $title,
-        'company_email' => $title,
-        'company_phone_number' => $title,
-        'company_website_link' => $title,
-        'homePro_type' => $subTitle,
+        'company_name' => $_POST["companyName"],
+        'company_email' => $_POST["companyEmail"],
+        'company_phone_number' => $_POST["companyPhoneNumber"],
+        'company_website_link' => $_POST["companyWebsiteLink"],
+        'homePro_type' => $_POST["homeProType"],
+        'comments' => $_POST["comments"],
+        'my_notes' => $_POST["myNotes"],
         'realtor_id' => $_SESSION["user"]["realtor_id"],
         'img' => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $imagePath,
         'date' => new Timestamp(new DateTime()),

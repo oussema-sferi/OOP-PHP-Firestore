@@ -131,15 +131,10 @@ if(!isset($_SESSION["user"]))
                                 <div class="card-header">My Notes</div>
                                 <div class="card-body"><textarea class="lh-base form-control" type="text" placeholder="Enter your notes..." rows="5" name="myNotes" required></textarea></div>
                             </div>
-                            <!--<div class="card card-header-actions mb-4 mb-lg-0">
-                                <div class="card-header">
-                                    Pro Service Image
-                                    <i class="text-muted"></i>
-                                </div>
-                                <div class="card-body">
-                                    <input type="file" accept="image/jpeg/png" name="proServiceImage">
-                                </div>
-                            </div>-->
+                            <div class="card mb-4">
+                                <div class="card-header">Image</div>
+                                <div class="card-body"><input type="file" accept="image/jpeg/png" name="proServiceImage"></div>
+                            </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="card card-header-actions">
