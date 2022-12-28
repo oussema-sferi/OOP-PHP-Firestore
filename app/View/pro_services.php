@@ -9,8 +9,6 @@ if(!isset($_SESSION["user"]))
 }
 $database = new Firestore_honeydoo();
 $loggedUserProServices = $database->fetchProServices($_SESSION["user"]["realtor_id"]);
-/*print_r($loggedUserProServices);
-die();*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +63,7 @@ die();*/
                     <!-- Sidenav Link (Blog Posts)-->
                     <a class="nav-link" href="<?='blog_posts.php'?>">
                         <div class="nav-link-icon"><i data-feather="list"></i></div>
-                        My Blog Posts
+                        My Stories
                     </a>
                     <!-- Sidenav Link (Pro Services)-->
                     <a class="nav-link" href="<?='pro_services.php'?>">
@@ -94,10 +92,24 @@ die();*/
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="<?='pro_service_add.php'?>">
-                                    <i class="me-1" data-feather="plus"></i>
-                                    Create New Pro Service
-                                </a>
+                                <div id="formContainer" style="display: none">
+                                    <form action="<?='../Controller/import_pro_services_csv_action.php'?>" method="post" enctype="multipart/form-data">
+                                        <input id="excelHomeProsfile" type="file" name="excelHomeProsfile" class="form-control-sm" style="width: 210px" accept=".csv,.ods, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
+                                        <input class="btn btn-sm btn-success" type="submit" name="submit" value="Confirm">
+                                        <a id="backButton" class="btn btn-sm btn-secondary">Back</a>
+                                    </form>
+                                </div>
+                                <div id="buttonsContainer">
+                                    <a class="btn btn-sm btn-light text-primary" href="<?='pro_service_add.php'?>">
+                                        <i class="me-1" data-feather="plus"></i>
+                                        Create New Pro Service
+                                    </a>
+                                    <a id="importProServicesButton" class="btn btn-sm btn-light text-primary">
+                                        <i class="me-1" data-feather="plus"></i>
+                                        Import Pro Services
+                                    </a>
+                                    <a data-bs-toggle=tooltip data-bs-placement=bottom title='Download Template' href="<?='../Controller/template_download.php?template=pro_services'?>"><i class="fa-solid fa-download"></i></a>
+                                </div>
                             <div>
                         </div>
                     </div>
@@ -178,5 +190,17 @@ die();*/
 <script src="../Ressources/js/datatables/datatables-simple-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="../Ressources/js/scripts.js"></script>
+<script>
+    $( document ).ready(function() {
+        $("#importProServicesButton").click(function () {
+            $("#buttonsContainer").hide()
+            $("#formContainer").show()
+        })
+        $("#backButton").click(function () {
+            $("#formContainer").hide()
+            $("#buttonsContainer").show()
+        })
+    });
+</script>
 </body>
 </html>

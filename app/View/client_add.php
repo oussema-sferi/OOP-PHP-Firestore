@@ -60,7 +60,7 @@ if(!isset($_SESSION["user"]))
                     <!-- Sidenav Link (Blog Posts)-->
                     <a class="nav-link" href="<?='blog_posts.php'?>">
                         <div class="nav-link-icon"><i data-feather="list"></i></div>
-                        My Blog Posts
+                        My Stories
                     </a>
                     <!-- Sidenav Link (Pro Services)-->
                     <a class="nav-link" href="<?='pro_services.php'?>">
@@ -108,7 +108,6 @@ if(!isset($_SESSION["user"]))
                                     <div class="page-header-icon"><i data-feather="plus"></i></div>
                                     Add Client (Homeowner)
                                 </h1>
-                                <!--<div class="page-header-subtitle">Wizard examples for step-by-step form submission content to use as part of an application</div>-->
                             </div>
                         </div>
                     </div>
@@ -233,17 +232,6 @@ if(!isset($_SESSION["user"]))
                                                                 <label class="small mb-1" for="state">State</label>
                                                                 <input class="form-control" id="state" placeholder="State" name="state"/>
                                                             </div>
-                                                            <!--<div class="mb-3 col-md-6">
-                                                                <label class="small mb-1" for="state">State</label>
-                                                                <select class="form-control" id="state" name="state">
-                                                                    <option>Select State</option>
-                                                                    <option>1</option>
-                                                                    <option>2</option>
-                                                                    <option>3</option>
-                                                                    <option>4</option>
-                                                                    <option>5</option>
-                                                                </select>
-                                                            </div>-->
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="small mb-1" for="zipCode">Zip Code</label>
@@ -294,7 +282,6 @@ if(!isset($_SESSION["user"]))
                                                 <div class="d-flex justify-content-between">
                                                     <button class="btn btn-light" type="button" id="step4prev">Previous</button>
                                                     <button class="btn btn-primary" type="submit">Add Client</button>
-                                                    <!--<input class="btn btn-primary" type="submit" value="Add Client">-->
                                                 </div>
                                             </fieldset>
                                         </form>

@@ -72,7 +72,7 @@ $proServiceImage = $proServiceToShow["img"] ?? "";
                     <!-- Sidenav Link (Blog Posts)-->
                     <a class="nav-link" href="<?='blog_posts.php'?>">
                         <div class="nav-link-icon"><i data-feather="list"></i></div>
-                        My Blog Posts
+                        My Stories
                     </a>
                     <!-- Sidenav Link (Pro Services)-->
                     <a class="nav-link" href="<?='pro_services.php'?>">
@@ -146,42 +146,11 @@ $proServiceImage = $proServiceToShow["img"] ?? "";
                         </div>
                         <div class="card mb-4">
                             <div class="card-header">Image</div>
-                            <div class="card-body"><img src="<?=$proServiceImage?>" alt="" height="150px" width="200px"></div>
+                            <div class="card-body"><img src="<?=$proServiceImage?>" alt="N/A" height="150px" width="200px"></div>
                         </div>
                     </div>
-                    <!--<div class="col-lg-8">
-                        <div class="card mb-4">
-                            <div class="card-header">Company Name</div>
-                            <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" value="<?/*=$proServiceCompanyName*/?>" disabled/></div>
-                        </div>
-                        <div class="card mb-4">
-                            <div class="card-header">My Notes</div>
-                            <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?/*=$proServiceNotes*/?>" disabled/></div>
-                        </div>
-                        <div class="card card-header-actions mb-4 mb-lg-0">
-                            <div class="card-header">
-                                Image
-                                <i class="text-muted"></i>
-                            </div>
-                            <div class="card-body">
-                                <img src="<?/*=$proServiceImage*/?>" alt="" height="150px" width="200px">
-                            </div>
-                        </div>
-                    </div>-->
                     <div class="col-lg-2">
                     </div>
-                    <!--<div class="col-lg-4">
-                        <div class="card card-header-actions">
-                            <div class="card-header">
-                                Publish
-                                <i class="text-muted" data-feather="info" data-bs-toggle="tooltip" data-bs-placement="left" title="After submitting, your post will be published once it is approved by a moderator."></i>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-grid mb-3"><button class="fw-500 btn btn-primary-soft text-primary">Save as Draft</button></div>
-                                <div class="d-grid"><button class="fw-500 btn btn-primary">Submit for Approval</button></div>
-                            </div>
-                        </div>
-                    </div>-->
                 </div>
             </div>
         </main>

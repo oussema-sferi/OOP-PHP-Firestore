@@ -66,7 +66,7 @@ die();*/
                     <!-- Sidenav Link (Blog Posts)-->
                     <a class="nav-link" href="<?='blog_posts.php'?>">
                         <div class="nav-link-icon"><i data-feather="list"></i></div>
-                        My Blog Posts
+                        My Stories
                     </a>
                     <!-- Sidenav Link (Pro Services)-->
                     <a class="nav-link" href="<?='pro_services.php'?>">
@@ -103,14 +103,15 @@ die();*/
                                     </form>
                                 </div>
                                 <div id="buttonsContainer">
-                                    <a id="importClientButton" class="btn btn-sm btn-light text-primary">
-                                        <i class="me-1" data-feather="plus"></i>
-                                        Import Clients
-                                    </a>
                                     <a class="btn btn-sm btn-light text-primary" href="<?='client_add.php'?>">
                                         <i class="me-1" data-feather="plus"></i>
                                         Create New Client
                                     </a>
+                                    <a id="importClientButton" class="btn btn-sm btn-light text-primary">
+                                        <i class="me-1" data-feather="plus"></i>
+                                        Import Clients
+                                    </a>
+                                    <a data-bs-toggle=tooltip data-bs-placement=bottom title='Download Template' href="<?='../Controller/template_download.php?template=clients'?>"><i class="fa-solid fa-download"></i></a>
                                 </div>
                             <div>
                         </div>

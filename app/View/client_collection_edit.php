@@ -79,7 +79,7 @@ $notes = $clientCollectionToShow["notes"];
                     <!-- Sidenav Link (Blog Posts)-->
                     <a class="nav-link" href="<?='blog_posts.php'?>">
                         <div class="nav-link-icon"><i data-feather="list"></i></div>
-                        My Blog Posts
+                        My Stories
                     </a>
                     <!-- Sidenav Link (Pro Services)-->
                     <a class="nav-link" href="<?='pro_services.php'?>">
@@ -192,10 +192,6 @@ $notes = $clientCollectionToShow["notes"];
                                 <label class="small mb-1" for="zipCode">Zip Code</label>
                                 <input class="form-control" id="zipCode" type="text" value="<?=$zipCode?>" name="zipCode"/>
                             </div>
-                            <!--<div class="col-md-4">
-                                <label class="small mb-1" for="homeType">Home Type</label>
-                                <input class="form-control" id="homeType" type="text" value="<?/*=$homeType*/?>" name="homeType"/>
-                            </div>-->
                             <div class="col-md-4">
                                 <label class="small mb-1" for="homeType">Home Type</label>
                                 <select class="form-control" id="homeType" name="homeType">

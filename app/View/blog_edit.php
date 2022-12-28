@@ -22,7 +22,7 @@ $blogPostDistribution = $blogToEdit["distribution"];
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Honeydoo" />
     <meta name="author" content="Honeydoo" />
-    <title>Edit Blog Post</title>
+    <title>Edit Story</title>
     <link href="../Ressources/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="../Ressources/assets/img/favicon.png" />
     <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
@@ -68,7 +68,7 @@ $blogPostDistribution = $blogToEdit["distribution"];
                     <!-- Sidenav Link (Blog Posts)-->
                     <a class="nav-link" href="<?='blog_posts.php'?>">
                         <div class="nav-link-icon"><i data-feather="list"></i></div>
-                        My Blog Posts
+                        My Stories
                     </a>
                     <!-- Sidenav Link (Pro Services)-->
                     <a class="nav-link" href="<?='pro_services.php'?>">
@@ -93,13 +93,13 @@ $blogPostDistribution = $blogToEdit["distribution"];
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="list"></i></div>
-                                    Edit Blog Post
+                                    Edit Story
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
                                 <a class="btn btn-sm btn-light text-primary" href="<?='blog_posts.php'?>">
                                     <i class="me-1" data-feather="arrow-left"></i>
-                                    Back to All Blog Posts
+                                    Back to All Stories
                                 </a>
                             <div>
                         </div>
@@ -112,19 +112,19 @@ $blogPostDistribution = $blogToEdit["distribution"];
                     <div class="row gx-4">
                         <div class="col-lg-8">
                             <div class="card mb-4">
-                                <div class="card-header">Blog Post Title</div>
+                                <div class="card-header">Story Title</div>
                                 <div class="card-body"><input class="form-control" id="postTitleInput" type="text" value="<?=$blogPostTitle?>" name="blogPostTitle" required/></div>
                             </div>
                             <div class="card card-header-actions mb-4">
                                 <div class="card-header">
-                                    Blog Post Distribution
+                                    Story Distribution
                                     <i class="text-muted" title="The post preview text shows below the post title, and is the post summary on blog pages."></i>
                                 </div>
                                 <div class="card-body"><textarea id="postDistribution" class="lh-base form-control" type="text" rows="10" style="resize: none" name="blogPostDistribution" required><?=$blogPostDistribution?></textarea></div>
                             </div>
                             <div class="card card-header-actions mb-4 mb-lg-0">
                                 <div class="card-header">
-                                    Blog Post Image
+                                    Story Image
                                     <i class="text-muted"></i>
                                 </div>
                                 <div class="card-body">

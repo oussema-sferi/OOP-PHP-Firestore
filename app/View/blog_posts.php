@@ -21,7 +21,7 @@ die();*/
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Honeydoo" />
     <meta name="author" content="Honeydoo" />
-    <title>My Blog Posts</title>
+    <title>My Stories</title>
     <link href="../Ressources/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="../Ressources/assets/img/favicon.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -66,7 +66,7 @@ die();*/
                     <!-- Sidenav Link (Blog Posts)-->
                     <a class="nav-link" href="<?='blog_posts.php'?>">
                         <div class="nav-link-icon"><i data-feather="list"></i></div>
-                        My Blog Posts
+                        My Stories
                     </a>
                     <!-- Sidenav Link (Pro Services)-->
                     <a class="nav-link" href="<?='pro_services.php'?>">
@@ -91,13 +91,13 @@ die();*/
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="list"></i></div>
-                                    All My Blog Posts
+                                    All My Stories
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
                                 <a class="btn btn-sm btn-light text-primary" href="<?='blog_add.php'?>">
                                     <i class="me-1" data-feather="plus"></i>
-                                    Create New Blog Post
+                                    Create New Story
                                 </a>
                             <div>
                         </div>
@@ -111,13 +111,13 @@ die();*/
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
-                                <th>Blog Title</th>
+                                <th>Story Title</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
-                                <th>Title</th>
+                                <th>Story Title</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </tfoot>
@@ -148,7 +148,7 @@ die();*/
                                                 <h5 class='modal-title text-center' id='exampleModalCenterTitle'>Removal Confirmation</h5>
                                             </div>
                                             <div class='modal-body text-center'>
-                                                Do you really want to delete this blog post ?
+                                                Do you really want to delete this story ?
                                             </div>
                                             <div class='modal-footer justify-content-center'>
                                                 <a class='btn btn-secondary' type='button' data-bs-dismiss='modal'>No</a>

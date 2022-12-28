@@ -114,25 +114,6 @@ $companyNotes = $proServiceToEdit["my_notes"];
             <div class="container-fluid px-4">
                 <form action="<?='../Controller/edit_pro_service_action.php?pro_service_id=' . $proServiceId?>" method="post" enctype="multipart/form-data">
                     <div class="row gx-4">
-                        <!--<div class="col-lg-8">
-                            <div class="card mb-4">
-                                <div class="card-header">Company Name</div>
-                                <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" value="<?/*=$proServiceCompanyName*/?>" name="company_name" required/></div>
-                            </div>
-                            <div class="card mb-4">
-                                <div class="card-header">My Notes</div>
-                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?/*=$proServiceNotes*/?>" name="my_notes" required/></div>
-                            </div>
-                            <div class="card card-header-actions mb-4 mb-lg-0">
-                                <div class="card-header">
-                                    Image
-                                    <i class="text-muted"></i>
-                                </div>
-                                <div class="card-body">
-                                    <input type="file" accept="image/jpeg/png" name="proServiceImage">
-                                </div>
-                            </div>
-                        </div>-->
                         <div class="col-lg-8">
                             <div class="card mb-4">
                                 <div class="card-header">Company Name</div>
