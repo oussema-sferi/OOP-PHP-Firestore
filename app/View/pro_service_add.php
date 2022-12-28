@@ -23,11 +23,12 @@ if(!isset($_SESSION["user"]))
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body class="nav-fixed">
-<nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
+<nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" style="background-color: #262144!important" id="sidenavAccordion">
     <!-- Sidenav Toggle Button-->
-    <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i data-feather="menu"></i></button>
+    <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle" style="background-color: #00B2A0!important;"><i data-feather="menu"></i></button>
     <!-- Navbar Brand-->
-    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="#">Honeydoo</a>
+    <!--<a class="navbar-brand pe-3 ps-4 ps-lg-2" href="#">Honeydoo</a>-->
+    <img class="navbar-brand pe-3 ps-4 ps-lg-2" src="../Ressources/assets/img/HoneyDoo-logo.png">
     <!-- Navbar Items-->
     <ul class="navbar-nav align-items-center ms-auto">
         <!-- User Dropdown-->
@@ -119,9 +120,33 @@ if(!isset($_SESSION["user"]))
                                 <div class="card-header">Company Website Link</div>
                                 <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter company website link..." name="companyWebsiteLink" required/></div>
                             </div>
-                            <div class="card mb-4">
+                            <!--<div class="card mb-4">
                                 <div class="card-header">Home Pro Type</div>
                                 <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter home pro type..." name="homeProType" required/></div>
+                            </div>-->
+                            <div class="card mb-4">
+                                <div class="card-header">Home Pro Type</div>
+                                <div class="card-body">
+                                <select class="form-control" id="homeProType" name="homeProType" required>
+                                    <option>Select Home Pro Type</option>
+                                    <option value="Cleaning">Cleaning</option>
+                                    <option value="Electrical">Electrical</option>
+                                    <option value="Fencing">Fencing</option>
+                                    <option value="Handy person">Handy person</option>
+                                    <option value="Home Renovation">Home Renovation</option>
+                                    <option value="HVAC">HVAC</option>
+                                    <option value="Inspector">Inspector</option>
+                                    <option value="Lawncare">Lawncare</option>
+                                    <option value="Painting">Painting</option>
+                                    <option value="Pest Control">Pest Control</option>
+                                    <option value="Plumbing">Plumbing</option>
+                                    <option value="Power Washing">Power Washing</option>
+                                    <option value="Roofing">Roofing</option>
+                                    <option value="Security System">Security System</option>
+                                    <option value="Windows">Windows</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                </div>
                             </div>
                             <div class="card mb-4">
                                 <div class="card-header">Comments</div>
