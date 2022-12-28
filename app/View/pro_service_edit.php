@@ -132,9 +132,33 @@ $companyNotes = $proServiceToEdit["my_notes"];
                                 <div class="card-header">Company Website Link</div>
                                 <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter company website link..." name="companyWebsiteLink" value="<?=$companyWebsiteLink?>" required/></div>
                             </div>
+                            <!--<div class="card mb-4">
+                                <div class="card-header">Home Pro Type</div>
+                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter home pro type..." name="homeProType" value="<?/*=$homeProType*/?>" required/></div>
+                            </div>-->
                             <div class="card mb-4">
                                 <div class="card-header">Home Pro Type</div>
-                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter home pro type..." name="homeProType" value="<?=$homeProType?>" required/></div>
+                                <div class="card-body">
+                                    <select class="form-control" id="homeProType" name="homeProType" required>
+                                        <option>Select Home Pro Type</option>
+                                        <option value="Cleaning">Cleaning</option>
+                                        <option value="Electrical">Electrical</option>
+                                        <option value="Fencing">Fencing</option>
+                                        <option value="Handy person">Handy person</option>
+                                        <option value="Home Renovation">Home Renovation</option>
+                                        <option value="HVAC">HVAC</option>
+                                        <option value="Inspector">Inspector</option>
+                                        <option value="Lawncare">Lawncare</option>
+                                        <option value="Painting">Painting</option>
+                                        <option value="Pest Control">Pest Control</option>
+                                        <option value="Plumbing">Plumbing</option>
+                                        <option value="Power Washing">Power Washing</option>
+                                        <option value="Roofing">Roofing</option>
+                                        <option value="Security System">Security System</option>
+                                        <option value="Windows">Windows</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="card mb-4">
                                 <div class="card-header">Comments</div>
@@ -173,5 +197,11 @@ $companyNotes = $proServiceToEdit["my_notes"];
 <script src="../Ressources/js/datatables/datatables-simple-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="../Ressources/js/scripts.js"></script>
+<script>
+    $( document ).ready(function() {
+        let homeProType = <?php echo json_encode($homeProType); ?>;
+        $("#homeProType").val(homeProType);
+    });
+</script>
 </body>
 </html>
