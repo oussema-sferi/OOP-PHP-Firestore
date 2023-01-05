@@ -95,6 +95,12 @@ die();*/
                                     All Clients
                                 </h1>
                             </div>
+                            <div class="col mb-3">
+                                <a class="btn btn-sm btn-light text-primary" href="<?='../Controller/template_download.php?template=clients'?>">
+                                    <i class="me-1" data-feather="send"></i>
+                                    Send invitation to download App
+                                </a>
+                            </div>
                             <div class="col-12 col-xl-auto mb-3">
                                 <div id="formContainer" style="display: none">
                                     <form action="<?='../Controller/import_clients_csv_action.php'?>" method="post" enctype="multipart/form-data">
@@ -104,6 +110,10 @@ die();*/
                                     </form>
                                 </div>
                                 <div id="buttonsContainer">
+                                    <a class="btn btn-sm btn-light text-primary" href="<?='../Controller/template_download.php?template=clients'?>">
+                                        <i class="me-1" data-feather="download"></i>
+                                        Download Client Template
+                                    </a>
                                     <a class="btn btn-sm btn-light text-primary" href="<?='client_add.php'?>">
                                         <i class="me-1" data-feather="plus"></i>
                                         Create New Client
@@ -112,7 +122,6 @@ die();*/
                                         <i class="me-1" data-feather="plus"></i>
                                         Import Clients
                                     </a>
-                                    <a data-bs-toggle=tooltip data-bs-placement=bottom title='Download Template' href="<?='../Controller/template_download.php?template=clients'?>"><i class="fa-solid fa-download"></i></a>
                                 </div>
                             <div>
                         </div>

@@ -118,7 +118,7 @@ $blogPostDistribution = $blogToEdit["distribution"];
                             </div>
                             <div class="card card-header-actions mb-4">
                                 <div class="card-header">
-                                    Story Distribution
+                                    Story Content
                                     <i class="text-muted" title="The post preview text shows below the post title, and is the post summary on blog pages."></i>
                                 </div>
                                 <div class="card-body"><textarea id="postDistribution" class="lh-base form-control" type="text" rows="10" style="resize: none" name="blogPostDistribution" required><?=$blogPostDistribution?></textarea></div>
