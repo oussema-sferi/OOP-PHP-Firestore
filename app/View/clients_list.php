@@ -9,8 +9,6 @@ if(!isset($_SESSION["user"]))
 }
 $database = new Firestore_honeydoo();
 $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
-/*print_r($userClients);
-die();*/
 
 ?>
 <!DOCTYPE html>
@@ -96,10 +94,10 @@ die();*/
                                 </h1>
                             </div>
                             <div class="col mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="<?='../Controller/template_download.php?template=clients'?>">
+                                <button id="sendInviteButton" class="btn btn-sm btn-light text-primary" href="#" disabled>
                                     <i class="me-1" data-feather="send"></i>
                                     Send invitation to download App
-                                </a>
+                                </button>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
                                 <div id="formContainer" style="display: none">
@@ -135,6 +133,7 @@ die();*/
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
+                                <th><input type='checkbox' class="checkAll"></th>
                                 <th>First name 1</th>
                                 <th>Last name 1</th>
                                 <th>Email 1</th>
@@ -146,7 +145,8 @@ die();*/
                             </thead>
                             <tfoot>
                             <tr>
-                                <th>First name 1</th>
+                                <th><input type='checkbox' class="checkAll"></th>
+                                <th class="first">First name 1</th>
                                 <th>Last name 1</th>
                                 <th>Email 1</th>
                                 <th>First name 2</th>
@@ -173,6 +173,7 @@ die();*/
                                     $deleteClientCollectionLink = "../Controller/delete_client_collection_action.php?client_collection_id=$clientCollectionId";
                                     echo "
                                 <tr>
+                                    <td><input type='checkbox'></td>
                                     <td>$firstName1</td>
                                     <td>$lastName1</td>
                                     <td>$email1</td>                                 
@@ -235,6 +236,17 @@ die();*/
             $("#formContainer").hide()
             $("#buttonsContainer").show()
 
+        })
+        $(".checkAll").click(function () {
+            $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+        });
+        $("input[type=checkbox]").change(function () {
+            if($("input[type=checkbox]:checked").length > 0)
+            {
+                $("#sendInviteButton").prop("disabled", false)
+            } else {
+                $("#sendInviteButton").prop("disabled", true)
+            }
         })
     });
 </script>
