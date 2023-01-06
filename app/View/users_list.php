@@ -67,13 +67,13 @@ $users = $database->fetchUsers();
                     <!-- Sidenav Heading (Custom)-->
                     <div class="sidenav-menu-heading">Dashboard</div>
                     <!-- Sidenav Link (Blog Posts)-->
-                    <a class="nav-link" href="">
-                        <div class="nav-link-icon"><i data-feather="list"></i></div>
+                    <a class="nav-link" href="<?='users_list.php'?>">
+                        <div class="nav-link-icon"><i data-feather="user"></i></div>
                         Users
                     </a>
                     <!-- Sidenav Link (Pro Services)-->
-                    <a class="nav-link" href="#">
-                        <div class="nav-link-icon"><i data-feather="list"></i></div>
+                    <a class="nav-link" href="<?='email_content.php'?>">
+                        <div class="nav-link-icon"><i data-feather="mail"></i></div>
                         Email
                     </a>
                     <!-- Sidenav Link (Client)-->

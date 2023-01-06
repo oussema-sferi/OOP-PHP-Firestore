@@ -195,4 +195,18 @@ class Firestore_honeydoo
         }
         return $res;
     }
+
+    public function fetchEmailContent()
+    {
+        $query = $this->db->collection('invitation_email')->document('invitation_email');
+        return $query->snapshot();
+    }
+
+    public function updateEmailContent($data)
+    {
+        $emailRef = $this->db->collection('invitation_email')->document('invitation_email');
+        /*var_dump($emailRef);
+        die();*/
+        return $emailRef->update($data);
+    }
 }
