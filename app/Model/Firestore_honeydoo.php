@@ -180,4 +180,19 @@ class Firestore_honeydoo
         $blogRef = $this->db->collection('hd_pros')->document($hdProsId);
         return $blogRef->delete();
     }
+
+    public function fetchUsers()
+    {
+        $res = [];
+        $query = $this->db->collection('realtor');
+        $documents = $query->documents();
+        foreach ($documents as $document) {
+            if ($document->exists()) {
+                $obj_merged = (object) array_merge(
+                    ["doc_id" => $document->id()], (array) $document->data());
+                $res[] = $obj_merged;
+            }
+        }
+        return $res;
+    }
 }
