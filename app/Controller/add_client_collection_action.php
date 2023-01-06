@@ -9,21 +9,6 @@ use Google\Cloud\Core\Timestamp;
     {
         header("Location: login.php");
     }
-    /*$firstName1 = $_POST["firstName1"];
-    $lastName1 = $_POST["lastName1"];
-    $email1 = $_POST["email1"];
-    $phoneNumber1 = $_POST["phoneNumber1"];
-    $firstName2 = $_POST["firstName2"];
-    $lastName2 = $_POST["lastName2"];
-    $email2 = $_POST["email2"];
-    $phoneNumber2 = $_POST["phoneNumber2"];
-    $address1 = $_POST["address1"];
-    $address2 = $_POST["address2"];
-    $city = $_POST["city"];
-    $state = $_POST["state"];
-    $zipCode = $_POST["zipCode"];
-    $homeType = $_POST["homeType"];
-    $notes = $_POST["notes"];*/
     $data = [
         'first_name_1' => $_POST["firstName1"],
         'last_name_1' => $_POST["lastName1"],
