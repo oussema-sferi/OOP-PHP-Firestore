@@ -101,6 +101,10 @@ $loggedUserProServices = $database->fetchProServices($_SESSION["user"]["realtor_
                                     </form>
                                 </div>
                                 <div id="buttonsContainer">
+                                    <a class="btn btn-sm btn-light text-primary" href="<?='../Controller/template_download.php?template=pro_services'?>">
+                                        <i class="me-1" data-feather="download"></i>
+                                        Download Pro Services Template
+                                    </a>
                                     <a class="btn btn-sm btn-light text-primary" href="<?='pro_service_add.php'?>">
                                         <i class="me-1" data-feather="plus"></i>
                                         Create New Pro Service
@@ -109,7 +113,7 @@ $loggedUserProServices = $database->fetchProServices($_SESSION["user"]["realtor_
                                         <i class="me-1" data-feather="plus"></i>
                                         Import Pro Services
                                     </a>
-                                    <a data-bs-toggle=tooltip data-bs-placement=bottom title='Download Template' href="<?='../Controller/template_download.php?template=pro_services'?>"><i class="fa-solid fa-download"></i></a>
+                                    <!--<a data-bs-toggle=tooltip data-bs-placement=bottom title='Download Template' href="<?/*='../Controller/template_download.php?template=pro_services'*/?>"><i class="fa-solid fa-download"></i></a>-->
                                 </div>
                             <div>
                         </div>

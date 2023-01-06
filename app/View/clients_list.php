@@ -162,11 +162,11 @@ $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
                                     $firstName1 = $clientCollection->first_name_1;
                                     $lastName1 = $clientCollection->last_name_1;
                                     $email1 = $clientCollection->email_1;
-                                    $phoneNumber1 = $clientCollection->phone_1;
+                                    /*$phoneNumber1 = $clientCollection->phone_1;*/
                                     $firstName2 = $clientCollection->first_name_2;
                                     $lastName2 = $clientCollection->last_name_2;
                                     $email2 = $clientCollection->email_2;
-                                    $phoneNumber2 = $clientCollection->phone_2;
+                                    /*$phoneNumber2 = $clientCollection->phone_2;*/
                                     $clientCollectionId = $clientCollection->doc_id;
                                     $showClientCollectionLink = "client_collection_show.php?client_collection_id=$clientCollectionId";
                                     $editClientCollectionLink = "client_collection_edit.php?client_collection_id=$clientCollectionId";
