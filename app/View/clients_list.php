@@ -6,6 +6,11 @@ require_once "../../vendor/autoload.php";
 if(!isset($_SESSION["user"]))
 {
     header("Location: login.php");
+} else {
+    if(isset($_SESSION["user"]["role"]) && $_SESSION["user"]["role"] == "ROLE_ADMIN")
+    {
+        header("Location: users_list.php");
+    }
 }
 $database = new Firestore_honeydoo();
 $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);

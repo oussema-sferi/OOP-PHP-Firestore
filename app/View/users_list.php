@@ -66,21 +66,16 @@ $users = $database->fetchUsers();
                 <div class="nav accordion" id="accordionSidenav">
                     <!-- Sidenav Heading (Custom)-->
                     <div class="sidenav-menu-heading">Dashboard</div>
-                    <!-- Sidenav Link (Blog Posts)-->
+                    <!-- Sidenav Link (Users)-->
                     <a class="nav-link" href="<?='users_list.php'?>">
                         <div class="nav-link-icon"><i data-feather="user"></i></div>
                         Users
                     </a>
-                    <!-- Sidenav Link (Pro Services)-->
+                    <!-- Sidenav Link (Email)-->
                     <a class="nav-link" href="<?='email_content.php'?>">
                         <div class="nav-link-icon"><i data-feather="mail"></i></div>
                         Email
                     </a>
-                    <!-- Sidenav Link (Client)-->
-                    <!--<a class="nav-link" href="<?/*='clients_list.php'*/?>">
-                        <div class="nav-link-icon"><i data-feather="list"></i></div>
-                        Clients List
-                    </a>-->
                 </div>
             </div>
         </nav>
@@ -140,7 +135,7 @@ $users = $database->fetchUsers();
                                 <th>Email</th>
                                 <th>Company Name</th>
                                 <th>Phone Number</th>
-                                <th class="text-center">Actions</th>
+                                <!--<th class="text-center">Actions</th>-->
                             </tr>
                             </thead>
                             <tfoot>
@@ -148,7 +143,7 @@ $users = $database->fetchUsers();
                                 <th>Email</th>
                                 <th>Company Name</th>
                                 <th>Phone Number</th>
-                                <th class="text-center">Actions</th>
+                                <!--<th class="text-center">Actions</th>-->
                             </tr>
                             </tfoot>
                             <tbody>
@@ -166,12 +161,7 @@ $users = $database->fetchUsers();
                                 <tr>                              
                                     <td>$email</td>
                                     <td>$companyName</td>
-                                    <td>$phoneNumber</td>                                                                                                
-                                    <td class='text-center'>
-                                        <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$showUserLink><i data-feather='zoom-in'></i></a>
-                                        <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$editUserLink><i data-feather='edit'></i></a>
-                                        <a class='btn btn-datatable btn-icon btn-transparent-dark' data-bs-toggle='modal' data-bs-target='#approveUserModal$userId'><i data-feather='trash-2'></i></a>                                                                                                                              
-                                    </td>
+                                    <td>$phoneNumber</td>                                                                                                                                
                                 </tr>
                                 
                                 <div class='modal fade' id='approveUserModal$userId' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>

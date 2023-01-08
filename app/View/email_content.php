@@ -9,6 +9,11 @@ if(!isset($_SESSION["user"]))
     header("Location: login.php");
 }
 
+if(isset($_SESSION["user"]["role"]) && ($_SESSION["user"]["role"] != "ROLE_ADMIN"))
+{
+    header("Location: blog_posts.php");
+}
+
 $database = new Firestore_honeydoo();
 $email = $database->fetchEmailContent();
 $emailContentToEdit = $email["content"];
@@ -65,21 +70,16 @@ $emailContentToEdit = $email["content"];
                 <div class="nav accordion" id="accordionSidenav">
                     <!-- Sidenav Heading (Custom)-->
                     <div class="sidenav-menu-heading">Dashboard</div>
-                    <!-- Sidenav Link (Blog Posts)-->
+                    <!-- Sidenav Link (Users)-->
                     <a class="nav-link" href="<?='users_list.php'?>">
                         <div class="nav-link-icon"><i data-feather="user"></i></div>
                         Users
                     </a>
-                    <!-- Sidenav Link (Pro Services)-->
+                    <!-- Sidenav Link (Email)-->
                     <a class="nav-link" href="<?='email_content.php'?>">
                         <div class="nav-link-icon"><i data-feather="mail"></i></div>
                         Email
                     </a>
-                    <!-- Sidenav Link (Client)-->
-                    <!--<a class="nav-link" href="<?/*='clients_list.php'*/?>">
-                        <div class="nav-link-icon"><i data-feather="list"></i></div>
-                        Clients List
-                    </a>-->
                 </div>
             </div>
         </nav>

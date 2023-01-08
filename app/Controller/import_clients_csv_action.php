@@ -9,6 +9,11 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 if(!isset($_SESSION["user"]))
 {
     header("Location: login.php");
+} else {
+    if(isset($_SESSION["user"]["role"]) && $_SESSION["user"]["role"] == "ROLE_ADMIN")
+    {
+        header("Location: users_list.php");
+    }
 }
 $path = "";
 if (isset($_POST["submit"]))

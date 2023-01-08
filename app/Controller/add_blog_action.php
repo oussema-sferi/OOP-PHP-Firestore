@@ -8,6 +8,11 @@ use Google\Cloud\Core\Timestamp;
     if(!isset($_SESSION["user"]))
     {
         header("Location: login.php");
+    } else {
+        if(isset($_SESSION["user"]["role"]) && $_SESSION["user"]["role"] == "ROLE_ADMIN")
+        {
+            header("Location: users_list.php");
+        }
     }
     $imagePath =  "/app/blog_posts_images/" . md5(uniqid()) . $_FILES["blogPostImage"]["name"];
     move_uploaded_file(

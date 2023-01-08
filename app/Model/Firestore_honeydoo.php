@@ -184,7 +184,7 @@ class Firestore_honeydoo
     public function fetchUsers()
     {
         $res = [];
-        $query = $this->db->collection('realtor');
+        $query = $this->db->collection('realtor')->where('role', '=', "ROLE_USER");
         $documents = $query->documents();
         foreach ($documents as $document) {
             if ($document->exists()) {
@@ -205,8 +205,6 @@ class Firestore_honeydoo
     public function updateEmailContent($data)
     {
         $emailRef = $this->db->collection('invitation_email')->document('invitation_email');
-        /*var_dump($emailRef);
-        die();*/
         return $emailRef->update($data);
     }
 }

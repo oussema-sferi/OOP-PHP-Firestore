@@ -1,7 +1,13 @@
 <?php
 if(isset($_SESSION['user'])) {
-    header("Location: blog_posts.php");
+    if(isset($_SESSION["user"]["role"]) && $_SESSION["user"]["role"] == "ROLE_ADMIN")
+    {
+        header("Location: users_list.php");
+    } else {
+        header("Location: blog_posts.php");
+    }
 }
+
 if(isset($_SESSION['login_error_flash_message'])) {
     $errorMessage = $_SESSION['login_error_flash_message'];
     unset($_SESSION['login_error_flash_message']);
