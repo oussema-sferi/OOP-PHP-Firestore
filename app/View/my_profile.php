@@ -131,7 +131,7 @@ die();*/
                         <div class="card mb-4">
                             <div class="card-header text-center">Account Details</div>
                             <div class="card-body">
-                                <form>
+                                <form action="<?='../Controller/edit_my_profile_action.php?realtor_id=' . $realtor["realtor_id"]?>" method="post">
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputFirstName">Full name</label>
@@ -159,7 +159,7 @@ die();*/
                                     <!-- Save changes button-->
                                     <div class="text-center">
                                         <button class="btn btn-primary" id="editButton" type="button">Edit</button>
-                                        <button class="btn btn-success" id="saveButton" type="button" style="display: none">Save Changes</button>
+                                        <button class="btn btn-success" id="saveButton" type="submit" style="display: none">Save Changes</button>
                                     </div>
 
                                 </form>

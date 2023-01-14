@@ -224,4 +224,10 @@ class Firestore_honeydoo
         $emailRef = $this->db->collection('invitation_email')->document('invitation_email');
         return $emailRef->update($data);
     }
+
+    public function updateRealtorInfo($realtorId, $data)
+    {
+        $realtorRef = $this->db->collection('realtor')->document($realtorId);
+        return $realtorRef->update($data);
+    }
 }
