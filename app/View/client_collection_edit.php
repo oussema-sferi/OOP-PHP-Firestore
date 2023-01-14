@@ -67,6 +67,10 @@ $notes = $clientCollectionToShow["notes"];
                     </div>
                 </h6>
                 <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="<?php echo 'my_profile.php' ?>">
+                    <div class="dropdown-item-icon"><i data-feather="user"></i></div>
+                    My Profile
+                </a>
                 <a class="dropdown-item" href="<?php echo 'logout.php' ?>">
                     <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
                     Logout
