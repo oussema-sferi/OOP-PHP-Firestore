@@ -99,10 +99,13 @@ $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
                                 </h1>
                             </div>
                             <div class="col mb-3">
-                                <button id="sendInviteButton" class="btn btn-sm btn-light text-primary" href="#" disabled>
-                                    <i class="me-1" data-feather="send"></i>
-                                    Send invitation to download App
-                                </button>
+                                <form id="emailInvitaionForm" action="<?='../Controller/send_email_invitation_action.php'?>" method="post">
+                                    <input type="hidden" id="selected_clients" name="selectedClients">
+                                    <button type="submit" id="sendInviteButton" class="btn btn-sm btn-light text-primary" href="#" disabled>
+                                        <i class="me-1" data-feather="send"></i>
+                                        Send invitation to download App
+                                    </button>
+                                </form>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
                                 <div id="formContainer" style="display: none">
@@ -181,10 +184,10 @@ $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
                                     <td><input type='checkbox'></td>
                                     <td>$firstName1</td>
                                     <td>$lastName1</td>
-                                    <td>$email1</td>                                 
+                                    <td class='email1'>$email1</td>                                 
                                     <td>$firstName2</td>
                                     <td>$lastName2</td>
-                                    <td>$email2</td>                                   
+                                    <td class='email2'>$email2</td>                                   
                                     <td class='text-center'>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$showClientCollectionLink><i data-feather='zoom-in'></i></a>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$editClientCollectionLink><i data-feather='edit'></i></a>
@@ -233,6 +236,7 @@ $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
 <script src="../Ressources/js/scripts.js"></script>
 <script>
     $( document ).ready(function() {
+        let emailsArray = [];
         $("#importClientButton").click(function () {
             $("#buttonsContainer").hide()
             $("#formContainer").show()
@@ -252,6 +256,28 @@ $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
             } else {
                 $("#sendInviteButton").prop("disabled", true)
             }
+            if($(this).prop('checked') == true)
+            {
+                let emailOne = "";
+                let emailTwo = "";
+                emailOne = $(this).parent().parent().find(".email1").text();
+                emailTwo = $(this).parent().parent().find(".email2").text();
+                if(emailOne != "") emailsArray.push(emailOne);
+                if(emailTwo != "") emailsArray.push(emailTwo);
+            } else {
+                emailOne = $(this).parent().parent().find(".email1").text();
+                emailTwo = $(this).parent().parent().find(".email2").text();
+                const removeFromArray = function (arr, ...theArgs) {
+                    return arr.filter( val => !theArgs.includes(val) )
+                };
+                emailsArray = removeFromArray(emailsArray, emailOne,emailTwo);
+            }
+        })
+        $("#emailInvitaionForm").submit(function (e) {
+            /*e.preventDefault()
+            console.log(emailsArray)*/
+
+            $("#selected_clients").val(JSON.stringify(emailsArray))
         })
     });
 </script>

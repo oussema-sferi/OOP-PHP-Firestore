@@ -8,7 +8,7 @@ if(!isset($_SESSION["user"]))
 } else {
     if(isset($_SESSION["user"]["role"]) && $_SESSION["user"]["role"] == "ROLE_ADMIN")
     {
-        header("Location: users_list.php");
+        header("Location: ../View/users_list.php");
     }
 }
 ?>
