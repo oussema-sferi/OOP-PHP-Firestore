@@ -28,6 +28,23 @@ class Firestore_honeydoo
         }
     }
 
+    public function fetchRealtorById($id)
+    {
+        /*$query = $this->db->collection('realtor')->where('realtor_id', '=', $id);*/
+
+        /*return $query->snapshot();*/
+        $query = $this->db->collection('realtor')->where('realtor_id', '=', $id);
+        $documents = $query->documents();
+        foreach ($documents as $document) {
+            if ($document->exists()) {
+                return $document->data();
+            } else {
+                return false;
+            }
+        }
+
+    }
+
     public function fetchBlogPosts($userId)
     {
         $res = [];

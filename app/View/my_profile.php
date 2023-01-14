@@ -12,9 +12,12 @@ if(!isset($_SESSION["user"]))
         header("Location: users_list.php");
     }
 }
-/*$database = new Firestore_honeydoo();
-$userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);*/
 
+$database = new Firestore_honeydoo();
+
+$realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);
+/*var_dump($realtor["homePro_type"]);
+die();*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -132,12 +135,12 @@ $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);*/
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputFirstName">Full name</label>
-                                            <input class="form-control" id="fullName" name="fullName" placeholder="Enter your full name..." type="text" value="" disabled/>
+                                            <input class="form-control" id="fullName" name="fullName" placeholder="Enter your full name..." type="text" value="<?= $realtor["realtor_title"]?>" disabled/>
                                         </div>
 
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                                            <input class="form-control" id="emailAddress" name="emailAddress" placeholder="Enter your email address..." type="email" value="" disabled/>
+                                            <input class="form-control" id="emailAddress" name="emailAddress" placeholder="Enter your email address..." type="email" value="<?= $realtor["email"]?>" disabled/>
                                         </div>
                                     </div>
 
@@ -145,12 +148,12 @@ $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);*/
 
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputLastName">Phone Number</label>
-                                            <input class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number..." type="text" value="" disabled/>
+                                            <input class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number..." type="text" value="<?= $realtor["phone_number"]?>" disabled/>
                                         </div>
 
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputOrgName">Company name</label>
-                                            <input class="form-control" id="companyName" name="companyName" placeholder="Enter your company name..." type="text" value="" disabled/>
+                                            <input class="form-control" id="companyName" name="companyName" placeholder="Enter your company name..." type="text" value="<?= $realtor["realtor_sub_title"]?>" disabled/>
                                         </div>
                                     </div>
                                     <!-- Save changes button-->
