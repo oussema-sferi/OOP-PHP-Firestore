@@ -46,7 +46,7 @@ if(isset($_SESSION['login_error_flash_message'])) {
                                     ?>
                                     <!-- Form Group (email address)-->
                                     <div class="mb-3">
-                                        <label class="small mb-1" for="email">Email</label>
+                                        <label class="small mb-1" for="email">Email Address</label>
                                         <input class="form-control" type="email" name="email" placeholder="Enter your email address" required/>
                                     </div>
                                     <!-- Form Group (password)-->
@@ -59,6 +59,9 @@ if(isset($_SESSION['login_error_flash_message'])) {
                                         <input class="btn btn-primary" type="submit" value="Login">
                                     </div>
                                 </form>
+                            </div>
+                            <div class="card-footer text-center">
+                                <div class="small"><a href="<?='registration.php'?>">Need an account? Sign up!</a></div>
                             </div>
                         </div>
                     </div>
