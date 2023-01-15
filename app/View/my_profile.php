@@ -2,7 +2,6 @@
 namespace App\View;
 use App\Model\Firestore_honeydoo;
 require_once "../../vendor/autoload.php";
-
 if(!isset($_SESSION["user"]))
 {
     header("Location: login.php");
@@ -12,12 +11,16 @@ if(!isset($_SESSION["user"]))
         header("Location: users_list.php");
     }
 }
-
 $database = new Firestore_honeydoo();
-
 $realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);
-/*var_dump($realtor["homePro_type"]);
+/*var_dump($realtor["realtor_photo"]);
 die();*/
+if(isset($realtor["realtor_photo"]) && $realtor["realtor_photo"] != "")
+{
+    $profilePic = $realtor["realtor_photo"];
+} else {
+    $profilePic = "../Ressources/assets/img/illustrations/profiles/profile-4.png";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +48,7 @@ die();*/
     <ul class="navbar-nav align-items-center ms-auto">
         <!-- User Dropdown-->
         <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
-            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="../Ressources/assets/img/illustrations/profiles/profile-4.png" /></a>
+            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src=<?=$profilePic?> /></a>
             <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
                 <h6 class="dropdown-header d-flex align-items-center">
                     <img class="dropdown-user-img" src="../Ressources/assets/img/illustrations/profiles/profile-4.png" />
@@ -114,17 +117,24 @@ die();*/
                 <div class="row">
                     <div class="col-xl-4">
                         <!-- Profile picture card-->
-                        <div class="card mb-4 mb-xl-0">
-                            <div class="card-header text-center">Profile Picture</div>
-                            <div class="card-body text-center">
-                                <!-- Profile picture image-->
-                                <img class="img-account-profile rounded-circle mb-2" src="assets/img/illustrations/profiles/profile-1.png" alt="" />
-                                <!-- Profile picture help block-->
-                                <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                                <!-- Profile picture upload button-->
-                                <button class="btn btn-primary" type="button">Upload new image</button>
+                        <form action="<?='../Controller/add_profile_picture_action.php?realtor_id=' . $realtor["realtor_id"]?>" method="post" enctype="multipart/form-data">
+                            <div class="card mb-4 mb-xl-0">
+                                <div class="card-header text-center">Add/Edit Profile Picture</div>
+                                <div class="card-body text-center">
+                                    <!-- Profile picture image-->
+                                    <!--<img class="img-account-profile rounded-circle mb-2" src="../Ressources/assets/img/illustrations/profiles/profile-4.png" alt="" />-->
+                                    <img class="img-account-profile rounded-circle mb-2" src="<?=$profilePic?>" alt="Profile Picture">
+                                    <!-- Profile picture help block-->
+                                    <!--<div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>-->
+                                    <!-- Profile picture upload button-->
+                                    <!--<button class="btn btn-primary" type="button">Upload new image</button>-->
+                                    <div class="text-center mt-2">
+                                        <input class="form-control mb-2" type="file" accept="image/jpeg/png" name="profilePicture">
+                                        <button class="btn btn-success" id="uploadPictureButton" type="submit" disabled>Upload picture</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                     <div class="col-xl-8">
                         <!-- Account details card-->
@@ -161,14 +171,12 @@ die();*/
                                         <button class="btn btn-primary" id="editButton" type="button">Edit</button>
                                         <button class="btn btn-success" id="saveButton" type="submit" style="display: none">Save Changes</button>
                                     </div>
-
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </main>
         <footer class="footer-admin mt-auto footer-light">
             <div class="container-xl px-4">
@@ -186,10 +194,18 @@ die();*/
 <script>
     $( document ).ready(function() {
         $("#editButton").click(function () {
-            $(this).hide()
-            $("#saveButton").show()
+            $(this).hide();
+            $("#saveButton").show();
             $("input").prop('disabled', false);
         })
+        $("input:file").change(function (){
+            if($(this).val())
+            {
+                $("#uploadPictureButton").prop('disabled', false);
+            } else {
+                $("#uploadPictureButton").prop('disabled', true);
+            }
+        });
     });
 </script>
 </body>
