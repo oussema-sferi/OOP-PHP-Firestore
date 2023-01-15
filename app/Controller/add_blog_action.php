@@ -15,6 +15,7 @@ use Google\Cloud\Core\Timestamp;
         }
     }
     $imagePath =  "/app/blog_posts_images/" . md5(uniqid()) . $_FILES["blogPostImage"]["name"];
+    $imagePath = str_replace(" ", "", $imagePath);
     move_uploaded_file(
         $_FILES["blogPostImage"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . $imagePath
     );

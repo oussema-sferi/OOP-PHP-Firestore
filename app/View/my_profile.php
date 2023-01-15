@@ -1,6 +1,7 @@
 <?php
 namespace App\View;
 use App\Model\Firestore_honeydoo;
+use App\Service\HelperService;
 require_once "../../vendor/autoload.php";
 if(!isset($_SESSION["user"]))
 {
@@ -13,14 +14,8 @@ if(!isset($_SESSION["user"]))
 }
 $database = new Firestore_honeydoo();
 $realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);
-/*var_dump($realtor["realtor_photo"]);
-die();*/
-if(isset($realtor["realtor_photo"]) && $realtor["realtor_photo"] != "")
-{
-    $profilePic = $realtor["realtor_photo"];
-} else {
-    $profilePic = "../Ressources/assets/img/illustrations/profiles/profile-4.png";
-}
+$helper = new HelperService();
+$profilePic = $helper->setProfilePic($realtor);
 ?>
 <!DOCTYPE html>
 <html lang="en">

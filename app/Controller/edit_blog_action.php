@@ -19,6 +19,7 @@ $blogId = $_GET["blog_id"];
 $title = isset($_POST["blogPostTitle"]) ? $_POST["blogPostTitle"] : "";
 $distribution = isset($_POST["blogPostDistribution"]) ? $_POST["blogPostDistribution"] : "";
 $imagePath = $_FILES["blogPostImage"]["name"] !== "" ? "/app/blog_posts_images/" . md5(uniqid()) . $_FILES["blogPostImage"]["name"] : "";
+$imagePath = str_replace(" ", "", $imagePath);
 $imageDbLink =  $_FILES["blogPostImage"]["name"] !== "" ? (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $imagePath : "";
 if($imagePath !== "")
 {

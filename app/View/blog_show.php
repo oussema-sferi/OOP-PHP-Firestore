@@ -1,6 +1,8 @@
 <?php
 namespace App\View;
 use App\Model\Firestore_honeydoo;
+use App\Service\HelperService;
+
 require_once "../../vendor/autoload.php";
 
 if(!isset($_SESSION["user"]))
@@ -19,6 +21,11 @@ $blogPostTitle = $blogToShow["title"];
 $blogPostDistribution = $blogToShow["distribution"];
 $blogPostImage = $blogToShow["img"] ?? "";
 $encodedblogPostDistribution = json_encode($blogPostDistribution);
+
+//
+$realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);
+$helper = new HelperService();
+$profilePic = $helper->setProfilePic($realtor);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,7 +54,7 @@ $encodedblogPostDistribution = json_encode($blogPostDistribution);
     <ul class="navbar-nav align-items-center ms-auto">
         <!-- User Dropdown-->
         <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
-            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="../Ressources/assets/img/illustrations/profiles/profile-4.png" /></a>
+            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src=<?= $profilePic ?> /></a>
             <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
                 <h6 class="dropdown-header d-flex align-items-center">
                     <img class="dropdown-user-img" src="../Ressources/assets/img/illustrations/profiles/profile-4.png" />
