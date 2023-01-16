@@ -260,6 +260,7 @@ $profilePic = $helper->setProfilePic($realtor);
             $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
         });
         $("input[type=checkbox]").change(function () {
+            if($("input[type=checkbox]").length == 1) return;
             if($("input[type=checkbox]:checked").length > 0)
             {
                 $("#sendInviteButton").prop("disabled", false)
