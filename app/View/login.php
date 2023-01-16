@@ -12,6 +12,11 @@ if(isset($_SESSION['login_error_flash_message'])) {
     $errorMessage = $_SESSION['login_error_flash_message'];
     unset($_SESSION['login_error_flash_message']);
 }
+
+if(isset($_SESSION['registration_success_flash_message'])) {
+    $successfulRegistrationMessage = $_SESSION['registration_success_flash_message'];
+    unset($_SESSION['registration_success_flash_message']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,6 +47,10 @@ if(isset($_SESSION['login_error_flash_message'])) {
                                     if(isset($errorMessage))
                                     {
                                         echo "<div class='alert alert-danger'>$errorMessage</div>";
+                                    }
+                                    if(isset($successfulRegistrationMessage))
+                                    {
+                                        echo "<div class='alert alert-success'>$successfulRegistrationMessage</div>";
                                     }
                                     ?>
                                     <!-- Form Group (email address)-->

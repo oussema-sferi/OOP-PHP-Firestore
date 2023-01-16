@@ -15,13 +15,18 @@ class Firestore_honeydoo
         ]);
     }
 
-    public function fetchUser($email, $password)
+    public function fetchUser($email, $userPassword)
     {
-        $query = $this->db->collection('realtor')->where('portalp', '=', $password)->where('email', '=', $email);
+        /*$query = $this->db->collection('realtor')->where('password', '=', $password)->where('email', '=', $email);*/
+        $query = $this->db->collection('realtor')->where('email', '=', $email);
         $documents = $query->documents();
+
         foreach ($documents as $document) {
             if ($document->exists()) {
-                return $document->data();
+                if (password_verify($userPassword, $document->data()["password"]))
+                {
+                    return $document->data();
+                }
             } else {
                 return false;
             }
@@ -229,5 +234,16 @@ class Firestore_honeydoo
     {
         $realtorRef = $this->db->collection('realtor')->document($realtorId);
         return $realtorRef->update($data);
+    }
+
+    public function createNewRealtorUser($data)
+    {
+        $docRef = $this->db->collection('realtor')->add($data);
+        return $docRef->id();
+    }
+    public function setRealtorId($realtorId)
+    {
+        $realtorRef = $this->db->collection('realtor')->document($realtorId);
+        return $realtorRef->update([['path' => 'realtor_id', 'value' => $realtorId]]);
     }
 }

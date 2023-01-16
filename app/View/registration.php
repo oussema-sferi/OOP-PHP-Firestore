@@ -1,5 +1,5 @@
 <?php
-/*if(isset($_SESSION['user'])) {
+if(isset($_SESSION['user'])) {
     if(isset($_SESSION["user"]["role"]) && $_SESSION["user"]["role"] == "ROLE_ADMIN")
     {
         header("Location: users_list.php");
@@ -8,10 +8,6 @@
     }
 }
 
-if(isset($_SESSION['login_error_flash_message'])) {
-    $errorMessage = $_SESSION['login_error_flash_message'];
-    unset($_SESSION['login_error_flash_message']);
-}*/
 if(isset($_SESSION['registration_error_flash_message'])) {
     $errorMessage = $_SESSION['registration_error_flash_message'];
     unset($_SESSION['registration_error_flash_message']);
@@ -94,7 +90,7 @@ if(isset($_SESSION['registration_error_flash_message'])) {
                                                 <input class="form-control" name="password" type="password" placeholder="Enter your password" required/>
                                             </div>
                                             <div style="color: grey; font-size: small">
-                                                <small>Your password must be at least 8 characters and have a special character, e.g. !#$.,:;()</small>
+                                                <small>Your password must be at least 8 characters long and contains a special character, e.g. !#$.,:;()</small>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
