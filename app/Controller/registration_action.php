@@ -5,8 +5,17 @@ use App\Model\Firestore_honeydoo;
 use DateTime;
 use Google\Cloud\Core\Timestamp;
 
+$email = $_POST["emailAddress"];
 $password = $_POST["password"];
 $confirmPassword = $_POST["confirmPassword"];
+$database = new Firestore_honeydoo();
+
+if($database->checkIfRealtorUserExists($email))
+{
+    $_SESSION['registration_error_flash_message'] = "This email is already used! Please choose another email and try again";
+    header("Location: ../View/registration.php");
+    die();
+}
 
 if($password !== $confirmPassword)
 {
@@ -25,7 +34,7 @@ if (!(strlen($password) >= 8 && strpbrk($password, "!#$@.,:;()"))){
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 /*var_dump(password_hash($password, PASSWORD_DEFAULT));
 die();*/
-$database = new Firestore_honeydoo();
+
 $data = [
     'email' => $_POST["emailAddress"],
     'password' => $hashedPassword,

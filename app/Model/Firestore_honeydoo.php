@@ -236,6 +236,12 @@ class Firestore_honeydoo
         return $realtorRef->update($data);
     }
 
+    public function checkIfRealtorUserExists($email)
+    {
+        $query = $this->db->collection('realtor')->where('email', '=', $email);
+        return !$query->documents()->isEmpty();
+    }
+
     public function createNewRealtorUser($data)
     {
         $docRef = $this->db->collection('realtor')->add($data);

@@ -57,7 +57,7 @@ $profilePic = $helper->setProfilePic($realtor);
             <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src=<?= $profilePic ?> /></a>
             <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
                 <h6 class="dropdown-header d-flex align-items-center">
-                    <img class="dropdown-user-img" src="../Ressources/assets/img/illustrations/profiles/profile-4.png" />
+                    <img class="dropdown-user-img" src=<?=$profilePic?> />
                     <div class="dropdown-user-details">
                         <div class="dropdown-user-details-name"><?=$_SESSION["user"]["realtor_title"]?></div>
                         <div class="dropdown-user-details-email"><?=$_SESSION["user"]["email"]?></div>
