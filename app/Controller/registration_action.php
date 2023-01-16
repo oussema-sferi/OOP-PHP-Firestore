@@ -15,7 +15,7 @@ if($password !== $confirmPassword)
     die();
 }
 
-if (!(strlen($password) >= 8 && strpbrk($password, "!#$.,:;()"))){
+if (!(strlen($password) >= 8 && strpbrk($password, "!#$@.,:;()"))){
     // next code block
     $_SESSION['registration_error_flash_message'] = "Your password is not strong enough. Please use another one and try again.";
     header("Location: ../View/registration.php");

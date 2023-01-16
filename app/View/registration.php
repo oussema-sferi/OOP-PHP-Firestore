@@ -90,7 +90,7 @@ if(isset($_SESSION['registration_error_flash_message'])) {
                                                 <input class="form-control" name="password" type="password" placeholder="Enter your password" required/>
                                             </div>
                                             <div style="color: grey; font-size: small">
-                                                <small>Your password must be at least 8 characters long and contains a special character, e.g. !#$.,:;()</small>
+                                                <small>Your password must be at least 8 characters long and contains a special character, e.g. !#$@.,:;()</small>
                                             </div>
                                         </div>
                                         <div class="col-md-6">

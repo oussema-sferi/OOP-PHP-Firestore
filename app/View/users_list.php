@@ -15,7 +15,6 @@ if(isset($_SESSION["user"]["role"]) && ($_SESSION["user"]["role"] != "ROLE_ADMIN
 }
 $database = new Firestore_honeydoo();
 $users = $database->fetchUsers();
-
 //
 $realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);
 $helper = new HelperService();
@@ -57,10 +56,10 @@ $profilePic = $helper->setProfilePic($realtor);
                     </div>
                 </h6>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="<?php echo 'my_profile.php' ?>">
+                <!--<a class="dropdown-item" href="<?php /*echo 'my_profile.php' */?>">
                     <div class="dropdown-item-icon"><i data-feather="user"></i></div>
                     My Profile
-                </a>
+                </a>-->
                 <a class="dropdown-item" href="<?php echo 'logout.php' ?>">
                     <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
                     Logout
@@ -102,34 +101,7 @@ $profilePic = $helper->setProfilePic($realtor);
                                     All Users
                                 </h1>
                             </div>
-                            <!--<div class="col mb-3">
-                                <button id="sendInviteButton" class="btn btn-sm btn-light text-primary" href="#" disabled>
-                                    <i class="me-1" data-feather="send"></i>
-                                    Send invitation to download App
-                                </button>
-                            </div>-->
                             <div class="col-12 col-xl-auto mb-3">
-                                <!--<div id="formContainer" style="display: none">
-                                    <form action="<?/*='../Controller/import_clients_csv_action.php'*/?>" method="post" enctype="multipart/form-data">
-                                        <input id="excelcontactsfile" type="file" name="excelclientsfile" class="form-control-sm" style="width: 210px" accept=".csv,.ods, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
-                                        <input class="btn btn-sm btn-success" type="submit" name="submit" value="Confirm">
-                                        <a id="backButton" class="btn btn-sm btn-secondary">Back</a>
-                                    </form>
-                                </div>-->
-                                <!--<div id="buttonsContainer">
-                                    <a class="btn btn-sm btn-light text-primary" href="<?/*='../Controller/template_download.php?template=clients'*/?>">
-                                        <i class="me-1" data-feather="download"></i>
-                                        Download Client Template
-                                    </a>
-                                    <a class="btn btn-sm btn-light text-primary" href="<?/*='client_add.php'*/?>">
-                                        <i class="me-1" data-feather="plus"></i>
-                                        Create New Client
-                                    </a>
-                                    <a id="importClientButton" class="btn btn-sm btn-light text-primary">
-                                        <i class="me-1" data-feather="plus"></i>
-                                        Import Clients
-                                    </a>
-                                </div>-->
                             <div>
                         </div>
                     </div>
@@ -161,7 +133,7 @@ $profilePic = $helper->setProfilePic($realtor);
                             foreach ($users as $user)
                                 {
                                     $email = $user->email;
-                                    $companyName = $user->company_name;
+                                    $companyName = $user->realtor_sub_title;
                                     $phoneNumber = $user->phone_number;
                                     $userId = $user->doc_id;
                                     $showUserLink = "client_collection_show.php?client_collection_id=$userId";
