@@ -118,7 +118,7 @@ $profilePic = $helper->setProfilePic($realtor);
             </header>
             <!-- Main page content-->
             <div class="container-fluid px-4">
-                <form action="<?='../Controller/add_blog_action.php'?>" method="post" enctype="multipart/form-data">
+                <form id="addBlogForm" action="<?='../Controller/add_blog_action.php'?>" method="post" enctype="multipart/form-data">
                     <div class="row gx-4">
                         <div class="col-lg-8">
                             <div class="card mb-4">
@@ -130,7 +130,7 @@ $profilePic = $helper->setProfilePic($realtor);
                                     Story Content
                                     <i class="text-muted"></i>
                                 </div>
-                                <div class="card-body"><textarea id="postDistribution" class="lh-base form-control" type="text" placeholder="Enter your story content text..." rows="10" name="blogPostDistribution" required></textarea></div>
+                                <div class="card-body"><textarea id="postDistribution" class="lh-base form-control" type="text" placeholder="Enter your story content text..." rows="10" name="blogPostDistribution"></textarea></div>
                             </div>
                             <div class="card card-header-actions mb-4 mb-lg-0">
                                 <div class="card-header">
@@ -168,5 +168,14 @@ $profilePic = $helper->setProfilePic($realtor);
 <script src="../Ressources/js/scripts.js"></script>
 <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
 <script src="../Ressources/js/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+    $("#addBlogForm").submit(function (e) {
+        /*e.preventDefault()*/
+        let postContent = $("#postDistribution").val()
+        $("#postDistribution").val(marked.parse(postContent))
+        console.log($("#postDistribution").val())
+    })
+</script>
 </body>
 </html>

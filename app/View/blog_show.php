@@ -141,13 +141,13 @@ $profilePic = $helper->setProfilePic($realtor);
                             </div>
                             <div class="card-body"><textarea id="postDistributionShow" class="lh-base form-control" type="text" rows="10" style="resize: none" disabled><?=$blogPostDistribution?></textarea></div>
                         </div>
-                        <div class="card card-header-actions mb-4">
+                        <!--<div class="card card-header-actions mb-4">
                             <div class="card-header">
                                 Test
                                 <i class="text-muted" title="The post preview text shows below the post title, and is the post summary on blog pages."></i>
                             </div>
                             <div class="card-body"><textarea id="testshow" class="lh-base form-control" type="text" rows="10" style="resize: none" disabled></textarea></div>
-                        </div>
+                        </div>-->
                         <div class="card card-header-actions mb-4 mb-lg-0">
                             <div class="card-header">
                                 Story Image
@@ -180,24 +180,12 @@ $profilePic = $helper->setProfilePic($realtor);
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
-    $("#testshow").val(marked.parse(<?php echo $encodedblogPostDistribution;  ?>));
-</script>
-
-<script>
     const easyMDE = new EasyMDE({
         element: document.getElementById('postDistributionShow'),
         toolbar: false
     });
     easyMDE.markdown(easyMDE.value());
     easyMDE.togglePreview();
-    /*easyMDE.disable()*/
-    /*const easyMDEtest = new EasyMDE({
-        element: document.getElementById('testshow'),
-        toolbar: false
-    });
-    easyMDEtest.markdown(easyMDEtest.value());
-    easyMDEtest.togglePreview();*/
-    /*$("#testshow").val(easyMDE.value())*/
 </script>
 </body>
 </html>

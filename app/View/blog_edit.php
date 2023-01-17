@@ -19,7 +19,7 @@ $database = new Firestore_honeydoo();
 $blogToEdit = $database->fetchBlogById($blogId);
 $blogPostTitle = $blogToEdit["title"];
 $blogPostDistribution = $blogToEdit["distribution"];
-
+$encodedblogPostDistribution = json_encode($blogPostDistribution);
 //
 $realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);
 $helper = new HelperService();
@@ -125,7 +125,7 @@ $profilePic = $helper->setProfilePic($realtor);
             </header>
             <!-- Main page content-->
             <div class="container-fluid px-4">
-                <form action="<?='../Controller/edit_blog_action.php?blog_id=' . $blogId?>" method="post" enctype="multipart/form-data">
+                <form id="editBlogForm" action="<?='../Controller/edit_blog_action.php?blog_id=' . $blogId?>" method="post" enctype="multipart/form-data">
                     <div class="row gx-4">
                         <div class="col-lg-8">
                             <div class="card mb-4">
@@ -137,7 +137,7 @@ $profilePic = $helper->setProfilePic($realtor);
                                     Story Content
                                     <i class="text-muted" title="The post preview text shows below the post title, and is the post summary on blog pages."></i>
                                 </div>
-                                <div class="card-body"><textarea id="postDistribution" class="lh-base form-control" type="text" rows="10" style="resize: none" name="blogPostDistribution" required><?=$blogPostDistribution?></textarea></div>
+                                <div class="card-body"><textarea id="postDistribution" class="lh-base form-control" type="text" rows="10" style="resize: none" name="blogPostDistribution"></textarea></div>
                             </div>
                             <div class="card card-header-actions mb-4 mb-lg-0">
                                 <div class="card-header">
@@ -174,6 +174,21 @@ $profilePic = $helper->setProfilePic($realtor);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="../Ressources/js/scripts.js"></script>
 <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
-<script src="../Ressources/js/markdown.js"></script>
+<!--<script src="../Ressources/js/markdown.js"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://unpkg.com/turndown/dist/turndown.js"></script>
+<script>
+    const easyMDE = new EasyMDE({
+        element: document.getElementById('postDistribution'),
+
+    });
+    const turndownService = new TurndownService()
+    console.log(turndownService.turndown(easyMDE.value()))
+    easyMDE.value(turndownService.turndown(<?php echo $encodedblogPostDistribution;  ?>));
+    $("#editBlogForm").submit(function (e) {
+        let postContent = $("#postDistribution").val()
+        $("#postDistribution").val(marked.parse(postContent))
+    })
+</script>
 </body>
 </html>
