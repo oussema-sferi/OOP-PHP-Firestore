@@ -17,6 +17,15 @@ $emailAddresses = json_decode($_POST["selectedClients"]);
 $database = new Firestore_honeydoo();
 $email = $database->fetchEmailContent();
 $emailContent = $email["content"];
+$realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);
+$realtorInfo = [
+    "{{realtor_name}}" => $realtor["realtor_title"],
+    "{{realtor_photo}}" => "'" . $realtor["realtor_photo"] . "'",
+];
+foreach ($realtorInfo as $key => $value)
+{
+    $emailContent = str_replace($key, $value, $emailContent);
+}
 $mailer = new MailerService();
 $mailer->sendInvitationMail($emailContent, $emailAddresses);
 header("Location: ../View/clients_list.php");
