@@ -13,8 +13,26 @@ if(!isset($_SESSION["user"]))
         header("Location: ../View/users_list.php");
     }
 }
-$emailAddresses = json_decode($_POST["selectedClients"]);
+$clientsDocsIds = json_decode($_POST["selectedClients"]);
+$clientsArray = [];
 $database = new Firestore_honeydoo();
+foreach ($clientsDocsIds as $clientId)
+{
+$clientsArray[] = $database->fetchClientCollectionById($clientId);
+}
+$subscribedClients = [];
+foreach ($clientsArray as $client)
+{
+    if($client["is_subscribed"] == true) $subscribedClients[] = $client;
+}
+
+$emailAddresses = [];
+foreach ($subscribedClients as $client)
+{
+    $emailAddresses[] = $client["email_1"];
+    $emailAddresses[] = $client["email_2"];
+}
+
 $email = $database->fetchEmailContent();
 $emailContent = $email["content"];
 $realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);

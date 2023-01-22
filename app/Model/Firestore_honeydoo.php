@@ -252,4 +252,5 @@ class Firestore_honeydoo
         $realtorRef = $this->db->collection('realtor')->document($realtorId);
         return $realtorRef->update([['path' => 'realtor_id', 'value' => $realtorId]]);
     }
+
 }

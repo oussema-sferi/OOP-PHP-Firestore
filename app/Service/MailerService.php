@@ -25,7 +25,7 @@ class MailerService
         $this->mailer->addReplyTo("info@honeydoo.io", "Honeydoo");
         foreach ($emailAddresses as $emailRecipient)
         {
-            $this->mailer->AddAddress($emailRecipient);
+            $this->mailer->AddAddress(trim($emailRecipient));
         }
         $this->mailer->isHTML(true);
         $this->mailer->Subject = "App Download Invitation";

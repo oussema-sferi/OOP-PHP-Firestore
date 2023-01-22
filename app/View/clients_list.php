@@ -16,6 +16,8 @@ if(!isset($_SESSION["user"]))
 }
 $database = new Firestore_honeydoo();
 $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
+/*var_dump($userClients[0]->doc_id);
+die();*/
 
 //
 $realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);
@@ -177,6 +179,7 @@ $profilePic = $helper->setProfilePic($realtor);
                             <?php
                             foreach ($userClients as $clientCollection)
                                 {
+                                    $docId = $clientCollection->doc_id;
                                     $firstName1 = $clientCollection->first_name_1;
                                     $lastName1 = $clientCollection->last_name_1;
                                     $email1 = $clientCollection->email_1;
@@ -191,7 +194,7 @@ $profilePic = $helper->setProfilePic($realtor);
                                     $deleteClientCollectionLink = "../Controller/delete_client_collection_action.php?client_collection_id=$clientCollectionId";
                                     echo "
                                 <tr>
-                                    <td><input type='checkbox'></td>
+                                    <td><input type='checkbox' value=$docId></td>
                                     <td>$firstName1</td>
                                     <td>$lastName1</td>
                                     <td class='email1'>$email1</td>                                 
@@ -246,7 +249,7 @@ $profilePic = $helper->setProfilePic($realtor);
 <script src="../Ressources/js/scripts.js"></script>
 <script>
     $( document ).ready(function() {
-        let emailsArray = [];
+        let clientsArray = [];
         $("#importClientButton").click(function () {
             $("#buttonsContainer").hide()
             $("#formContainer").show()
@@ -258,8 +261,17 @@ $profilePic = $helper->setProfilePic($realtor);
         })
         $(".checkAll").click(function () {
             $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+            if($(this).prop('checked') == true)
+            {
+                $('input[type=checkbox][class!=checkAll]:checked').each(function(){
+                    clientsArray.push($(this).val())
+                });
+            } else {
+                clientsArray = [];
+            }
         });
         $("input[type=checkbox]").change(function () {
+            /*console.log($(this))*/
             if($("input[type=checkbox]").length == 1) return;
             if($("input[type=checkbox]:checked").length > 0)
             {
@@ -269,26 +281,20 @@ $profilePic = $helper->setProfilePic($realtor);
             }
             if($(this).prop('checked') == true)
             {
-                let emailOne = "";
-                let emailTwo = "";
-                emailOne = $(this).parent().parent().find(".email1").text();
-                emailTwo = $(this).parent().parent().find(".email2").text();
-                if(emailOne != "") emailsArray.push(emailOne);
-                if(emailTwo != "") emailsArray.push(emailTwo);
-            } else {
-                emailOne = $(this).parent().parent().find(".email1").text();
-                emailTwo = $(this).parent().parent().find(".email2").text();
+                if($(this).val() != "on")
+                {
+                    clientsArray.push($(this).val())
+                }
+            } else if($(this).prop('checked') == false)
+            {
                 const removeFromArray = function (arr, ...theArgs) {
                     return arr.filter( val => !theArgs.includes(val) )
                 };
-                emailsArray = removeFromArray(emailsArray, emailOne,emailTwo);
+                clientsArray = removeFromArray(clientsArray, $(this).val());
             }
         })
         $("#emailInvitaionForm").submit(function (e) {
-            /*e.preventDefault()
-            console.log(emailsArray)*/
-
-            $("#selected_clients").val(JSON.stringify(emailsArray))
+            $("#selected_clients").val(JSON.stringify(clientsArray))
         })
     });
 </script>
