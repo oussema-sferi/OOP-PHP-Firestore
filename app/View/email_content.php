@@ -18,6 +18,7 @@ if(isset($_SESSION["user"]["role"]) && ($_SESSION["user"]["role"] != "ROLE_ADMIN
 $database = new Firestore_honeydoo();
 $email = $database->fetchEmailContent();
 $emailContentToEdit = $email["content"];
+$emailSubjectToEdit = $email["subject"];
 
 //
 $realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);
@@ -103,7 +104,7 @@ $profilePic = $helper->setProfilePic($realtor);
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="edit"></i></div>
-                                    Edit Content
+                                    Edit Email
                                 </h1>
                             </div>
                         </div>
@@ -117,6 +118,12 @@ $profilePic = $helper->setProfilePic($realtor);
                         <div class="col-lg-2">
                         </div>
                         <div class="col-lg-8">
+                            <div class="card mb-4 text-center">
+                                <div class="card-header">
+                                    Email Subject
+                                </div>
+                                <div class="card-body"><input class="form-control" id="postTitleInput" type="text" placeholder="Enter your email subject here..." value="<?=$emailSubjectToEdit?>" name="emailSubject" required/></div>
+                            </div>
                             <div class="card mb-4 text-center">
                                 <div class="card-header">
                                     Email Content

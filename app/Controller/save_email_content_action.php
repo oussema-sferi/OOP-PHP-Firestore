@@ -13,8 +13,17 @@ use App\Model\Firestore_honeydoo;
         }
     }
     $emailContent = $_POST["emailContent"];
-    $data[] = ['path' => 'content', 'value' => $emailContent];
+    $emailSubject = $_POST["emailSubject"];
+    $data = [
+        'content' => $emailContent,
+        'subject' => $emailSubject
+    ];
+    $finalData = [];
+    foreach ($data as $key => $value) {
+
+        if ($value !== "") $finalData[] = ['path' => $key, 'value' => $value];
+    }
     $database = new Firestore_honeydoo();
-    $database->updateEmailContent($data);
+    $database->updateEmailContent($finalData);
     header("Location: ../View/email_content.php");
 
