@@ -46,6 +46,7 @@ if (isset($_POST["submit"]))
             'zip' => $row["M"],
             'home_type' => $row["N"],
             'notes' => $row["O"],
+            'is_subscribed' => true,
             'realtor_id' => $_SESSION["user"]["realtor_id"]
         ];
         $allData[] = $rowData;
