@@ -9,9 +9,10 @@ $database = new Firestore_honeydoo();
 $data = [
     'is_subscribed' => false,
 ];
+
 foreach ($data as $key => $value)
 {
-    if($value != "") $finalData[] = ['path' => $key, 'value' => $value];
+    $finalData[] = ['path' => $key, 'value' => $value];
 }
 $database->updateClientCollection($clientDocId, $finalData);
 header("Location: ../View/unsubscription_confirmation.php");

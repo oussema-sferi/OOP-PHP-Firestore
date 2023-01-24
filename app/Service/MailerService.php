@@ -1,10 +1,10 @@
 <?php
 namespace App\Service;
 use PHPMailer\PHPMailer\PHPMailer;
-
 class MailerService
 {
     private $mailer;
+
     public function __construct()
     {
         $this->mailer = new PHPMailer;
@@ -19,16 +19,18 @@ class MailerService
         $this->mailer->Password = 'Tmvh5282!';
     }
 
-    public function sendInvitationMail($content, $emailAddresses)
+    public function sendInvitationMail($content, $subject, $emailAddresses)
     {
         $this->mailer->setFrom("info@honeydoo.io", "Honeydoo");
         $this->mailer->addReplyTo("info@honeydoo.io", "Honeydoo");
-        foreach ($emailAddresses as $emailRecipient)
+        $this->mailer->addAddress($emailAddresses[0]);
+        $this->mailer->addCC($emailAddresses[1]);
+        /*foreach ($emailAddresses as $emailRecipient)
         {
             $this->mailer->AddAddress(trim($emailRecipient));
-        }
+        }*/
         $this->mailer->isHTML(true);
-        $this->mailer->Subject = "App Download Invitation";
+        $this->mailer->Subject = $subject;
         $this->mailer->Body = $content;
         if (!$this->mailer->send()) {
             return 'Mailer Error: ' . !$this->mailer->ErrorInfo;

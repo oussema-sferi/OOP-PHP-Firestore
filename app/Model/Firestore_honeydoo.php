@@ -224,6 +224,7 @@ class Firestore_honeydoo
         return $query->snapshot();
     }
 
+
     public function updateEmailContent($data)
     {
         $emailRef = $this->db->collection('invitation_email')->document('invitation_email');

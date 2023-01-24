@@ -29,13 +29,6 @@ foreach ($clientsArray as $client)
     if($client["is_subscribed"] == true) $subscribedClients[] = $client;
 }
 
-$emailAddresses = [];
-foreach ($subscribedClients as $client)
-{
-    $emailAddresses[] = $client["email_1"];
-    $emailAddresses[] = $client["email_2"];
-}
-
 $unsubscriptionLink = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . "/app/Controller/unsubscribe_action.php?id=";
 
 $email = $database->fetchEmailContent();
@@ -49,12 +42,14 @@ foreach ($realtorInfo as $key => $value)
 {
     $emailContent = str_replace($key, $value, $emailContent);
 }
-$mailer = new MailerService();
+
+$email = $database->fetchEmailContent();
+$emailSubject = $email["subject"];
 foreach ($subscribedClients as $client)
 {
+    $mailer = new MailerService();
     $emailContent = str_replace("{{unsubscribe}}", $unsubscriptionLink . $client->id(), $emailContent);
-    $mailer->sendInvitationMail($emailContent, [$client["email_1"], $client["email_2"]]);
+    $mailer->sendInvitationMail($emailContent, $emailSubject, [$client["email_1"], $client["email_2"]]);
 }
-
 header("Location: ../View/clients_list.php");
 
