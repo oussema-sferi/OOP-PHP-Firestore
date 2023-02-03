@@ -213,11 +213,10 @@ $profilePic = $helper->setProfilePic($realtor);
                                 <label class="small mb-1" for="homeType">Home Type</label>
                                 <select class="form-control" id="homeType" name="homeType">
                                     <option>Select Home Type</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
+                                    <option value="Single Family Home">Single Family Home</option>
+                                    <option value="Townhome">Townhome</option>
+                                    <option value="Condo">Condo</option>
+                                    <option value="Other">Other</option>
                                 </select>
                             </div>
                         </div>
