@@ -281,11 +281,6 @@ $profilePic = $helper->setProfilePic($realtor);
                                                     <div class="col-md-2">
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <h3 class="text-primary">Selections</h3>
-                                                        <div class="form-check mb-3">
-                                                            <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="">
-                                                            <label class="form-check-label" for="flexCheckDefault">My Home Pro List</label>
-                                                        </div>
                                                         <h3 class="text-primary">Personal Notes/Reminders</h3>
                                                         <div class="mb-3">
                                                             <textarea id="notes" class="lh-base form-control" type="text" name="notes" placeholder="Enter notes..." rows="4" style="resize: none"></textarea>
