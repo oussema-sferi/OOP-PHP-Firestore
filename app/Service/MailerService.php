@@ -10,6 +10,8 @@ class MailerService
         $this->mailer = new PHPMailer;
         $this->mailer->isSMTP();
         $this->mailer->SMTPDebug = 2;
+        $this->mailer->CharSet = 'UTF-8';
+        $this->mailer->Encoding = 'base64';
         $this->mailer->Debugoutput = 'error_log';
         $this->mailer->Host = 'smtp.office365.com';
         $this->mailer->Port = 587;

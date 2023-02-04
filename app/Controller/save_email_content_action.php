@@ -13,10 +13,10 @@ use App\Model\Firestore_honeydoo;
         }
     }
     $emailContent = $_POST["emailContent"];
-    $emailSubject = $_POST["emailSubject"];
+    /*$emailSubject = $_POST["emailSubject"];*/
     $data = [
         'content' => $emailContent,
-        'subject' => $emailSubject
+        /*'subject' => $emailSubject*/
     ];
     $finalData = [];
     foreach ($data as $key => $value) {
