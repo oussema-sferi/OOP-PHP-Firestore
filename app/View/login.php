@@ -26,7 +26,7 @@ if(isset($_SESSION['registration_success_flash_message'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Honeydoo" />
     <meta name="author" content="Honeydoo" />
-    <title>Login - Honeydoo</title>
+    <title>Login - HoneyDoo Realtor Portal</title>
     <link href="../Ressources/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="../Ressources/assets/img/favicon.png" />
 </head>
@@ -34,12 +34,13 @@ if(isset($_SESSION['registration_success_flash_message'])) {
 <div id="layoutAuthentication">
     <div id="layoutAuthentication_content">
         <main>
+            <center><img src="https://realtors.honeydoo.io/app/Ressources/assets/img/HoneyDoo-logo.png" width="400" style="margin: 50px 0 25px;"></center>
             <div class="container-xl px-4">
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
                         <!-- Basic login form-->
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
-                            <div class="card-header justify-content-center text-center"><h3 class="fw-light my-4">Authentication</h3></div>
+                            <div class="card-header justify-content-center text-center"><h3 class="fw-light my-4">Realtor Sign-In Page</h3></div>
                             <div class="card-body">
                                 <!-- Login form-->
                                 <form action="../Controller/login_action.php" method="post">
