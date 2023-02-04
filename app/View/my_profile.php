@@ -136,7 +136,7 @@ $profilePic = $helper->setProfilePic($realtor);
                         <div class="card mb-4">
                             <div class="card-header text-center">Account Details</div>
                             <div class="card-body">
-                                <form action="<?='../Controller/edit_my_profile_action.php?realtor_id=' . $realtor["realtor_id"]?>" method="post">
+                                <form action="<?='../Controller/edit_my_profile_action.php?realtor_id=' . $realtor["realtor_id"]?>" method="post" class="mt-4">
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputFirstName">Full name</label>
@@ -162,7 +162,7 @@ $profilePic = $helper->setProfilePic($realtor);
                                         </div>
                                     </div>
                                     <!-- Save changes button-->
-                                    <div class="text-center">
+                                    <div class="text-center mt-5 mb-1">
                                         <button class="btn btn-primary" id="editButton" type="button">Edit</button>
                                         <button class="btn btn-success" id="saveButton" type="submit" style="display: none">Save Changes</button>
                                     </div>
