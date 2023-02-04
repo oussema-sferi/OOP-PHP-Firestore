@@ -37,6 +37,7 @@ $realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);
 $realtorInfo = [
     "{{realtor_name}}" => $realtor["realtor_title"],
     "{{realtor_photo}}" => "'" . $realtor["realtor_photo"] . "'",
+    "{{current_year}}" => date("Y"),
 ];
 foreach ($realtorInfo as $key => $value)
 {
