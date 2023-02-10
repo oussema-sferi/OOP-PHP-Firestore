@@ -18,13 +18,6 @@ if(!isset($_SESSION["user"]))
 }
 $database = new Firestore_honeydoo();
 $loggedUserProServices = $database->fetchProServices($_SESSION["user"]["realtor_id"]);
-/*var_dump((new DateTimeImmutable(($loggedUserProServices[0]->date)->formatAsString()))->format("m-d-Y"));*/
-/*$createdAt = $loggedUserProServices[0]->date;
-$createdAt = $createdAt->get()->format("m-d-Y");*/
-
-/*$newformat = date('Y-m-d',(int)$test);*/
-/*var_dump($createdAt);
-die();*/
 
 //
 $realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);
