@@ -1,9 +1,11 @@
 <?php
 namespace App\View;
+require_once "../../vendor/autoload.php";
 use App\Model\Firestore_honeydoo;
 use App\Service\HelperService;
+use Google\Cloud\Core\Timestamp;
+use Monolog\DateTimeImmutable;
 
-require_once "../../vendor/autoload.php";
 
 if(!isset($_SESSION["user"]))
 {
@@ -16,6 +18,13 @@ if(!isset($_SESSION["user"]))
 }
 $database = new Firestore_honeydoo();
 $loggedUserProServices = $database->fetchProServices($_SESSION["user"]["realtor_id"]);
+/*var_dump((new DateTimeImmutable(($loggedUserProServices[0]->date)->formatAsString()))->format("m-d-Y"));*/
+/*$createdAt = $loggedUserProServices[0]->date;
+$createdAt = $createdAt->get()->format("m-d-Y");*/
+
+/*$newformat = date('Y-m-d',(int)$test);*/
+/*var_dump($createdAt);
+die();*/
 
 //
 $realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);
@@ -144,12 +153,14 @@ $profilePic = $helper->setProfilePic($realtor);
                             <thead>
                             <tr>
                                 <th>Company Name</th>
+                                <th>Creation Date</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
                                 <th>Company Name</th>
+                                <th>Creation Date</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </tfoot>
@@ -158,6 +169,8 @@ $profilePic = $helper->setProfilePic($realtor);
                             foreach ($loggedUserProServices as $proService)
                             {
                                 $companyName = $proService->company_name;
+                                $createdAt = $loggedUserProServices[0]->date;
+                                $createdAtFormatted = $createdAt->get()->format("m-d-Y");
                                 $proServiceId = $proService->doc_id;
                                 $showProServiceLink = "pro_service_show.php?pro_service_id=$proServiceId";
                                 $editProServiceLink = "pro_service_edit.php?pro_service_id=$proServiceId";
@@ -165,6 +178,7 @@ $profilePic = $helper->setProfilePic($realtor);
                                 echo "
                                 <tr>
                                     <td>$companyName</td>
+                                    <td>$createdAtFormatted</td>
                                     <td class='text-center'>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$showProServiceLink><i data-feather='zoom-in'></i></a>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$editProServiceLink><i data-feather='edit'></i></a>
