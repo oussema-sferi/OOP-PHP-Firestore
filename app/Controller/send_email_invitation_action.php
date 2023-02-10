@@ -45,8 +45,8 @@ foreach ($realtorInfo as $key => $value)
 }
 
 $email = $database->fetchEmailContent();
-/*$emailSubject = $email["subject"];*/
-$emailSubject = $_SESSION["user"]["realtor_title"] . " is inviting to download HoneyDoo!";
+$emailSubject = $email["subject"];
+$emailSubject = str_replace("{{realtor_name}}", $_SESSION["user"]["realtor_title"], $emailSubject);
 foreach ($subscribedClients as $client)
 {
     $mailer = new MailerService();
