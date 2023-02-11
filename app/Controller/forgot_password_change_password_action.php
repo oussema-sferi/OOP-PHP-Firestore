@@ -35,4 +35,5 @@ $user = $database->fetchUserByEmail($userFromDB["realtor_email"]);
 $finalData[] = ['path' => 'password', 'value' => $hashedPassword];
 $database->updateRealtorInfo($user["realtor_id"], $finalData);
 $database->deleteResetRequest($userFromDB["token"]);
+unset($_SESSION['token']);
 header("Location: ../View/forgot_password/reset_password_confirmation.php");
