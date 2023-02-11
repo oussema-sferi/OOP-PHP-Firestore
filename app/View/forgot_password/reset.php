@@ -31,25 +31,28 @@ if(isset($_SESSION['user'])) {
                     <div class="col-lg-5">
                         <!-- Basic forgot password form-->
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
-                            <div class="card-header justify-content-center text-center"><h3 class="fw-light my-4">Password Recovery</h3></div>
+                            <div class="card-header justify-content-center"><h3 class="fw-light my-4 text-center">Enter your new password</h3></div>
                             <div class="card-body">
-                                <div class="small mb-3 text-muted">Enter your email address and we will send you a link to reset your password.</div>
                                 <!-- Forgot password form-->
                                 <form action="../../Controller/forgot_password_request_action.php" method="post">
-                                    <!-- Form Group (email address)-->
+                                <!-- Form Group (email address)-->
                                     <div class="mb-3">
-                                        <label class="small mb-1" for="email">Email</label>
-                                        <input class="form-control" id="email" type="email" name="email" placeholder="Enter your email address" required/>
+                                        <label class="small mb-1" for="password">Password</label>
+                                        <input class="form-control" name="password" type="password" placeholder="Enter your new password" required/>
+                                        <div style="color: grey; font-size: small">
+                                            <small>Your password must be at least 8 characters long and contains a special character, e.g. !#$@.,:;</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="small mb-1" for="confirmPassword">Confirm Password</label>
+                                        <input class="form-control" name="confirmPassword" type="password" placeholder="Confirm your password" required/>
                                     </div>
                                     <!-- Form Group (submit options)-->
-                                    <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                        <a class="small" href="<?='../login.php'?>">Return to login</a>
-                                        <input class="btn btn-primary" type="submit" value="Reset Password">
+                                    <div class="text-center">
+                                        <button class="btn btn-success text-center" type="submit">Reset Password</button>
                                     </div>
                                 </form>
-                            </div>
-                            <div class="card-footer text-center">
-                                <div class="small"><a href="<?='../registration.php'?>">Need an account? Sign up!</a></div>
                             </div>
                         </div>
                     </div>

@@ -267,4 +267,27 @@ class Firestore_honeydoo
         return $realtorRef->update([['path' => 'realtor_id', 'value' => $realtorId]]);
     }
 
+    public function saveResetPasswordToken($data)
+    {
+        return $this->db->collection('reset_password_request')->add($data);
+    }
+
+    public function fetchResetEmail()
+    {
+        $query = $this->db->collection('reset_password_email')->document('reset_password_email');
+        return $query->snapshot();
+    }
+
+    public function fetchTokenFromDb($token)
+    {
+        $query = $this->db->collection('reset_password_request')->where('token', '=', $token);
+        $documents = $query->documents();
+        foreach ($documents as $document) {
+            if ($document->exists()) {
+                return $document->data();
+            } else {
+                return false;
+            }
+        }
+    }
 }

@@ -21,8 +21,7 @@ foreach ($clientsDocsIds as $clientId)
 {
 $clientsArray[] = $database->fetchClientCollectionById($clientId);
 }
-/*var_dump($clientsArray[0]->id());
-die();*/
+
 $subscribedClients = [];
 foreach ($clientsArray as $client)
 {
