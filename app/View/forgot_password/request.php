@@ -2,9 +2,9 @@
 if(isset($_SESSION['user'])) {
     if(isset($_SESSION["user"]["role"]) && $_SESSION["user"]["role"] == "ROLE_ADMIN")
     {
-        header("Location: users_list.php");
+        header("Location: ../users_list.php");
     } else {
-        header("Location: blog_posts.php");
+        header("Location: ../blog_posts.php");
     }
 }
 

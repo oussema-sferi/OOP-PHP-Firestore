@@ -1,13 +1,31 @@
 <?php
+require_once "../../../vendor/autoload.php";
+use App\Model\Firestore_honeydoo;
+
 if(isset($_SESSION['user'])) {
     if(isset($_SESSION["user"]["role"]) && $_SESSION["user"]["role"] == "ROLE_ADMIN")
     {
-        header("Location: users_list.php");
+        header("Location: ../users_list.php");
     } else {
-        header("Location: blog_posts.php");
+        header("Location: ../blog_posts.php");
     }
 }
+if(!isset($_SESSION['token']))
+{
+    header("Location: request.php");
+}
+$tokenFromSession = $_SESSION['token'];
+$database = new Firestore_honeydoo();
+$userFromDB = $database->fetchTokenFromDb($tokenFromSession);
+if(!$userFromDB)
+{
+    header("Location: request.php");
+}
 
+if(isset($_SESSION['change_password_error_flash_message'])) {
+    $errorMessage = $_SESSION['change_password_error_flash_message'];
+    unset($_SESSION['change_password_error_flash_message']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +35,7 @@ if(isset($_SESSION['user'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Honeydoo" />
     <meta name="author" content="Honeydoo" />
-    <title>Forgot Password - HoneyDoo Realtor Portal</title>
+    <title>Change Password Form - HoneyDoo Realtor Portal</title>
     <link href="../../Ressources/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="../../Ressources/assets/img/favicon.png" />
 </head>
@@ -29,13 +47,19 @@ if(isset($_SESSION['user'])) {
             <div class="container-xl px-4">
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
-                        <!-- Basic forgot password form-->
+                        <!-- Change password form-->
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
                             <div class="card-header justify-content-center"><h3 class="fw-light my-4 text-center">Enter your new password</h3></div>
                             <div class="card-body">
                                 <!-- Forgot password form-->
-                                <form action="../../Controller/forgot_password_request_action.php" method="post">
-                                <!-- Form Group (email address)-->
+                                <form action="../../Controller/forgot_password_change_password_action.php" method="post">
+                                    <?php
+                                    if(isset($errorMessage))
+                                    {
+                                        echo "<div class='alert alert-danger'>$errorMessage</div>";
+                                    }
+                                    ?>
+                                <!-- Form Group (password)-->
                                     <div class="mb-3">
                                         <label class="small mb-1" for="password">Password</label>
                                         <input class="form-control" name="password" type="password" placeholder="Enter your new password" required/>

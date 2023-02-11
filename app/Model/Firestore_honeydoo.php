@@ -10,7 +10,7 @@ class Firestore_honeydoo
     public function __construct()
     {
         $this->db = new FirestoreClient([
-            'keyFilePath' => '../../hondeydoo-19eb1_credentials.json',
+            'keyFilePath' => $_SERVER['DOCUMENT_ROOT'] . '/hondeydoo-19eb1_credentials.json',
             'projectId' => 'hondeydoo-19eb1'
         ]);
     }
@@ -272,6 +272,19 @@ class Firestore_honeydoo
         return $this->db->collection('reset_password_request')->add($data);
     }
 
+    public function deleteResetRequest($token)
+    {
+        $query = $this->db->collection('reset_password_request')->where('token', '=', $token);
+        $documents = $query->documents();
+        foreach ($documents as $document) {
+            if ($document->exists()) {
+                return $this->db->collection('reset_password_request')->document($document->id())->delete();
+            } else {
+                return false;
+            }
+        }
+    }
+
     public function fetchResetEmail()
     {
         $query = $this->db->collection('reset_password_email')->document('reset_password_email');
@@ -290,4 +303,5 @@ class Firestore_honeydoo
             }
         }
     }
+
 }

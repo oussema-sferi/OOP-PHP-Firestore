@@ -42,8 +42,8 @@ try {
     mail($to, $subject, $msg, $headers);
     header('location: pending.php?email=' . $email);*/
     $mailer->sendResetPasswordMail($msg, $emailSubject, $user["email"]);
-    echo "email was just sent";
-    /*header("Location: ../View/forgot_password/check_email.php");*/
+    /*echo "email was just sent";*/
+    header("Location: ../View/forgot_password/check_email.php");
 
 } catch (\Exception $e) {
     header("Location: ../View/forgot_password/check_email.php");
