@@ -120,7 +120,7 @@ $profilePic = $helper->setProfilePic($realtor);
             </header>
             <!-- Main page content-->
             <div class="container-fluid px-4">
-                <form action="<?='../Controller/save_email_content_action.php'?>" method="post" enctype="multipart/form-data">
+                <form action="<?='../Controller/save_email_content_action.php'?>" method="post">
                     <div class="row gx-4">
                         <div class="col-lg-2">
                         </div>

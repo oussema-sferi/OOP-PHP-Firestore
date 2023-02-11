@@ -304,4 +304,9 @@ class Firestore_honeydoo
         }
     }
 
+    public function updateResetEmail($data)
+    {
+        $emailRef = $this->db->collection('reset_password_email')->document('reset_password_email');
+        return $emailRef->update($data);
+    }
 }
