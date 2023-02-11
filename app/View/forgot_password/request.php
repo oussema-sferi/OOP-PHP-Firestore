@@ -26,9 +26,9 @@ if(isset($_SESSION['registration_success_flash_message'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Honeydoo" />
     <meta name="author" content="Honeydoo" />
-    <title>Login - HoneyDoo Realtor Portal</title>
-    <link href="../Ressources/css/styles.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="../Ressources/assets/img/favicon.png" />
+    <title>Forgot Password - HoneyDoo Realtor Portal</title>
+    <link href="../../Ressources/css/styles.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="../../Ressources/assets/img/favicon.png" />
 </head>
 <body class="bg-primary">
 <div id="layoutAuthentication">
@@ -38,41 +38,27 @@ if(isset($_SESSION['registration_success_flash_message'])) {
             <div class="container-xl px-4">
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
-                        <!-- Basic login form-->
+                        <!-- Basic forgot password form-->
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
-                            <div class="card-header justify-content-center text-center"><h3 class="fw-light my-4">Realtor Sign-In Page</h3></div>
+                            <div class="card-header justify-content-center text-center"><h3 class="fw-light my-4">Password Recovery</h3></div>
                             <div class="card-body">
-                                <!-- Login form-->
-                                <form action="../Controller/login_action.php" method="post">
-                                    <?php
-                                    if(isset($errorMessage))
-                                    {
-                                        echo "<div class='alert alert-danger'>$errorMessage</div>";
-                                    }
-                                    if(isset($successfulRegistrationMessage))
-                                    {
-                                        echo "<div class='alert alert-success'>$successfulRegistrationMessage</div>";
-                                    }
-                                    ?>
+                                <div class="small mb-3 text-muted">Enter your email address and we will send you a link to reset your password.</div>
+                                <!-- Forgot password form-->
+                                <form>
                                     <!-- Form Group (email address)-->
                                     <div class="mb-3">
-                                        <label class="small mb-1" for="email">Email Address</label>
-                                        <input class="form-control" type="email" name="email" placeholder="Enter your email address" required/>
+                                        <label class="small mb-1" for="inputEmailAddress">Email</label>
+                                        <input class="form-control" id="inputEmailAddress" type="email" aria-describedby="emailHelp" placeholder="Enter email address" />
                                     </div>
-                                    <!-- Form Group (password)-->
-                                    <div class="mb-3">
-                                        <label class="small mb-1" for="password">Password</label>
-                                        <input class="form-control" type="password" name="password" placeholder="Enter your password" required/>
-                                    </div>
-                                    <!-- Form Group (login box)-->
+                                    <!-- Form Group (submit options)-->
                                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                        <a class="small" href="<?='forgot_password/request.php'?>">Forgot Password?</a>
-                                        <input class="btn btn-primary" type="submit" value="Login">
+                                        <a class="small" href="<?='../login.php'?>">Return to login</a>
+                                        <a class="btn btn-primary" href="auth-login-basic.html">Reset Password</a>
                                     </div>
                                 </form>
                             </div>
                             <div class="card-footer text-center">
-                                <div class="small"><a href="<?='registration.php'?>">Need an account? Sign up!</a></div>
+                                <div class="small"><a href="<?='../registration.php'?>">Need an account? Sign up!</a></div>
                             </div>
                         </div>
                     </div>
