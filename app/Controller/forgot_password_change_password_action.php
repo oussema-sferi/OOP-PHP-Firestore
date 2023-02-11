@@ -6,7 +6,6 @@ use DateTime;
 use Google\Cloud\Core\Timestamp;
 $password = trim($_POST["password"]);
 $confirmPassword = trim($_POST["confirmPassword"]);
-$tokenFromSession = $_SESSION['token'];
 if(!isset($_SESSION['token']))
 {
     header("Location: ../View/forgot_password/request.php");
