@@ -7,7 +7,6 @@ if(isset($_SESSION['user'])) {
         header("Location: blog_posts.php");
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +16,7 @@ if(isset($_SESSION['user'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Honeydoo" />
     <meta name="author" content="Honeydoo" />
-    <title>Forgot Password - HoneyDoo Realtor Portal</title>
+    <title>Check Email - HoneyDoo Realtor Portal</title>
     <link href="../../Ressources/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="../../Ressources/assets/img/favicon.png" />
 </head>
@@ -31,25 +30,15 @@ if(isset($_SESSION['user'])) {
                     <div class="col-lg-5">
                         <!-- Basic forgot password form-->
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
-                            <div class="card-header justify-content-center text-center"><h3 class="fw-light my-4">Password Recovery</h3></div>
+                            <div class="card-header justify-content-center"><h3 class="fw-light my-4 text-center">Password Reset Email Sent!</h3></div>
                             <div class="card-body">
-                                <div class="small mb-3 text-muted">Enter your email address and we will send you a link to reset your password.</div>
-                                <!-- Forgot password form-->
-                                <form action="../../Controller/forgot_password_request.php" method="post">
-                                    <!-- Form Group (email address)-->
-                                    <div class="mb-3">
-                                        <label class="small mb-1" for="email">Email</label>
-                                        <input class="form-control" id="email" type="email" name="email" placeholder="Enter your email address" required/>
-                                    </div>
-                                    <!-- Form Group (submit options)-->
-                                    <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                        <a class="small" href="<?='../login.php'?>">Return to login</a>
-                                        <input class="btn btn-primary" type="submit" value="Reset Password">
-                                    </div>
-                                </form>
+                                <div class="small mb-3">
+                                    If an account matching your email exists, then an email will be sent that contains a link that you can use to reset your password.
+                                    <p>If you do not receive an email please check your spam folder or <a href="<?='request.php'?>">try again</a>.</p>
+                                </div>
                             </div>
                             <div class="card-footer text-center">
-                                <div class="small"><a href="<?='../registration.php'?>">Need an account? Sign up!</a></div>
+                                <div class="small"><a class="text-white" href="<?='../login.php'?>">Return to login</a></div>
                             </div>
                         </div>
                     </div>

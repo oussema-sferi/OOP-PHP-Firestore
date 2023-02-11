@@ -33,6 +33,19 @@ class Firestore_honeydoo
         }
     }
 
+    public function fetchUserByEmail($email)
+    {
+        $query = $this->db->collection('realtor')->where('email', '=', $email);
+        $documents = $query->documents();
+        foreach ($documents as $document) {
+            if ($document->exists()) {
+                return $document->data();
+            } else {
+                return false;
+            }
+        }
+    }
+
     public function fetchRealtorById($id)
     {
         /*$query = $this->db->collection('realtor')->where('realtor_id', '=', $id);*/
