@@ -16,8 +16,6 @@ if (!isset($_SESSION["user"])) {
 }
 $finalData = [];
 $realtorId = $_GET["realtor_id"];
-/*var_dump($realtorId);
-die();*/
 
 $data = [
     'realtor_title' => $_POST["fullName"] ?? "",

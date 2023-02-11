@@ -1,5 +1,5 @@
 <?php
-namespace App\View\admin;
+namespace App\View;
 use App\Model\Firestore_honeydoo;
 use App\Service\HelperService;
 
@@ -9,12 +9,17 @@ if(!isset($_SESSION["user"]))
 {
     header("Location: login.php");
 }
+
 if(isset($_SESSION["user"]["role"]) && ($_SESSION["user"]["role"] != "ROLE_ADMIN"))
 {
     header("Location: blog_posts.php");
 }
+
 $database = new Firestore_honeydoo();
-$users = $database->fetchUsers();
+$email = $database->fetchEmailContent();
+$emailContentToEdit = $email["content"];
+$emailSubjectToEdit = $email["subject"];
+
 //
 $realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);
 $helper = new HelperService();
@@ -28,8 +33,9 @@ $profilePic = $helper->setProfilePic($realtor);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Honeydoo" />
     <meta name="author" content="Honeydoo" />
-    <title>Users List</title>
+    <title>Reset Password Email</title>
     <link href="../Ressources/css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
     <link rel="icon" type="image/x-icon" href="../Ressources/assets/img/favicon.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
@@ -104,79 +110,43 @@ $profilePic = $helper->setProfilePic($realtor);
                         <div class="row align-items-center justify-content-between pt-3">
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
-                                    <div class="page-header-icon"><i data-feather="list"></i></div>
-                                    All Users
+                                    <div class="page-header-icon"><i data-feather="edit"></i></div>
+                                    Edit Reset Password Email
                                 </h1>
                             </div>
-                            <div class="col-12 col-xl-auto mb-3">
-                            <div>
                         </div>
                     </div>
                 </div>
             </header>
             <!-- Main page content-->
             <div class="container-fluid px-4">
-                <div class="card">
-                    <div class="card-body">
-                        <table id="datatablesSimple">
-                            <thead>
-                            <tr>
-                                <th>Email</th>
-                                <th>Company Name</th>
-                                <th>Phone Number</th>
-                                <!--<th class="text-center">Actions</th>-->
-                            </tr>
-                            </thead>
-                            <tfoot>
-                            <tr>
-                                <th>Email</th>
-                                <th>Company Name</th>
-                                <th>Phone Number</th>
-                                <!--<th class="text-center">Actions</th>-->
-                            </tr>
-                            </tfoot>
-                            <tbody>
-                            <?php
-                            foreach ($users as $user)
-                                {
-                                    $email = $user->email;
-                                    $companyName = $user->realtor_sub_title;
-                                    $phoneNumber = $user->phone_number;
-                                    $userId = $user->doc_id;
-                                    $showUserLink = "client_collection_show.php?client_collection_id=$userId";
-                                    $editUserLink = "client_collection_edit.php?client_collection_id=$userId";
-                                    $deleteUserLink = "../Controller/delete_client_collection_action.php?client_collection_id=$userId";
-                                    echo "
-                                <tr>                              
-                                    <td>$email</td>
-                                    <td>$companyName</td>
-                                    <td>$phoneNumber</td>                                                                                                                                
-                                </tr>
-                                
-                                <div class='modal fade' id='approveUserModal$userId' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
-                                    <div class='modal-dialog modal-dialog-centered' role='document'>
-                                        <div class='modal-content'>
-                                            <div class='modal-header d-block'>
-                                                <button class='btn-close float-end' type='button' data-bs-dismiss='modal' aria-label='Close'></button>
-                                                <h5 class='modal-title text-center' id='exampleModalCenterTitle'>Removal Confirmation</h5>
-                                            </div>
-                                            <div class='modal-body text-center'>
-                                                Do you really want to delete this client ?
-                                            </div>
-                                            <div class='modal-footer justify-content-center'>
-                                                <a class='btn btn-secondary' type='button' data-bs-dismiss='modal'>No</a>
-                                                <a class='btn btn-success' type='button' href='$deleteUserLink'>Yes</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                <form action="<?='../Controller/save_email_content_action.php'?>" method="post" enctype="multipart/form-data">
+                    <div class="row gx-4">
+                        <div class="col-lg-2">
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="card mb-4 text-center">
+                                <div class="card-header">
+                                    Subject
                                 </div>
-                                ";
-                                };
-                            ?>
-                            </tbody>
-                        </table>
+                                <div class="card-body"><input class="form-control" id="postTitleInput" type="text" placeholder="Enter your email subject here..." value="<?=$emailSubjectToEdit?>" name="emailSubject" required/></div>
+                            </div>
+                            <div class="card mb-4 text-center">
+                                <div class="card-header">
+                                    Content
+                                </div>
+                                <div class="card-body"><textarea class="lh-base form-control" type="text" placeholder="Enter your email content here..." rows="25" name="emailContent" style="resize: none" required><?=$emailContentToEdit?></textarea></div>
+                            </div>
+                            <div class="text-center">
+                                <div class="card-body">
+                                    <div><input class="btn btn-primary" type="submit" value="Save"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </main>
         <footer class="footer-admin mt-auto footer-light">
@@ -192,29 +162,7 @@ $profilePic = $helper->setProfilePic($realtor);
 <script src="../Ressources/js/datatables/datatables-simple-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="../Ressources/js/scripts.js"></script>
-<script>
-    $( document ).ready(function() {
-        /*$("#importClientButton").click(function () {
-            $("#buttonsContainer").hide()
-            $("#formContainer").show()
-        })
-        $("#backButton").click(function () {
-            $("#formContainer").hide()
-            $("#buttonsContainer").show()
-
-        })
-        $(".checkAll").click(function () {
-            $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
-        });
-        $("input[type=checkbox]").change(function () {
-            if($("input[type=checkbox]:checked").length > 0)
-            {
-                $("#sendInviteButton").prop("disabled", false)
-            } else {
-                $("#sendInviteButton").prop("disabled", true)
-            }
-        })*/
-    });
-</script>
+<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+<script src="../Ressources/js/markdown.js"></script>
 </body>
 </html>

@@ -33,7 +33,7 @@ $profilePic = $helper->setProfilePic($realtor);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Honeydoo" />
     <meta name="author" content="Honeydoo" />
-    <title>Email Content</title>
+    <title>Invitation Email</title>
     <link href="../Ressources/css/styles.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
     <link rel="icon" type="image/x-icon" href="../Ressources/assets/img/favicon.png" />
@@ -86,11 +86,18 @@ $profilePic = $helper->setProfilePic($realtor);
                         <div class="nav-link-icon"><i data-feather="user"></i></div>
                         Users
                     </a>
-                    <!-- Sidenav Link (Email)-->
-                    <a class="nav-link" href="<?='email_content.php'?>">
+                    <!-- Sidenav Accordion (Cell Rules)-->
+                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseEmails" aria-expanded="false" aria-controls="collapseDashboards">
                         <div class="nav-link-icon"><i data-feather="mail"></i></div>
-                        Email
+                        Emails
+                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
+                    <div class="collapse" id="collapseEmails" data-bs-parent="#accordionSidenav">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                            <a class="nav-link" href="<?='email_content.php'?>">Invitation Email</a>
+                            <a class="nav-link" href="<?='reset_password_email.php'?>">Reset Password Email</a>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -104,7 +111,7 @@ $profilePic = $helper->setProfilePic($realtor);
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="edit"></i></div>
-                                    Edit Email
+                                    Edit Invitation Email
                                 </h1>
                             </div>
                         </div>
@@ -120,13 +127,13 @@ $profilePic = $helper->setProfilePic($realtor);
                         <div class="col-lg-8">
                             <div class="card mb-4 text-center">
                                 <div class="card-header">
-                                    Email Subject
+                                    Subject
                                 </div>
                                 <div class="card-body"><input class="form-control" id="postTitleInput" type="text" placeholder="Enter your email subject here..." value="<?=$emailSubjectToEdit?>" name="emailSubject" required/></div>
                             </div>
                             <div class="card mb-4 text-center">
                                 <div class="card-header">
-                                    Email Content
+                                    Content
                                 </div>
                                 <div class="card-body"><textarea class="lh-base form-control" type="text" placeholder="Enter your email content here..." rows="25" name="emailContent" style="resize: none" required><?=$emailContentToEdit?></textarea></div>
                             </div>
