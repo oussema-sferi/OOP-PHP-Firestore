@@ -16,6 +16,7 @@ $userFromDB = $database->fetchTokenFromDb($tokenFromSession);
 if(!$userFromDB)
 {
     header("Location: ../View/forgot_password/request.php");
+    die();
 }
 if($password !== $confirmPassword)
 {

@@ -12,16 +12,11 @@ $user = $database->fetchUserByEmail($email);
 if(!$user)
 {
     header("Location: ../View/forgot_password/check_email.php");
+    die();
 }
 
 try {
-    /*var_dump($user["realtor_id"]);
-    die();*/
     $token = bin2hex(random_bytes(50));
-    /*var_dump($token);
-    die();*/
-
-
     $data = [
         'realtor_email' => $user["email"],
         'token' => $token,

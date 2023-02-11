@@ -11,7 +11,7 @@ $resetRequest = $database->fetchTokenFromDb($token);
 if(!$resetRequest)
 {
     header("Location: ../View/forgot_password/request.php");
+    die();
 }
 $_SESSION["token"] = $token;
-
 header("Location: ../View/forgot_password/reset.php");
