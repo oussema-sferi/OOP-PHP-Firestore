@@ -12,4 +12,53 @@ class HelperService
             return "../Ressources/assets/img/illustrations/profiles/profile-4.png";
         }
     }
+
+    public function sendFCM()
+    {
+        $url = "https://fcm.googleapis.com/fcm/send";
+        // SERVER KEY
+        $apiKey = "AAAAc6AHlLw:APA91bEZAO-NSozL_IbxiRnk7ixCHWWMxAViU-mX8fvzmLWflGFQk6QFayyv8QCcqZFWOavmv25wKraQhF3W3fXRljMAV1_GB6OKjVsUnFFLqAoURV9F8SqJqnOCePhtGHuBvXgdXyyU";
+        $headers = [
+            "Authorization:key=" . $apiKey,
+            "Content-Type:application/json"
+        ];
+        // Notification Content
+        $notifData = [
+            "title" => "My new notification title",
+            "body" => "My new notification body",
+            /*"image" => "IMAGE - URL",
+            "click-action" => "activities.notifhandler"*/
+        ];
+
+        // Optional
+        $dataPayload = [
+            "to" => "VIP",
+            "date" => "2023-02-12",
+            "other_data" => "dummy data just for testing purposes"
+        ];
+
+        // Create API Body
+        $notifBody = [
+            "notification" => $notifData,
+            // data payload is optional
+            "data" => $dataPayload,
+            // optional - in seconds, max_time = 4 weeks
+            "time_to_live" => 3600,
+            // "to" => "token or Reg_id",
+            "to" => "topics/newoffer",
+            // "registration_ids" => array of Registration_ids or tokens JSON
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($notifBody));
+
+        // Execute
+        $result = curl_exec($ch);
+        print $result;
+        curl_close($ch);
+        die();
+    }
 }

@@ -2,9 +2,12 @@
 namespace App\Controller;
 require_once "../../vendor/autoload.php";
 use App\Model\Firestore_honeydoo;
+use App\Service\HelperService;
 use DateTime;
 use Google\Cloud\Core\Timestamp;
 
+/*$helper = new HelperService();
+$helper->sendFCM();*/
     if(!isset($_SESSION["user"]))
     {
         header("Location: login.php");
@@ -29,6 +32,9 @@ use Google\Cloud\Core\Timestamp;
         'date' => new Timestamp(new DateTime()),
     ];
     $database = new Firestore_honeydoo();
+    // Create and save new blog post in DB
     $database->createNewBlogPost($data);
+
+    // Here comes the push notifications
     header("Location: ../View/blog_posts.php");
 
