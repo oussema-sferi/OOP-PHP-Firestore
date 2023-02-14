@@ -31,8 +31,8 @@ use Google\Cloud\Core\Timestamp;
         'home_type' => $_POST["homeType"],
         'notes' => $_POST["notes"],
         'is_subscribed' => true,
-        'realtor_id' => $_SESSION["user"]["realtor_id"]
-        /*'date' => new Timestamp(new DateTime()),*/
+        'realtor_id' => $_SESSION["user"]["realtor_id"],
+        'created_at' => new Timestamp(new DateTime()),
     ];
     $database = new Firestore_honeydoo();
     $database->createNewClientCollection($data);
