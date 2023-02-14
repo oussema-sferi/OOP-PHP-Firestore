@@ -146,14 +146,14 @@ $profilePic = $helper->setProfilePic($realtor);
                             <thead>
                             <tr>
                                 <th>Company Name</th>
-                                <th>Creation Date</th>
+                                <th>Date Created</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
                                 <th>Company Name</th>
-                                <th>Creation Date</th>
+                                <th>Date Created</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </tfoot>

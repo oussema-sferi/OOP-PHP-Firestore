@@ -154,24 +154,24 @@ $profilePic = $helper->setProfilePic($realtor);
                             <thead>
                             <tr>
                                 <th><input type='checkbox' class="checkAll"></th>
-                                <th>First name 1</th>
-                                <th>Last name 1</th>
-                                <th>Email 1</th>
-                                <th>First name 2</th>
-                                <th>Last name 2</th>
-                                <th>Email 2</th>
+                                <th>Client name</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Date Created</th>
+                                <th>Date Email Invite Sent</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
                                 <th><input type='checkbox' class="checkAll"></th>
-                                <th class="first">First name 1</th>
-                                <th>Last name 1</th>
-                                <th>Email 1</th>
-                                <th>First name 2</th>
-                                <th>Last name 2</th>
-                                <th>Email 2</th>
+                                <th>Client name</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Date Created</th>
+                                <th>Date Email Invite Sent</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </tfoot>
@@ -180,14 +180,20 @@ $profilePic = $helper->setProfilePic($realtor);
                             foreach ($userClients as $clientCollection)
                                 {
                                     $docId = $clientCollection->doc_id;
-                                    $firstName1 = $clientCollection->first_name_1;
-                                    $lastName1 = $clientCollection->last_name_1;
-                                    $email1 = $clientCollection->email_1;
-                                    /*$phoneNumber1 = $clientCollection->phone_1;*/
-                                    $firstName2 = $clientCollection->first_name_2;
-                                    $lastName2 = $clientCollection->last_name_2;
-                                    $email2 = $clientCollection->email_2;
-                                    /*$phoneNumber2 = $clientCollection->phone_2;*/
+                                    $clientName = $clientCollection->first_name_1 . " " . $clientCollection->last_name_1;
+                                    $address = $clientCollection->address_1;
+                                    $city = $clientCollection->city;
+                                    $state = $clientCollection->state;
+                                    if(isset($clientCollection->created_at)) {
+                                        $createdAt = $clientCollection->created_at->get()->format("m-d-Y");
+                                    } else {
+                                        $createdAt = "";
+                                    }
+                                    if(isset($clientCollection->email_invite_sent_at)) {
+                                        $emailInviteSentDate = $clientCollection->email_invite_sent_at->get()->format("m-d-Y");
+                                    } else {
+                                        $emailInviteSentDate = "";
+                                    }
                                     $clientCollectionId = $clientCollection->doc_id;
                                     $showClientCollectionLink = "client_collection_show.php?client_collection_id=$clientCollectionId";
                                     $editClientCollectionLink = "client_collection_edit.php?client_collection_id=$clientCollectionId";
@@ -195,12 +201,13 @@ $profilePic = $helper->setProfilePic($realtor);
                                     echo "
                                 <tr>
                                     <td><input type='checkbox' value=$docId></td>
-                                    <td>$firstName1</td>
-                                    <td>$lastName1</td>
-                                    <td class='email1'>$email1</td>                                 
-                                    <td>$firstName2</td>
-                                    <td>$lastName2</td>
-                                    <td class='email2'>$email2</td>                                   
+                                    <td>$clientName</td>
+                                    <td>$address</td>
+                                    <td>$city</td>
+                                    <td>$state</td>
+                                    <td>$createdAt</td>
+                                    <td>$emailInviteSentDate</td>
+                                                        
                                     <td class='text-center'>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$showClientCollectionLink><i data-feather='zoom-in'></i></a>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$editClientCollectionLink><i data-feather='edit'></i></a>

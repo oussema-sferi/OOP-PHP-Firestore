@@ -3,7 +3,8 @@ namespace App\Controller;
 require_once "../../vendor/autoload.php";
 use App\Model\Firestore_honeydoo;
 use App\Service\MailerService;
-use function Google\Cloud\Debugger\showUsageAndDie;
+use DateTime;
+use Google\Cloud\Core\Timestamp;
 
 if(!isset($_SESSION["user"]))
 {
@@ -46,11 +47,15 @@ foreach ($realtorInfo as $key => $value)
 $email = $database->fetchEmailContent();
 $emailSubject = $email["subject"];
 $emailSubject = str_replace("{{realtor_name}}", $_SESSION["user"]["realtor_title"], $emailSubject);
+/*var_dump($subscribedClients[0]->id());
+die();*/
 foreach ($subscribedClients as $client)
 {
     $mailer = new MailerService();
     $emailContent = str_replace("{{unsubscribe}}", $unsubscriptionLink . $client->id(), $emailContent);
     $mailer->sendInvitationMail($emailContent, $emailSubject, [$client["email_1"], $client["email_2"]]);
+    $data = [['path' => 'email_invite_sent_at', 'value' => new Timestamp(new DateTime())]];
+    $database->updateClientCollection($client->id(), $data);
 }
 header("Location: ../View/clients_list.php");
 
