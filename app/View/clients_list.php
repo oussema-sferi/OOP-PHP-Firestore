@@ -16,9 +16,28 @@ if(!isset($_SESSION["user"]))
 }
 $database = new Firestore_honeydoo();
 $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
-/*var_dump($userClients[0]->doc_id);
-die();*/
-
+$allMobileAppClients = $database->fetchAllMobileAppClients();
+foreach ($userClients as $userClient)
+{
+    $clientOneEmail = $userClient->email_1;
+    $clientTwoEmail = $userClient->email_2;
+    if(!isset($userClient->mobile_app_signed_up_at) || trim($userClient->mobile_app_signed_up_at) == "")
+    {
+        foreach ($allMobileAppClients as $mobileAppClient)
+        {
+            $mobileAppClientEmail = $mobileAppClient->email;
+            if(isset($mobileAppClientEmail) && trim($mobileAppClientEmail) != "")
+            {
+                if(($clientOneEmail == $mobileAppClientEmail) || ($clientTwoEmail == $mobileAppClientEmail))
+                {
+                    $database->updateClientCollection($userClient->doc_id, [["path" => "mobile_app_signed_up_at", "value" => $mobileAppClient->created_date]]);
+                    break;
+                }
+            }
+        }
+    }
+}
+$userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
 //
 $realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);
 $helper = new HelperService();
@@ -38,6 +57,11 @@ $profilePic = $helper->setProfilePic($realtor);
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        th, td {
+            text-align: center;
+        }
+    </style>
 </head>
 <body class="nav-fixed">
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" style="background-color: #262144!important" id="sidenavAccordion">
@@ -160,6 +184,7 @@ $profilePic = $helper->setProfilePic($realtor);
                                 <th>State</th>
                                 <th>Date Created</th>
                                 <th>Date Email Invite Sent</th>
+                                <th>Date Client Signed-up</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </thead>
@@ -172,6 +197,7 @@ $profilePic = $helper->setProfilePic($realtor);
                                 <th>State</th>
                                 <th>Date Created</th>
                                 <th>Date Email Invite Sent</th>
+                                <th>Date Client Signed-up</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </tfoot>
@@ -194,6 +220,12 @@ $profilePic = $helper->setProfilePic($realtor);
                                     } else {
                                         $emailInviteSentDate = "";
                                     }
+
+                                    if(isset($clientCollection->mobile_app_signed_up_at)) {
+                                        $mobileAppSignedUpDate = $clientCollection->mobile_app_signed_up_at->get()->format("m-d-Y");
+                                    } else {
+                                        $mobileAppSignedUpDate = "";
+                                    }
                                     $clientCollectionId = $clientCollection->doc_id;
                                     $showClientCollectionLink = "client_collection_show.php?client_collection_id=$clientCollectionId";
                                     $editClientCollectionLink = "client_collection_edit.php?client_collection_id=$clientCollectionId";
@@ -207,6 +239,7 @@ $profilePic = $helper->setProfilePic($realtor);
                                     <td>$state</td>
                                     <td>$createdAt</td>
                                     <td>$emailInviteSentDate</td>
+                                    <td>$mobileAppSignedUpDate</td>
                                                         
                                     <td class='text-center'>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$showClientCollectionLink><i data-feather='zoom-in'></i></a>

@@ -139,10 +139,25 @@ class Firestore_honeydoo
         return $blogRef->delete();
     }
 
-    public function fetchUserClients($userId)
+    public function fetchUserClients($userId): array
     {
         $res = [];
         $query = $this->db->collection('realtor_clients')->where('realtor_id', '=', $userId);
+        $documents = $query->documents();
+        foreach ($documents as $document) {
+            if ($document->exists()) {
+                $obj_merged = (object) array_merge(
+                    ["doc_id" => $document->id()], (array) $document->data());
+                $res[] = $obj_merged;
+            }
+        }
+        return $res;
+    }
+
+    public function fetchAllMobileAppClients(): array
+    {
+        $res = [];
+        $query = $this->db->collection('user');
         $documents = $query->documents();
         foreach ($documents as $document) {
             if ($document->exists()) {
