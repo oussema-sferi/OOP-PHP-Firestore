@@ -15,33 +15,14 @@ if(!isset($_SESSION["user"]))
     }
 }
 $database = new Firestore_honeydoo();
+$helper = new HelperService();
+$realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);
+$profilePic = $helper->setProfilePic($realtor);
 $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
 $allMobileAppClients = $database->fetchAllMobileAppClients();
-foreach ($userClients as $userClient)
-{
-    $clientOneEmail = $userClient->email_1;
-    $clientTwoEmail = $userClient->email_2;
-    if(!isset($userClient->mobile_app_signed_up_at) || trim($userClient->mobile_app_signed_up_at) == "")
-    {
-        foreach ($allMobileAppClients as $mobileAppClient)
-        {
-            $mobileAppClientEmail = $mobileAppClient->email;
-            if(isset($mobileAppClientEmail) && trim($mobileAppClientEmail) != "")
-            {
-                if(($clientOneEmail == $mobileAppClientEmail) || ($clientTwoEmail == $mobileAppClientEmail))
-                {
-                    $database->updateClientCollection($userClient->doc_id, [["path" => "mobile_app_signed_up_at", "value" => $mobileAppClient->created_date]]);
-                    break;
-                }
-            }
-        }
-    }
-}
+$helper->clientCheckAndSaveSignUpDate($userClients, $allMobileAppClients, $database);
 $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
 //
-$realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);
-$helper = new HelperService();
-$profilePic = $helper->setProfilePic($realtor);
 ?>
 <!DOCTYPE html>
 <html lang="en">

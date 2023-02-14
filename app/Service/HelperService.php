@@ -13,6 +13,30 @@ class HelperService
         }
     }
 
+    public function clientCheckAndSaveSignUpDate($userClients, $allMobileAppClients, $database): void
+    {
+        foreach ($userClients as $userClient)
+        {
+            $clientOneEmail = $userClient->email_1;
+            $clientTwoEmail = $userClient->email_2;
+            if(!isset($userClient->mobile_app_signed_up_at) || trim($userClient->mobile_app_signed_up_at) == "")
+            {
+                foreach ($allMobileAppClients as $mobileAppClient)
+                {
+                    $mobileAppClientEmail = $mobileAppClient->email;
+                    if(isset($mobileAppClientEmail) && trim($mobileAppClientEmail) != "")
+                    {
+                        if(($clientOneEmail == $mobileAppClientEmail) || ($clientTwoEmail == $mobileAppClientEmail))
+                        {
+                            $database->updateClientCollection($userClient->doc_id, [["path" => "mobile_app_signed_up_at", "value" => $mobileAppClient->created_date]]);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public function sendFCM()
     {
         $url = "https://fcm.googleapis.com/fcm/send";
