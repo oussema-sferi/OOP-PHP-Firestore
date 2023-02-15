@@ -38,11 +38,6 @@ $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <style>
-        th, td {
-            text-align: center;
-        }
-    </style>
 </head>
 <body class="nav-fixed">
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" style="background-color: #262144!important" id="sidenavAccordion">
@@ -158,28 +153,28 @@ $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
-                                <th><input type='checkbox' class="checkAll"></th>
-                                <th>Client name</th>
-                                <th>Address</th>
-                                <th>City</th>
-                                <th>State</th>
-                                <th>Date Created</th>
-                                <th>Date Email Invite Sent</th>
-                                <th>Date Client Signed-up</th>
-                                <th class="text-center">Actions</th>
+                                <th class='text-center' style='vertical-align: middle'><input type='checkbox' class="checkAll"></th>
+                                <th class='text-center' style='vertical-align: middle'>Client name<i class="fas fa-sort float-end mt-1"></i></th>
+                                <th class='text-center' style='vertical-align: middle'>Address</th>
+                                <th class='text-center' style='vertical-align: middle'>City</th>
+                                <th class='text-center' style='vertical-align: middle'>State</th>
+                                <th class='text-center' style='vertical-align: middle'>Created At</th>
+                                <th class='text-center' style='max-width: 70px; vertical-align: middle'>Email Invite Sent At<i class="fas fa-sort float-end mt-1"></i></th>
+                                <th class='text-center' style='max-width: 70px; vertical-align: middle'>Client Signed-up At<i class="fas fa-sort float-end mt-1"></i></th>
+                                <th class="text-center" style='vertical-align: middle'>Actions</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
                                 <th><input type='checkbox' class="checkAll"></th>
-                                <th>Client name</th>
+                                <th>Client name<i class="fas fa-sort float-end mt-1"></i></th>
                                 <th>Address</th>
                                 <th>City</th>
                                 <th>State</th>
                                 <th>Date Created</th>
                                 <th>Date Email Invite Sent</th>
                                 <th>Date Client Signed-up</th>
-                                <th class="text-center">Actions</th>
+                                <th>Actions</th>
                             </tr>
                             </tfoot>
                             <tbody>
@@ -213,14 +208,14 @@ $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
                                     $deleteClientCollectionLink = "../Controller/delete_client_collection_action.php?client_collection_id=$clientCollectionId";
                                     echo "
                                 <tr>
-                                    <td><input type='checkbox' value=$docId></td>
-                                    <td>$clientName</td>
-                                    <td>$address</td>
-                                    <td>$city</td>
-                                    <td>$state</td>
-                                    <td>$createdAt</td>
-                                    <td>$emailInviteSentDate</td>
-                                    <td>$mobileAppSignedUpDate</td>
+                                    <td class='text-center' style='vertical-align: middle'><input type='checkbox' value=$docId></td>
+                                    <td class='text-center' style='min-width: 140px; vertical-align: middle'>$clientName</td>
+                                    <td class='text-center' style='max-width: 250px; vertical-align: middle'>$address</td>
+                                    <td class='text-center' style='vertical-align: middle'>$city</td>
+                                    <td class='text-center' style='vertical-align: middle'>$state</td>
+                                    <td class='text-center' style='min-width: 70px; vertical-align: middle'>$createdAt</td>
+                                    <td class='text-center' style='vertical-align: middle'>$emailInviteSentDate</td>
+                                    <td class='text-center' style='vertical-align: middle'>$mobileAppSignedUpDate</td>
                                                         
                                     <td class='text-center'>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$showClientCollectionLink><i data-feather='zoom-in'></i></a>
@@ -265,11 +260,21 @@ $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@5" type="text/javascript"></script>
-<script src="../Ressources/js/datatables/datatables-simple-demo.js"></script>
+<!--<script src="../Ressources/js/datatables/datatables-simple-demo.js"></script>-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="../Ressources/js/scripts.js"></script>
 <script>
     $( document ).ready(function() {
+        const datatablesSimple = document.getElementById('datatablesSimple');
+        if (datatablesSimple) {
+            new simpleDatatables.DataTable(datatablesSimple, {
+                /*sortable: false,*/
+                columns: [
+                    { select: [1,6,7], sortable: true },
+                    { select: [0,2,3,4,5,8], sortable: false },
+                ]
+            });
+        }
         let clientsArray = [];
         $("#importClientButton").click(function () {
             $("#buttonsContainer").hide()
@@ -291,8 +296,8 @@ $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
                 clientsArray = [];
             }
         });
-        $("input[type=checkbox]").change(function () {
-            /*console.log($(this))*/
+        $(document).on('change', 'input[type=checkbox]', function() {
+            /*$('th, td').css({"text-align": "center", "vertical-align": "middle"})*/
             if($("input[type=checkbox]").length == 1) return;
             if($("input[type=checkbox]:checked").length > 0)
             {
@@ -313,7 +318,8 @@ $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
                 };
                 clientsArray = removeFromArray(clientsArray, $(this).val());
             }
-        })
+        });
+
         $("#emailInvitaionForm").submit(function (e) {
             $("#selected_clients").val(JSON.stringify(clientsArray))
         })
