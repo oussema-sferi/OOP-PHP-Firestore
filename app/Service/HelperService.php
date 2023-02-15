@@ -28,8 +28,11 @@ class HelperService
                     {
                         if(($clientOneEmail == $mobileAppClientEmail) || ($clientTwoEmail == $mobileAppClientEmail))
                         {
-                            $database->updateClientCollection($userClient->doc_id, [["path" => "mobile_app_signed_up_at", "value" => $mobileAppClient->created_date]]);
-                            break;
+                            if(isset($mobileAppClient->created_date))
+                            {
+                                $database->updateClientCollection($userClient->doc_id, [["path" => "mobile_app_signed_up_at", "value" => $mobileAppClient->created_date]]);
+                                break;
+                            }
                         }
                     }
                 }
