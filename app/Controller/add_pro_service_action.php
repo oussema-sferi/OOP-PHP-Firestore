@@ -57,7 +57,4 @@ if(count($realtorLinkedMobileClientsTokens) > 0) {
     $helper->sendFCM($realtorLinkedMobileClientsTokens, $notificationParameters, $redirectUrl);
 } else {
     header("Location: ../View/pro_services.php");
-    /*var_dump("no notifications sent");
-    die();*/
 }
-
