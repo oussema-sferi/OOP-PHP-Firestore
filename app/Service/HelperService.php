@@ -86,19 +86,23 @@ class HelperService
             /*"registration_ids" => ["dIDaijXaREqaJ-S1InPc7H:APA91bGm7rqvUDCeIC4dVqf7bL2opxDjg4RzgbQMidOrqc4HWEmthWPqVbFPxFbjZQDEHIEfiu8l3GVx0_BkUVGxbT5ucrKdH4WP8XEiHFej3yyf2_68RZQ5jMO7-E3qN-5LRCBsp2Ju"],*/
             /*"registration_ids" => array of Registration_ids or tokens JSON*/
         ];
-
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($notifBody));
+        curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         // Execute
-        $result = curl_exec($ch);
-        /*print $result;*/
-        curl_close($ch);
-        header("Location: $redirectUrl");
-        exit;
+        if(json_decode(curl_exec($ch), true)["success"] > 0)
+        {
+            curl_close($ch);
+            header("Location: $redirectUrl");
+            die();
+        }
 
+        header("Location: $redirectUrl");
     }
 }

@@ -61,3 +61,4 @@ if(count($realtorLinkedMobileClientsTokens) > 0) {
     die();*/
 }
 
+header("Location: ../View/blog_posts.php");
