@@ -48,6 +48,16 @@ foreach ($realtorLinkedPortalClients as $portalClient)
         $realtorLinkedMobileClientsTokens[] = $portalClient->notification_token;
     }
 }
-if(count($realtorLinkedMobileClientsTokens) > 0) $helper->sendFCM($realtorLinkedMobileClientsTokens);
-header("Location: ../View/blog_posts.php");
+$notificationParameters = [
+    "title" => "HoneyDoo Alert",
+    "body" => "Your realtor has added a new story. Click here to read it."
+];
+$redirectUrl = "../View/blog_posts.php";
+if(count($realtorLinkedMobileClientsTokens) > 0) {
+    $helper->sendFCM($realtorLinkedMobileClientsTokens, $notificationParameters, $redirectUrl);
+} else {
+    header("Location: ../View/blog_posts.php");
+    /*var_dump("no notifications sent");
+    die();*/
+}
 

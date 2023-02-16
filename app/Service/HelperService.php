@@ -49,7 +49,7 @@ class HelperService
         }
     }
 
-    public function sendFCM($tokensArray)
+    public function sendFCM(array $tokensArray, array $parameters, string $redirectUrl)
     {
         $url = "https://fcm.googleapis.com/fcm/send";
         // SERVER KEY
@@ -60,24 +60,24 @@ class HelperService
         ];
         // Notification Content
         $notifData = [
-            "title" => "New added story",
-            "body" => "A new story has been added by your realtor",
+            "title" => $parameters["title"],
+            "body" => $parameters["body"],
             /*"image" => "IMAGE - URL",
             "click-action" => "activities.notifhandler"*/
         ];
 
         // Optional
-        $dataPayload = [
+        /*$dataPayload = [
             "to" => "VIP",
             "date" => "2023-02-12",
             "other_data" => "dummy data just for testing purposes"
-        ];
+        ];*/
 
         // Create API Body
         $notifBody = [
             "notification" => $notifData,
             // data payload is optional
-            "data" => $dataPayload,
+            /*"data" => $dataPayload,*/
             // optional - in seconds, max_time = 4 weeks
             "time_to_live" => 3600,
             // "to" => "token or Reg_id",
@@ -97,6 +97,8 @@ class HelperService
         $result = curl_exec($ch);
         /*print $result;*/
         curl_close($ch);
-        die();
+        header("Location: $redirectUrl");
+        exit;
+
     }
 }
