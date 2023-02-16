@@ -14,14 +14,15 @@ if(!isset($_SESSION["user"]))
         header("Location: users_list.php");
     }
 }
+$loggedRealtorId = $_SESSION["user"]["realtor_id"];
 $database = new Firestore_honeydoo();
 $helper = new HelperService();
-$realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);
+$realtor = $database->fetchRealtorById($loggedRealtorId);
 $profilePic = $helper->setProfilePic($realtor);
-$userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
+$userClients = $database->fetchUserClients($loggedRealtorId);
 $allMobileAppClients = $database->fetchAllMobileAppClients();
 $helper->clientCheckAndSaveSignUpDate($userClients, $allMobileAppClients, $database);
-$userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
+$userClients = $database->fetchUserClients($loggedRealtorId);
 //
 ?>
 <!DOCTYPE html>
@@ -197,7 +198,7 @@ $userClients = $database->fetchUserClients($_SESSION["user"]["realtor_id"]);
                                         $emailInviteSentDate = "";
                                     }
 
-                                    if(isset($clientCollection->mobile_app_signed_up_at)) {
+                                    if(isset($clientCollection->mobile_app_signed_up_at) && trim($clientCollection->mobile_app_signed_up_at) !== "") {
                                         $mobileAppSignedUpDate = $clientCollection->mobile_app_signed_up_at->get()->format("m-d-Y");
                                     } else {
                                         $mobileAppSignedUpDate = "";

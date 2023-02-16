@@ -19,28 +19,37 @@ class HelperService
         {
             $clientOneEmail = $userClient->email_1;
             $clientTwoEmail = $userClient->email_2;
-            if(!isset($userClient->mobile_app_signed_up_at) || trim($userClient->mobile_app_signed_up_at) == "")
+            $counter = 0;
+            foreach ($allMobileAppClients as $mobileAppClient)
             {
-                foreach ($allMobileAppClients as $mobileAppClient)
+                $mobileAppClientEmail = $mobileAppClient->email;
+                if(isset($mobileAppClientEmail) && trim($mobileAppClientEmail) != "")
                 {
-                    $mobileAppClientEmail = $mobileAppClient->email;
-                    if(isset($mobileAppClientEmail) && trim($mobileAppClientEmail) != "")
+                    if(($clientOneEmail == $mobileAppClientEmail) || ($clientTwoEmail == $mobileAppClientEmail))
                     {
-                        if(($clientOneEmail == $mobileAppClientEmail) || ($clientTwoEmail == $mobileAppClientEmail))
+                        if(isset($mobileAppClient->created_date))
                         {
-                            if(isset($mobileAppClient->created_date))
-                            {
-                                $database->updateClientCollection($userClient->doc_id, [["path" => "mobile_app_signed_up_at", "value" => $mobileAppClient->created_date]]);
-                                break;
-                            }
+                            $database->updateClientCollection($userClient->doc_id, [
+                                ["path" => "mobile_app_signed_up_at", "value" => $mobileAppClient->created_date],
+                                ["path" => "notification_token", "value" => $mobileAppClient->notification_token],
+                                ]);
+                            $counter++;
+                            break;
                         }
                     }
                 }
             }
+            if($counter === 0)
+            {
+                $database->updateClientCollection($userClient->doc_id, [
+                    ["path" => "mobile_app_signed_up_at", "value" => ""],
+                    ["path" => "notification_token", "value" => ""],
+                ]);
+            }
         }
     }
 
-    public function sendFCM()
+    public function sendFCM($tokensArray)
     {
         $url = "https://fcm.googleapis.com/fcm/send";
         // SERVER KEY
@@ -51,8 +60,8 @@ class HelperService
         ];
         // Notification Content
         $notifData = [
-            "title" => "My new notification title",
-            "body" => "My new notification body",
+            "title" => "New added story",
+            "body" => "A new story has been added by your realtor",
             /*"image" => "IMAGE - URL",
             "click-action" => "activities.notifhandler"*/
         ];
@@ -72,8 +81,10 @@ class HelperService
             // optional - in seconds, max_time = 4 weeks
             "time_to_live" => 3600,
             // "to" => "token or Reg_id",
-            "to" => "topics/newoffer",
-            // "registration_ids" => array of Registration_ids or tokens JSON
+            /*"to" => "dIDaijXaREqaJ-S1InPc7H:APA91bGm7rqvUDCeIC4dVqf7bL2opxDjg4RzgbQMidOrqc4HWEmthWPqVbFPxFbjZQDEHIEfiu8l3GVx0_BkUVGxbT5ucrKdH4WP8XEiHFej3yyf2_68RZQ5jMO7-E3qN-5LRCBsp2Ju",*/
+            "registration_ids" => $tokensArray
+            /*"registration_ids" => ["dIDaijXaREqaJ-S1InPc7H:APA91bGm7rqvUDCeIC4dVqf7bL2opxDjg4RzgbQMidOrqc4HWEmthWPqVbFPxFbjZQDEHIEfiu8l3GVx0_BkUVGxbT5ucrKdH4WP8XEiHFej3yyf2_68RZQ5jMO7-E3qN-5LRCBsp2Ju"],*/
+            /*"registration_ids" => array of Registration_ids or tokens JSON*/
         ];
 
         $ch = curl_init();
@@ -84,7 +95,7 @@ class HelperService
 
         // Execute
         $result = curl_exec($ch);
-        print $result;
+        /*print $result;*/
         curl_close($ch);
         die();
     }
