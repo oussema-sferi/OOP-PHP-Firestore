@@ -127,12 +127,18 @@ $profilePic = $helper->setProfilePic($realtor);
                             <thead>
                             <tr>
                                 <th>Story Title</th>
+                                <th>Date Created</th>
+                                <th>Views</th>
+                                <th>Likes</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
                                 <th>Story Title</th>
+                                <th>Date Created</th>
+                                <th>Views</th>
+                                <th>Likes</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </tfoot>
@@ -141,6 +147,18 @@ $profilePic = $helper->setProfilePic($realtor);
                             foreach ($loggedUserBlogPosts as $blogPost)
                                 {
                                     $title = $blogPost->title;
+                                    $createdAt = $blogPost->date->get()->format("m-d-Y");
+                                    if(isset($blogPost->views)) {
+                                        $views = $blogPost->views;
+                                    } else {
+                                        $views = 0;
+                                    }
+
+                                    if(isset($blogPost->user_liked)) {
+                                        $likes = count($blogPost->user_liked);
+                                    } else {
+                                        $likes = 0;
+                                    }
                                     $blogPostId = $blogPost->doc_id;
                                     $showBlogPostLink = "blog_show.php?blog_id=$blogPostId";
                                     $editBlogPostLink = "blog_edit.php?blog_id=$blogPostId";
@@ -148,6 +166,9 @@ $profilePic = $helper->setProfilePic($realtor);
                                     echo "
                                 <tr>
                                     <td>$title</td>
+                                    <td>$createdAt</td>
+                                    <td>$views</td>
+                                    <td>$likes</td>
                                     <td class='text-center'>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$showBlogPostLink><i data-feather='zoom-in'></i></a>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$editBlogPostLink><i data-feather='edit'></i></a>
