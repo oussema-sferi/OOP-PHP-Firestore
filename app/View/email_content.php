@@ -28,80 +28,13 @@ $profilePic = $helper->setProfilePic($realtor);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="Honeydoo" />
-    <meta name="author" content="Honeydoo" />
+    <?php include 'layout/admin/header.php';?>
     <title>Invitation Email</title>
-    <link href="../Ressources/css/styles.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
-    <link rel="icon" type="image/x-icon" href="../Ressources/assets/img/favicon.png" />
-    <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body class="nav-fixed">
-<nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" style="background-color: #262144!important" id="sidenavAccordion">
-    <!-- Sidenav Toggle Button-->
-    <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle" style="background-color: #00B2A0!important;"><i data-feather="menu"></i></button>
-    <!-- Navbar Brand-->
-    <!--<a class="navbar-brand pe-3 ps-4 ps-lg-2" href="#">Honeydoo</a>-->
-    <img class="navbar-brand pe-3 ps-4 ps-lg-2" src="../Ressources/assets/img/HoneyDoo-logo.png">
-    <!-- Navbar Items-->
-    <ul class="navbar-nav align-items-center ms-auto">
-        <!-- User Dropdown-->
-        <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
-            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src=<?= $profilePic ?> /></a>
-            <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
-                <h6 class="dropdown-header d-flex align-items-center">
-                    <img class="dropdown-user-img" src=<?=$profilePic?> />
-                    <div class="dropdown-user-details">
-                        <div class="dropdown-user-details-name"><?=$_SESSION["user"]["realtor_title"]?></div>
-                        <div class="dropdown-user-details-email"><?=$_SESSION["user"]["email"]?></div>
-                    </div>
-                </h6>
-                <div class="dropdown-divider"></div>
-                <!--<a class="dropdown-item" href="<?php /*echo 'my_profile.php' */?>">
-                    <div class="dropdown-item-icon"><i data-feather="user"></i></div>
-                    My Profile
-                </a>-->
-                <a class="dropdown-item" href="<?php echo 'logout.php' ?>">
-                    <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
-                    Logout
-                </a>
-            </div>
-        </li>
-    </ul>
-</nav>
+<?php include 'layout/admin/navbar.php';?>
 <div id="layoutSidenav">
-    <div id="layoutSidenav_nav">
-        <nav class="sidenav shadow-right sidenav-light">
-            <div class="sidenav-menu">
-                <div class="nav accordion" id="accordionSidenav">
-                    <!-- Sidenav Heading (Custom)-->
-                    <div class="sidenav-menu-heading">Dashboard</div>
-                    <!-- Sidenav Link (Users)-->
-                    <a class="nav-link" href="<?='users_list.php'?>">
-                        <div class="nav-link-icon"><i data-feather="user"></i></div>
-                        Users
-                    </a>
-                    <!-- Sidenav Accordion (Cell Rules)-->
-                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseEmails" aria-expanded="false" aria-controls="collapseDashboards">
-                        <div class="nav-link-icon"><i data-feather="mail"></i></div>
-                        Emails
-                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapseEmails" data-bs-parent="#accordionSidenav">
-                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="<?='email_content.php'?>">Invitation Email</a>
-                            <a class="nav-link" href="<?='reset_password_email.php'?>">Reset Password Email</a>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </div>
+    <?php include 'layout/admin/sidebar.php';?>
     <div id="layoutSidenav_content">
         <main>
             <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
@@ -149,7 +82,7 @@ $profilePic = $helper->setProfilePic($realtor);
                 </form>
             </div>
         </main>
-        <?php include 'layout/footer.php';?>
+        <?php include 'layout/admin/footer.php';?>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@5" type="text/javascript"></script>

@@ -1,0 +1,25 @@
+<div id="layoutSidenav_nav">
+    <nav class="sidenav shadow-right sidenav-light">
+        <div class="sidenav-menu">
+            <div class="nav accordion" id="accordionSidenav">
+                <!-- Sidenav Heading (Custom)-->
+                <div class="sidenav-menu-heading">Dashboard</div>
+                <!-- Sidenav Link (Blog Posts)-->
+                <a class="nav-link" href="<?='blog_posts.php'?>">
+                    <div class="nav-link-icon"><i data-feather="list"></i></div>
+                    My Stories
+                </a>
+                <!-- Sidenav Link (Pro Services)-->
+                <a class="nav-link" href="<?='pro_services.php'?>">
+                    <div class="nav-link-icon"><i data-feather="list"></i></div>
+                    My Pro Services
+                </a>
+                <!-- Sidenav Link (Client)-->
+                <a class="nav-link" href="<?='clients_list.php'?>">
+                    <div class="nav-link-icon"><i data-feather="list"></i></div>
+                    Clients List
+                </a>
+            </div>
+        </div>
+    </nav>
+</div>

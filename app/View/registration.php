@@ -117,7 +117,7 @@ if(isset($_SESSION['registration_error_flash_message'])) {
         </main>
     </div>
     <div id="layoutAuthentication_footer">
-        <?php include 'layout/footer.php';?>
+        <?php include 'layout/realtor/footer.php';?>
     </div>
 </div>
 </body>
