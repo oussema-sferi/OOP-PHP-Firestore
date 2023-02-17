@@ -35,7 +35,7 @@ foreach ($realtorLinkedPortalClients as $portalClient)
 }
 $notificationParameters = [
     "title" => "HoneyDoo Alert",
-    "body" => "Your realtor has just deleted a home pro."
+    "body" => "Your realtor has removed a recommended home pro."
 ];
 $redirectUrl = "../View/pro_services.php";
 if(count($realtorLinkedMobileClientsTokens) > 0) {
