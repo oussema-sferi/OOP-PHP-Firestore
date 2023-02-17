@@ -81,13 +81,7 @@ if(isset($_SESSION['registration_success_flash_message'])) {
         </main>
     </div>
     <div id="layoutAuthentication_footer">
-        <footer class="footer-admin mt-auto footer-dark">
-            <div class="container-xl px-4">
-                <div class="row">
-                    <div class="small text-center">Copyright &copy; Honeydoo</div>
-                </div>
-            </div>
-        </footer>
+        <?php include 'layout/footer.php';?>
     </div>
 </div>
 </body>

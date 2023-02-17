@@ -231,20 +231,12 @@ $profilePic = $helper->setProfilePic($realtor);
                         </div>
                     </div>
                     <div style="text-align: right">
-
-                                <div><input class="btn btn-lg btn-primary" type="submit" value="Save"></div>
-
+                        <div><input class="btn btn-lg btn-primary" type="submit" value="Save"></div>
                     </div>
                 </form>
             </div>
         </main>
-        <footer class="footer-admin mt-auto footer-light">
-            <div class="container-xl px-4">
-                <div class="row">
-                    <div class="small text-center">Copyright &copy; Honeydoo</div>
-                </div>
-            </div>
-        </footer>
+        <?php include 'layout/footer.php';?>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@5" type="text/javascript"></script>
