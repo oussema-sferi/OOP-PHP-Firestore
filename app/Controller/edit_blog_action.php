@@ -39,4 +39,4 @@ foreach ($data as $key => $value)
 }
 $database = new Firestore_honeydoo();
 $database->updateBlogPost($blogId, $finalData);
-header("Location: ../View/blog_posts.php");
+header("Location: ../View/stories/list.php");

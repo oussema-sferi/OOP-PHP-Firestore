@@ -20,5 +20,5 @@ if($email == "")
     } else {
         $_SESSION["user"] = $user;
     }
-    header("Location: ../View/blog_posts.php");
+    header("Location: ../View/stories/list.php");
 }

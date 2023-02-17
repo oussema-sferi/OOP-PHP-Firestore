@@ -17,5 +17,5 @@ if(!isset($_SESSION["user"]))
 $blogId = $_GET["blog_id"];
 $database = new Firestore_honeydoo();
 $database->deleteBlogPost($blogId);
-header("Location: ../View/blog_posts.php");
+header("Location: ../View/stories/list.php");
 
