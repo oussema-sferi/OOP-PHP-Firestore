@@ -57,5 +57,5 @@ if (isset($_POST["submit"]))
         $database->createNewClientCollection($row);
     }
 }
-header("Location: ../View/clients_list.php");
+header("Location: ../View/clients/list.php");
 

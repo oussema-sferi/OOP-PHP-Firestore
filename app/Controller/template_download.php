@@ -33,5 +33,5 @@ use Google\Cloud\Core\Timestamp;
         readfile($filename);
         exit;
     }
-    header("Location: ../View/clients_list.php");
+    header("Location: ../View/clients/list.php");
 

@@ -36,5 +36,5 @@ use Google\Cloud\Core\Timestamp;
     ];
     $database = new Firestore_honeydoo();
     $database->createNewClientCollection($data);
-    header("Location: ../View/clients_list.php");
+    header("Location: ../View/clients/list.php");
 

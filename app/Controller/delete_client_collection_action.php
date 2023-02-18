@@ -17,5 +17,5 @@ if(!isset($_SESSION["user"]))
 $clientCollectionId = $_GET["client_collection_id"];
 $database = new Firestore_honeydoo();
 $database->deleteClientCollection($clientCollectionId);
-header("Location: ../View/clients_list.php");
+header("Location: ../View/clients/list.php");
 

@@ -40,4 +40,4 @@ foreach ($data as $key => $value)
 }
 $database = new Firestore_honeydoo();
 $database->updateClientCollection($clientCollectionId, $finalData);
-header("Location: ../View/clients_list.php");
+header("Location: ../View/clients/list.php");

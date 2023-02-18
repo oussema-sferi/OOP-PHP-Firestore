@@ -57,5 +57,5 @@ foreach ($subscribedClients as $client)
     $data = [['path' => 'email_invite_sent_at', 'value' => new Timestamp(new DateTime())]];
     $database->updateClientCollection($client->id(), $data);
 }
-header("Location: ../View/clients_list.php");
+header("Location: ../View/clients/list.php");
 
