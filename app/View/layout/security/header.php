@@ -1,0 +1,10 @@
+<?php
+$baseUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . "/app/View/";
+?>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="Honeydoo" />
+<meta name="author" content="Honeydoo" />
+<link href="../../../Ressources/css/styles.css" rel="stylesheet" />
+<link rel="icon" type="image/x-icon" href="../../../Ressources/assets/img/favicon.png" />

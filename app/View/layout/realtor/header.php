@@ -3,7 +3,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="Honeydoo" />
 <meta name="author" content="Honeydoo" />
-
 <link href="../../Ressources/css/styles.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
 <link rel="icon" type="image/x-icon" href="../../Ressources/assets/img/favicon.png" />

@@ -4,14 +4,16 @@ use App\Model\Firestore_honeydoo;
 use App\Service\HelperService;
 
 require_once "../../../vendor/autoload.php";
-
+$baseUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . "/app/View/";
 if(!isset($_SESSION["user"]))
 {
-    header("Location: login.php");
+    $loginPage = $baseUrl . 'common/security/login.php';
+    header("Location: $loginPage");
 } else {
     if(isset($_SESSION["user"]["role"]) && $_SESSION["user"]["role"] == "ROLE_ADMIN")
     {
-        header("Location: users_list.php");
+        $adminUsersPage = $baseUrl . 'admin/users/list.php';
+        header("Location: $adminUsersPage");
     }
 }
 $database = new Firestore_honeydoo();

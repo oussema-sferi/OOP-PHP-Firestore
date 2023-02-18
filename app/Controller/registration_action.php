@@ -9,7 +9,7 @@ $email = $_POST["emailAddress"];
 $password = $_POST["password"];
 $confirmPassword = $_POST["confirmPassword"];
 $database = new Firestore_honeydoo();
-
+$baseUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . "/app/View/";
 if($database->checkIfRealtorUserExists($email))
 {
     $_SESSION['registration_error_flash_message'] = "This email is already used! Please choose another email and try again";
@@ -54,5 +54,5 @@ $data = [
 $realtorDocumentId = $database->createNewRealtorUser($data);
 $database->setRealtorId($realtorDocumentId);
 $_SESSION['registration_success_flash_message'] = "Congratulations! Your account has been created successfully. You can use your credentials to login";
-header("Location: ../View/login.php");
+header("Location: $baseUrl . 'common/security/login.php'");
 

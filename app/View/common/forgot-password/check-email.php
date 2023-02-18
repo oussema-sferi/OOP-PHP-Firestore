@@ -11,14 +11,8 @@ if(isset($_SESSION['user'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="Honeydoo" />
-    <meta name="author" content="Honeydoo" />
+    <?php include '../../layout/security/header.php';?>
     <title>Check Email - HoneyDoo Realtor Portal</title>
-    <link href="../../Ressources/css/styles.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="../../Ressources/assets/img/favicon.png" />
 </head>
 <body class="bg-primary">
 <div id="layoutAuthentication">
@@ -37,7 +31,7 @@ if(isset($_SESSION['user'])) {
                                 </div>
                             </div>
                             <div class="card-footer text-center">
-                                <div class="small"><a class="text-white" href="<?='../login.php'?>">Return to login</a></div>
+                                <div class="small"><a class="text-white" href="<?=$baseUrl . 'common/security/login.php'?>">Return to login</a></div>
                             </div>
                         </div>
                     </div>
@@ -46,13 +40,7 @@ if(isset($_SESSION['user'])) {
         </main>
     </div>
     <div id="layoutAuthentication_footer">
-        <footer class="footer-admin mt-auto footer-dark">
-            <div class="container-xl px-4">
-                <div class="row">
-                    <div class="small text-center">Copyright &copy; Honeydoo</div>
-                </div>
-            </div>
-        </footer>
+        <?php include '../../layout/security/footer.php';?>
     </div>
 </div>
 </body>
