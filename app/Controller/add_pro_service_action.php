@@ -15,6 +15,7 @@ if(!isset($_SESSION["user"]))
         header("Location: users_list.php");
     }
 }
+$baseUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
 $loggedRealtorId = $_SESSION["user"]["realtor_id"];
 $imagePath =  "/app/pro_services_images/" . md5(uniqid()) . $_FILES["proServiceImage"]["name"];
 move_uploaded_file(
@@ -29,7 +30,7 @@ $data = [
     'comments' => $_POST["comments"],
     'my_notes' => $_POST["myNotes"],
     'realtor_id' => $loggedRealtorId,
-    'img' => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $imagePath,
+    'img' => $baseUrl . $imagePath,
     'date' => new Timestamp(new DateTime()),
 ];
 $database = new Firestore_honeydoo();
@@ -52,9 +53,9 @@ $notificationParameters = [
     "title" => "HoneyDoo Alert",
     "body" => "Your realtor has added a new recommended home pro. Click here to learn more."
 ];
-$redirectUrl = "../View/pro_services.php";
+$redirectUrl = "$baseUrl/app/View/pro-services/list.php";
 if(count($realtorLinkedMobileClientsTokens) > 0) {
     $helper->sendFCM($realtorLinkedMobileClientsTokens, $notificationParameters, $redirectUrl);
 } else {
-    header("Location: ../View/pro_services.php");
+   header("Location: ../View/pro-services/list.php");
 }

@@ -15,6 +15,7 @@ if(!isset($_SESSION["user"]))
         header("Location: users_list.php");
     }
 }
+$baseUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
 $proServiceId = $_GET["pro_service_id"];
 $database = new Firestore_honeydoo();
 $database->deleteProService($proServiceId);
@@ -37,10 +38,10 @@ $notificationParameters = [
     "title" => "HoneyDoo Alert",
     "body" => "Your realtor has removed a recommended home pro."
 ];
-$redirectUrl = "../View/pro_services.php";
+$redirectUrl = "$baseUrl/app/View/pro-services/list.php";
 if(count($realtorLinkedMobileClientsTokens) > 0) {
     $helper->sendFCM($realtorLinkedMobileClientsTokens, $notificationParameters, $redirectUrl);
 } else {
-    header("Location: ../View/pro_services.php");
+    header("Location: ../View/pro-services/list.php");
 }
 

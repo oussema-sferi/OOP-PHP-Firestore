@@ -41,5 +41,5 @@ foreach ($data as $key => $value) {
 }
 $database = new Firestore_honeydoo();
 $database->updateProService($proServiceId, $finalData);
-header("Location: ../View/pro_services.php");
+header("Location: ../View/pro-services/list.php");
 

@@ -98,7 +98,7 @@ $profilePic = $helper->setProfilePic($realtor);
                                     $blogPostId = $blogPost->doc_id;
                                     $showBlogPostLink = "show.php?blog_id=$blogPostId";
                                     $editBlogPostLink = "edit.php?blog_id=$blogPostId";
-                                    $deleteBlogPostLink = "../Controller/delete_blog_action.php?blog_id=$blogPostId";
+                                    $deleteBlogPostLink = "../../Controller/delete_blog_action.php?blog_id=$blogPostId";
                                     echo "
                                 <tr>
                                     <td>$title</td>
