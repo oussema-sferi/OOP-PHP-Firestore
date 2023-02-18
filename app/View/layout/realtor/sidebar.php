@@ -20,7 +20,7 @@ $baseUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "
                 <!-- Sidenav Link (Client)-->
                 <a class="nav-link" href="<?=$baseUrl . 'clients/list.php'?>">
                     <div class="nav-link-icon"><i data-feather="list"></i></div>
-                    Clients List
+                    My Clients
                 </a>
             </div>
         </div>

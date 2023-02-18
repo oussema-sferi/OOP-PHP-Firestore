@@ -43,7 +43,7 @@ $profilePic = $helper->setProfilePic($realtor);
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="list"></i></div>
-                                    All My Pro Services
+                                    Pro Services List
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">

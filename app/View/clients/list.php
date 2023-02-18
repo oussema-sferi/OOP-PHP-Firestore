@@ -44,7 +44,7 @@ $userClients = $database->fetchUserClients($loggedRealtorId);
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="list"></i></div>
-                                    All Clients
+                                    Clients List
                                 </h1>
                             </div>
                             <div class="col mb-3">
