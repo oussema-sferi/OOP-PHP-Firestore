@@ -8,7 +8,7 @@ $baseUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "
                 <!-- Sidenav Heading (Custom)-->
                 <div class="sidenav-menu-heading">Dashboard</div>
                 <!-- Sidenav Link (Users)-->
-                <a class="nav-link" href=<?=$baseUrl . 'users/list.php'?>">
+                <a class="nav-link" href="<?=$baseUrl . 'users/list.php'?>">
                     <div class="nav-link-icon"><i data-feather="user"></i></div>
                     Users
                 </a>
