@@ -1,3 +1,6 @@
+<?php
+$baseUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . "/app/View/";
+?>
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" style="background-color: #262144!important" id="sidenavAccordion">
     <!-- Sidenav Toggle Button-->
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle" style="background-color: #00B2A0!important;"><i data-feather="menu"></i></button>
@@ -18,11 +21,11 @@
                     </div>
                 </h6>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="<?php echo 'my_profile.php' ?>">
+                <a class="dropdown-item" href="<?=$baseUrl . 'user/my-profile.php'?>">
                     <div class="dropdown-item-icon"><i data-feather="user"></i></div>
                     My Profile
                 </a>
-                <a class="dropdown-item" href="<?php echo 'logout.php' ?>">
+                <a class="dropdown-item" href="<?=$baseUrl . 'logout.php'?>">
                     <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
                     Logout
                 </a>

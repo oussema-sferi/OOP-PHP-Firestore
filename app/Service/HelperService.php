@@ -9,7 +9,7 @@ class HelperService
         {
             return $realtor["realtor_photo"];
         } else {
-            return "../Ressources/assets/img/illustrations/profiles/profile-4.png";
+            return $_SERVER['DOCUMENT_ROOT'] . '/app/Ressources/assets/img/illustrations/profiles/profile-4.png';
         }
     }
 

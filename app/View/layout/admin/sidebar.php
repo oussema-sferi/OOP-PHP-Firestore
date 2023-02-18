@@ -1,3 +1,6 @@
+<?php
+$baseUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . "/app/View/admin/";
+?>
 <div id="layoutSidenav_nav">
     <nav class="sidenav shadow-right sidenav-light">
         <div class="sidenav-menu">
@@ -5,7 +8,7 @@
                 <!-- Sidenav Heading (Custom)-->
                 <div class="sidenav-menu-heading">Dashboard</div>
                 <!-- Sidenav Link (Users)-->
-                <a class="nav-link" href="<?='users_list.php'?>">
+                <a class="nav-link" href=<?=$baseUrl . 'users/list.php'?>">
                     <div class="nav-link-icon"><i data-feather="user"></i></div>
                     Users
                 </a>
@@ -17,8 +20,8 @@
                 </a>
                 <div class="collapse" id="collapseEmails" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                        <a class="nav-link" href="<?='email_content.php'?>">Invitation Email</a>
-                        <a class="nav-link" href="<?='reset_password_email.php'?>">Reset Password Email</a>
+                        <a class="nav-link" href="<?=$baseUrl . 'emails-management/client-invitation.php'?>">Clients Invitation</a>
+                        <a class="nav-link" href="<?=$baseUrl . 'emails-management/reset-password.php'?>">Reset Password</a>
                     </nav>
                 </div>
             </div>
