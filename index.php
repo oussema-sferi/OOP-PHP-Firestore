@@ -25,9 +25,18 @@ $router->post('/registration', RegistrationController::class . '::registrationAc
 
 // STORIES
 $storiesBasePath = '/stories';
+// list stories
 $router->get($storiesBasePath . '/list', StoryController::class . '::listAction');
+// create story
 $router->get($storiesBasePath . '/new', StoryController::class . '::addForm');
-$router->post($storiesBasePath . '/create', StoryController::class . '::createAction');
+$router->post($storiesBasePath . '/new-save', StoryController::class . '::createAction');
+// update story
+$router->get($storiesBasePath . '/edit', StoryController::class . '::editForm');
+$router->post($storiesBasePath . '/edit-save', StoryController::class . '::editSaveAction');
+// show story
+$router->get($storiesBasePath . '/show', StoryController::class . '::showAction');
+// delete story
+$router->get($storiesBasePath . '/delete', StoryController::class . '::deleteAction');
 
 
 $router->post('/login', LoginController::class . '::loginAction');

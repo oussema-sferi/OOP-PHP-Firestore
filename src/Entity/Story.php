@@ -30,4 +30,22 @@ class Story
     {
         return $this->db->collection('blogPost')->add($data);
     }
+
+    public function find($docId)
+    {
+        $query = $this->db->collection('blogPost')->document($docId);
+        return $query->snapshot();
+    }
+
+    public function update($id, $data)
+    {
+        $blogRef = $this->db->collection('blogPost')->document($id);
+        return $blogRef->update($data);
+    }
+
+    public function delete($id)
+    {
+        $blogRef = $this->db->collection('blogPost')->document($id);
+        return $blogRef->delete();
+    }
 }

@@ -66,7 +66,7 @@
                             <?php
                             foreach ($stories as $story)
                             {
-                                $docId = $story->doc_id;
+                                $id = $story->doc_id;
                                 $title = $story->title;
                                 $createdAt = $story->date->get()->format("m-d-Y");
                                 if(isset($story->views)) {
@@ -84,26 +84,25 @@
                                 } else {
                                     $publishedAt = "";
                                 }
-                                $storyId = $story->doc_id;
-                                $showBlogPostLink = "blog_show.php?blog_id=$storyId";
-                                $editBlogPostLink = "blog_edit.php?blog_id=$storyId";
-                                $deleteBlogPostLink = "../Controller/delete_blog_action.php?blog_id=$storyId";
+                                $showStoryLink = "show?id=$id";
+                                $editStoryLink = "edit?id=$id";
+                                $deleteStoryLink = "delete?id=$id";
                                 echo "
                                 <tr>
-                                    <td class='text-center' style='vertical-align: middle'><input type='checkbox' value=$docId></td>
+                                    <td class='text-center' style='vertical-align: middle'><input type='checkbox' value=$id></td>
                                     <td class='text-center' style='vertical-align: middle'>$title</td>
                                     <td class='text-center' style='min-width: 70px; vertical-align: middle'>$createdAt</td>
                                     <td class='text-center' style='min-width: 70px; vertical-align: middle'>$publishedAt</td>
                                     <td class='text-center' style='vertical-align: middle'>$views</td>
                                     <td class='text-center' style='vertical-align: middle'>$likes</td>
                                     <td class='text-center'>
-                                        <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$showBlogPostLink><i data-feather='zoom-in'></i></a>
-                                        <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$editBlogPostLink><i data-feather='edit'></i></a>
-                                        <a class='btn btn-datatable btn-icon btn-transparent-dark' data-bs-toggle='modal' data-bs-target='#approveUserModal$storyId'><i data-feather='trash-2'></i></a>                                                                                                                              
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$showStoryLink><i data-feather='zoom-in'></i></a>
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$editStoryLink><i data-feather='edit'></i></a>
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark' data-bs-toggle='modal' data-bs-target='#approveUserModal$id'><i data-feather='trash-2'></i></a>                                                                                                                              
                                     </td>                                                      
                                 </tr>
                                 
-                                <div class='modal fade' id='approveUserModal$storyId' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
+                                <div class='modal fade' id='approveUserModal$id' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
                                     <div class='modal-dialog modal-dialog-centered' role='document'>
                                         <div class='modal-content'>
                                             <div class='modal-header d-block'>
@@ -115,7 +114,7 @@
                                             </div>
                                             <div class='modal-footer justify-content-center'>
                                                 <a class='btn btn-secondary' type='button' data-bs-dismiss='modal'>No</a>
-                                                <a class='btn btn-success' type='button' href='$deleteBlogPostLink'>Yes</a>
+                                                <a class='btn btn-success' type='button' href='$deleteStoryLink'>Yes</a>
                                             </div>
                                         </div>
                                     </div>

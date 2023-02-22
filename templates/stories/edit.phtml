@@ -1,11 +1,6 @@
 <?php
-namespace App\View;
-use App\Model\Firestore_honeydoo;
-use App\Service\HelperService;
 
-require_once "../../../vendor/autoload.php";
-
-if(!isset($_SESSION["user"]))
+/*if(!isset($_SESSION["user"]))
 {
     header("Location: login.php");
 } else {
@@ -13,29 +8,22 @@ if(!isset($_SESSION["user"]))
     {
         header("Location: ../View/users_list.php");
     }
-}
-$blogId = $_GET["blog_id"];
-$database = new Firestore_honeydoo();
-$blogToEdit = $database->fetchBlogById($blogId);
-$blogPostTitle = $blogToEdit["title"];
-$blogPostDistribution = $blogToEdit["distribution"];
-$encodedblogPostDistribution = json_encode($blogPostDistribution);
-//
-$realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);
-$helper = new HelperService();
-$profilePic = $helper->setProfilePic($realtor);
+}*/
 
+/* @var $story
+ * @var $id
+ */
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php include '../layout/realtor/header.php';?>
+    <?php include __DIR__ . '/../layout/realtor/header.phtml';?>
     <title>Edit Story</title>
 </head>
 <body class="nav-fixed">
-<?php include '../layout/realtor/navbar.php';?>
+<?php include __DIR__ . '/../layout/realtor/navbar.phtml';?>
 <div id="layoutSidenav">
-    <?php include '../layout/realtor/sidebar.php';?>
+    <?php include __DIR__ . '/../layout/realtor/sidebar.phtml';?>
     <div id="layoutSidenav_content">
         <main>
             <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
@@ -49,7 +37,7 @@ $profilePic = $helper->setProfilePic($realtor);
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="<?='list.php'?>">
+                                <a class="btn btn-sm btn-light text-primary" href="/stories/list">
                                     <i class="me-1" data-feather="arrow-left"></i>
                                     Back to All Stories
                                 </a>
@@ -60,19 +48,19 @@ $profilePic = $helper->setProfilePic($realtor);
             </header>
             <!-- Main page content-->
             <div class="container-fluid px-4">
-                <form id="editBlogForm" action="<?='../../Controller/edit_blog_action.php?blog_id=' . $blogId?>" method="post" enctype="multipart/form-data">
+                <form id="editBlogForm" action="/stories/edit-save?id=<?=$id?>" method="post" enctype="multipart/form-data">
                     <div class="row gx-4">
                         <div class="col-lg-8">
                             <div class="card mb-4">
                                 <div class="card-header">Story Title</div>
-                                <div class="card-body"><input class="form-control" id="postTitleInput" type="text" value="<?=$blogPostTitle?>" name="blogPostTitle" required/></div>
+                                <div class="card-body"><input class="form-control" id="postTitleInput" type="text" value="<?=$story["title"]?>" name="title" required/></div>
                             </div>
                             <div class="card card-header-actions mb-4">
                                 <div class="card-header">
                                     Story Content
                                     <i class="text-muted" title="The post preview text shows below the post title, and is the post summary on blog pages."></i>
                                 </div>
-                                <div class="card-body"><textarea id="postDistribution" class="lh-base form-control" type="text" rows="10" style="resize: none" name="blogPostDistribution"></textarea></div>
+                                <div class="card-body"><textarea id="postDistribution" class="lh-base form-control" type="text" rows="10" style="resize: none" name="content"></textarea></div>
                             </div>
                             <div class="card card-header-actions mb-4 mb-lg-0">
                                 <div class="card-header">
@@ -80,7 +68,7 @@ $profilePic = $helper->setProfilePic($realtor);
                                     <i class="text-muted"></i>
                                 </div>
                                 <div class="card-body">
-                                    <input type="file" accept="image/jpeg/png" name="blogPostImage">
+                                    <input type="file" accept="image/jpeg/png" name="image">
                                 </div>
                             </div>
                         </div>
@@ -95,10 +83,10 @@ $profilePic = $helper->setProfilePic($realtor);
                 </form>
             </div>
         </main>
-        <?php include '../layout/realtor/footer.php';?>
+        <?php include __DIR__ . '/../layout/realtor/footer.phtml';?>
     </div>
 </div>
-<?php include '../layout/realtor/scripts.php';?>
+<?php include __DIR__ . '/../layout/realtor/scripts.phtml';?>
 <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
@@ -109,7 +97,7 @@ $profilePic = $helper->setProfilePic($realtor);
     });
     const turndownService = new TurndownService()
     console.log(turndownService.turndown(easyMDE.value()))
-    easyMDE.value(turndownService.turndown(<?php echo $encodedblogPostDistribution;  ?>));
+    easyMDE.value(turndownService.turndown(<?php echo json_encode($story["distribution"]);  ?>));
     $("#editBlogForm").submit(function (e) {
         let postContent = $("#postDistribution").val()
         $("#postDistribution").val(marked.parse(postContent))
