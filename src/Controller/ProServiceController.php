@@ -6,7 +6,6 @@ namespace App\Controller;
 use App\Entity\ProService;
 use App\Service\HelperService;
 use App\Service\UserCheckerService;
-use App\Entity\Story;
 use App\Entity\User;
 use App\Entity\Client;
 use Google\Cloud\Core\Timestamp;
@@ -16,7 +15,6 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ProServiceController
 {
-    private User $user;
     private Client $client;
     private ProService $proService;
     private string $loggedUserId;
@@ -24,7 +22,6 @@ class ProServiceController
     public function __construct()
     {
         UserCheckerService::checkUser();
-        $this->user = new User();
         $this->proService = new ProService();
         $this->client = new Client();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
@@ -33,8 +30,9 @@ class ProServiceController
 
     #[NoReturn] public function listAction(array $params = []): void
     {
+        $user = new User();
         $proServices = $this->proService->findAllByUser($this->loggedUserId);
-        $realtor = $this->user->fetchUserById($this->loggedUserId);
+        $realtor = $user->fetchUserById($this->loggedUserId);
         require_once __DIR__ . '/../../templates/pro-services/list.phtml';
         die();
     }
