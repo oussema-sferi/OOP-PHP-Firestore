@@ -2,7 +2,7 @@
 declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 
-use App\Service\UserChecker;
+use App\Service\UserCheckerService;
 use App\Router;
 use App\Handler\Contact;
 use App\Controller\LoginController;

@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-class UserChecker
+class UserCheckerService
 {
     public static function checkUser()
     {

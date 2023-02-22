@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 use App\Entity\ProService;
 use App\Service\HelperService;
-use App\Service\UserChecker;
+use App\Service\UserCheckerService;
 use App\Entity\Story;
 use App\Entity\User;
 use App\Entity\Client;
@@ -16,17 +16,17 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ProServiceController
 {
-    private Story $story;
     private User $user;
+    private Client $client;
     private ProService $proService;
     private string $loggedUserId;
     private string $baseUri;
     public function __construct()
     {
-        UserChecker::checkUser();
-        $this->story = new Story();
+        UserCheckerService::checkUser();
         $this->user = new User();
         $this->proService = new ProService();
+        $this->client = new Client();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
     }
@@ -73,10 +73,9 @@ class ProServiceController
             'date' => new Timestamp(new DateTime()),
         ];
         $this->proService->create($data);
-        $client = new Client();
         $helper = new HelperService();
-        $realtorLinkedPortalClients = $client->fetchPortalClients($this->loggedUserId);
-        $allMobileAppClients = $client->fetchMobileAppClients();
+        $realtorLinkedPortalClients = $this->client->fetchPortalClients($this->loggedUserId);
+        $allMobileAppClients = $this->client->fetchMobileAppClients();
         $helper->clientCheckAndSaveSignUpDate($realtorLinkedPortalClients, $allMobileAppClients, $client);
         // Here comes the push notifications
         $realtorLinkedMobileClientsTokens = [];
@@ -154,12 +153,9 @@ class ProServiceController
     {
         $id = $params["id"];
         $this->proService->delete($id);
-
-
-        $client = new Client();
         $helper = new HelperService();
-        $realtorLinkedPortalClients = $client->fetchPortalClients($this->loggedUserId);
-        $allMobileAppClients = $client->fetchMobileAppClients();
+        $realtorLinkedPortalClients = $this->client->fetchPortalClients($this->loggedUserId);
+        $allMobileAppClients = $this->client->fetchMobileAppClients();
         $helper->clientCheckAndSaveSignUpDate($realtorLinkedPortalClients, $allMobileAppClients, $client);
         // Here comes the push notifications
         $realtorLinkedMobileClientsTokens = [];
@@ -213,10 +209,9 @@ class ProServiceController
             $this->proService->create($row);
         }
         // Here comes the push notifications
-        $client = new Client();
         $helper = new HelperService();
-        $realtorLinkedPortalClients = $client->fetchPortalClients($this->loggedUserId);
-        $allMobileAppClients = $client->fetchMobileAppClients();
+        $realtorLinkedPortalClients = $this->client->fetchPortalClients($this->loggedUserId);
+        $allMobileAppClients = $this->client->fetchMobileAppClients();
         $helper->clientCheckAndSaveSignUpDate($realtorLinkedPortalClients, $allMobileAppClients, $client);
         // Here comes the push notifications
         $realtorLinkedMobileClientsTokens = [];
