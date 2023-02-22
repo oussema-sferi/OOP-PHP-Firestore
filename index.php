@@ -6,16 +6,22 @@ use App\Service\UserChecker;
 use App\Router;
 use App\Handler\Contact;
 use App\Controller\LoginController;
+use App\Controller\RegistrationController;
 use App\Controller\StoryController;
 
-
 $router = new Router();
+
 // LOGIN
 $router->get('/login', LoginController::class . '::show');
 $router->post('/login', LoginController::class . '::loginAction');
 
 // LOGOUT
 $router->get('/logout', LoginController::class . '::logoutAction');
+
+// REGISTRATION
+$router->get('/registration', RegistrationController::class . '::show');
+$router->post('/registration', RegistrationController::class . '::registrationAction');
+
 
 // STORIES
 $mainPath = '/stories';

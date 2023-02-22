@@ -30,9 +30,6 @@ class User
 
     public function fetchUserById($id)
     {
-        /*$query = $this->db->collection('realtor')->where('realtor_id', '=', $id);*/
-
-        /*return $query->snapshot();*/
         $query = $this->db->collection('realtor')->where('realtor_id', '=', $id);
         $documents = $query->documents();
         foreach ($documents as $document) {
@@ -43,5 +40,23 @@ class User
             }
         }
 
+    }
+
+    public function checkIfUserExists($email)
+    {
+        $query = $this->db->collection('realtor')->where('email', '=', $email);
+        return !$query->documents()->isEmpty();
+    }
+
+    public function createNewUser($data)
+    {
+        $docRef = $this->db->collection('realtor')->add($data);
+        return $docRef->id();
+    }
+
+    public function setUserId($id)
+    {
+        $realtorRef = $this->db->collection('realtor')->document($id);
+        return $realtorRef->update([['path' => 'realtor_id', 'value' => $id]]);
     }
 }

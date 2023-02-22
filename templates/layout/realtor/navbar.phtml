@@ -1,6 +1,6 @@
 <?php
-$baseUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . "/app/View/";
-$profilePic = $realtor["realtor_photo"] ?? __DIR__ . '/public/assets/img/illustrations/profiles/profile-4.png';
+$user = $_SESSION["user"];
+$profilePic = isset($user["realtor_photo"]) && trim($user["realtor_photo"]) != '' ? $user["realtor_photo"] : '/../../public/assets/img/illustrations/profiles/profile-4.png';
 ?>
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" style="background-color: #262144!important" id="sidenavAccordion">
     <!-- Sidenav Toggle Button-->
@@ -12,21 +12,21 @@ $profilePic = $realtor["realtor_photo"] ?? __DIR__ . '/public/assets/img/illustr
     <ul class="navbar-nav align-items-center ms-auto">
         <!-- User Dropdown-->
         <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
-            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src=<?= $profilePic ?> /></a>
+            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src=<?=$profilePic?> /></a>
             <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
                 <h6 class="dropdown-header d-flex align-items-center">
                     <img class="dropdown-user-img" src=<?=$profilePic?> />
                     <div class="dropdown-user-details">
-                        <div class="dropdown-user-details-name"><?=$_SESSION["user"]["realtor_title"]?></div>
-                        <div class="dropdown-user-details-email"><?=$_SESSION["user"]["email"]?></div>
+                        <div class="dropdown-user-details-name"><?=$user["realtor_title"]?></div>
+                        <div class="dropdown-user-details-email"><?=$user["email"]?></div>
                     </div>
                 </h6>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="<?=$baseUrl . 'user/my-profile.php'?>">
+                <a class="dropdown-item" href="/my-profile">
                     <div class="dropdown-item-icon"><i data-feather="user"></i></div>
                     My Profile
                 </a>
-                <a class="dropdown-item" href="<?=$baseUrl . 'logout.php'?>">
+                <a class="dropdown-item" href="/logout">
                     <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
                     Logout
                 </a>

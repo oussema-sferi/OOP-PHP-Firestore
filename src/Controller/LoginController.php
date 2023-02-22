@@ -3,17 +3,10 @@
 declare(strict_types=1);
 
 namespace App\Controller;
-require_once __DIR__ . '/../DBConfig.php';
 use App\Entity\User;
 
 class LoginController
 {
-    /*public function execute(array $params = []): void
-    {
-        $username = $params['username'] ?? 'Guest';
-        require_once __DIR__ . '/../../templates/contact.phtml';
-    }*/
-
     public function show(array $params = []): void
     {
         require_once __DIR__ . '/../../templates/security/login.phtml';
