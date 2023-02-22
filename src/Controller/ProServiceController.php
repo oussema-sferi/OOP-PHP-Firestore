@@ -3,19 +3,21 @@
 declare(strict_types=1);
 
 namespace App\Controller;
-use App\Entity\Client;
+use App\Entity\ProService;
 use App\Service\HelperService;
 use App\Service\UserChecker;
 use App\Entity\Story;
 use App\Entity\User;
+use App\Entity\Client;
 use Google\Cloud\Core\Timestamp;
 use JetBrains\PhpStorm\NoReturn;
 use DateTime;
 
-class StoryController
+class ProServiceController
 {
     private Story $story;
     private User $user;
+    private ProService $proService;
     private string $loggedUserId;
     private string $baseUri;
     public function __construct()
@@ -23,21 +25,22 @@ class StoryController
         UserChecker::checkUser();
         $this->story = new Story();
         $this->user = new User();
+        $this->proService = new ProService();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
     }
 
     #[NoReturn] public function listAction(array $params = []): void
     {
-        $stories = $this->story->findAllByUser($this->loggedUserId);
+        $proServices = $this->proService->findAllByUser($this->loggedUserId);
         $realtor = $this->user->fetchUserById($this->loggedUserId);
-        require_once __DIR__ . '/../../templates/stories/list.phtml';
+        require_once __DIR__ . '/../../templates/pro-services/list.phtml';
         die();
     }
 
     #[NoReturn] public function addForm(array $params = []): void
     {
-        require_once __DIR__ . '/../../templates/stories/new.phtml';
+        require_once __DIR__ . '/../../templates/pro-services/new.phtml';
         die();
     }
 
@@ -46,7 +49,7 @@ class StoryController
         $image = $_FILES["image"]["name"];
         if(trim($image) !== "")
         {
-            $imagePath =  "/public/uploaded-images/stories/" . md5(uniqid()) . $image;
+            $imagePath =  "/public/uploaded-images/pro-services/" . md5(uniqid()) . $image;
             $imagePath = str_replace(" ", "", $imagePath);
             move_uploaded_file(
                 $_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . $imagePath
@@ -56,17 +59,19 @@ class StoryController
             $imageDbLink = "";
         }
 
-        $title = $params["title"];
-        $content = $params["content"];
         $data = [
-            'title' => $title,
-            'distribution' => $content,
+            'company_name' => $_POST["companyName"],
+            'company_email' => $_POST["companyEmail"],
+            'company_phone_number' => $_POST["companyPhoneNumber"],
+            'company_website_link' => $_POST["companyWebsiteLink"],
+            'homePro_type' => $_POST["homeProType"],
+            'comments' => $_POST["comments"],
+            'my_notes' => $_POST["myNotes"],
             'realtor_id' => $this->loggedUserId,
             'img' => $imageDbLink,
             'date' => new Timestamp(new DateTime()),
         ];
-        // Create and save new blog post in DB
-        $this->story->create($data);
+        $this->proService->create($data);
         $client = new Client();
         $helper = new HelperService();
         $realtorLinkedPortalClients = $client->fetchPortalClients($this->loggedUserId);
@@ -83,12 +88,12 @@ class StoryController
         }
         $notificationParameters = [
             "title" => "HoneyDoo Alert",
-            "body" => "Your realtor has added a new story. Click here to read it."
+            "body" => "Your realtor has added a new recommended home pro. Click here to learn more."
         ];
         if(count($realtorLinkedMobileClientsTokens) > 0) {
-            $helper->sendFCM($realtorLinkedMobileClientsTokens, $notificationParameters, "/stories/list");
+            $helper->sendFCM($realtorLinkedMobileClientsTokens, $notificationParameters, "/pro-services/list");
         } else {
-            header("Location: /stories/list.php");
+            header("Location: /pro-services/list.php");
         }
     }
 
@@ -103,7 +108,7 @@ class StoryController
     #[NoReturn] public function editSaveAction(array $params = []): void
     {
         $image = $_FILES["image"]["name"];
-        if( $image !== "")
+        if( trim($image) !== "")
         {
             $imagePath =  "/public/uploaded-images/stories/" . md5(uniqid()) . $_FILES["image"]["name"];
             $imagePath = str_replace(" ", "", $imagePath);

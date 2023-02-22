@@ -8,6 +8,7 @@ use App\Handler\Contact;
 use App\Controller\LoginController;
 use App\Controller\RegistrationController;
 use App\Controller\StoryController;
+use App\Controller\ProServiceController;
 
 $router = new Router();
 
@@ -39,7 +40,20 @@ $router->get($storiesBasePath . '/show', StoryController::class . '::showAction'
 $router->get($storiesBasePath . '/delete', StoryController::class . '::deleteAction');
 
 
-$router->post('/login', LoginController::class . '::loginAction');
+// PRO SERVICES
+$proServicesBasePath = '/pro-services';
+// list stories
+$router->get($proServicesBasePath . '/list', ProServiceController::class . '::listAction');
+// create story
+$router->get($proServicesBasePath . '/new', ProServiceController::class . '::addForm');
+$router->post($proServicesBasePath . '/new-save', ProServiceController::class . '::createAction');
+// update story
+$router->get($proServicesBasePath . '/edit', ProServiceController::class . '::editForm');
+$router->post($proServicesBasePath . '/edit-save', ProServiceController::class . '::editSaveAction');
+// show story
+$router->get($proServicesBasePath . '/show', ProServiceController::class . '::showAction');
+// delete story
+$router->get($proServicesBasePath . '/delete', ProServiceController::class . '::deleteAction');
 
 
 $router->get('/', function () {
