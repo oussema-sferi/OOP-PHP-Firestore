@@ -24,8 +24,10 @@ $router->post('/registration', RegistrationController::class . '::registrationAc
 
 
 // STORIES
-$mainPath = '/stories';
-$router->get($mainPath . '/list', StoryController::class . '::list');
+$storiesBasePath = '/stories';
+$router->get($storiesBasePath . '/list', StoryController::class . '::listAction');
+$router->get($storiesBasePath . '/new', StoryController::class . '::addForm');
+$router->post($storiesBasePath . '/create', StoryController::class . '::createAction');
 
 
 $router->post('/login', LoginController::class . '::loginAction');

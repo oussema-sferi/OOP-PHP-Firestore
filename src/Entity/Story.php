@@ -25,4 +25,9 @@ class Story
         }
         return $res;
     }
+
+    public function create($data)
+    {
+        return $this->db->collection('blogPost')->add($data);
+    }
 }

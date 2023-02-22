@@ -3,16 +3,6 @@ namespace App\Service;
 
 class HelperService
 {
-    public function setProfilePic($realtor): string
-    {
-        if(isset($realtor["realtor_photo"]) && $realtor["realtor_photo"] != "")
-        {
-            return $realtor["realtor_photo"];
-        } else {
-            return $_SERVER['DOCUMENT_ROOT'] . '/app/Ressources/assets/img/illustrations/profiles/profile-4.png';
-        }
-    }
-
     public function clientCheckAndSaveSignUpDate($userClients, $allMobileAppClients, $database): void
     {
         foreach ($userClients as $userClient)
@@ -29,7 +19,7 @@ class HelperService
                     {
                         if(isset($mobileAppClient->created_date))
                         {
-                            $database->updateClientCollection($userClient->doc_id, [
+                            $database->update($userClient->doc_id, [
                                 ["path" => "mobile_app_signed_up_at", "value" => $mobileAppClient->created_date],
                                 ["path" => "notification_token", "value" => $mobileAppClient->notification_token],
                                 ]);
@@ -41,7 +31,7 @@ class HelperService
             }
             if($counter === 0)
             {
-                $database->updateClientCollection($userClient->doc_id, [
+                $database->update($userClient->doc_id, [
                     ["path" => "mobile_app_signed_up_at", "value" => ""],
                     ["path" => "notification_token", "value" => ""],
                 ]);
