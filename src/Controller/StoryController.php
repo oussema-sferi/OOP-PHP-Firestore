@@ -41,6 +41,7 @@ class StoryController
 
     #[NoReturn] public function createAction(array $params = []): void
     {
+        $baseUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
         $imagePath =  "/public/uploaded-images/stories/" . md5(uniqid()) . $_FILES["image"]["name"];
         $imagePath = str_replace(" ", "", $imagePath);
         move_uploaded_file(
@@ -52,7 +53,7 @@ class StoryController
             'title' => $title,
             'distribution' => $content,
             'realtor_id' => $this->loggedUserId,
-            'img' => $_SERVER["REQUEST_URI"]. $imagePath,
+            'img' => $baseUrl. $imagePath,
             'date' => new Timestamp(new DateTime()),
         ];
         // Create and save new blog post in DB
