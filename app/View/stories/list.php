@@ -64,17 +64,21 @@ $profilePic = $helper->setProfilePic($realtor);
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
-                                <th>Story Title</th>
-                                <th>Date Created</th>
-                                <th>Views</th>
-                                <th>Likes</th>
-                                <th class="text-center">Actions</th>
+                                <th class='text-center' style='vertical-align: middle; max-width: 10px'><input type='checkbox' class="checkAll"></th>
+                                <th class='text-center' style='vertical-align: middle'>Story Title</th>
+                                <th class='text-center' style='vertical-align: middle'>Created At</th>
+                                <th class='text-center' style='vertical-align: middle'>Published At</th>
+                                <th class='text-center' style='vertical-align: middle'>Views</th>
+                                <th class='text-center' style='vertical-align: middle'>Likes</th>
+                                <th class='text-center' style='vertical-align: middle'>Actions</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
+                                <th><input type='checkbox' class="checkAll"></th>
                                 <th>Story Title</th>
-                                <th>Date Created</th>
+                                <th>Created At</th>
+                                <th>Published At</th>
                                 <th>Views</th>
                                 <th>Likes</th>
                                 <th class="text-center">Actions</th>
@@ -83,30 +87,43 @@ $profilePic = $helper->setProfilePic($realtor);
                             <tbody>
                             <?php
                             foreach ($loggedUserBlogPosts as $blogPost)
-                                {
-                                    $title = $blogPost->title;
-                                    $createdAt = $blogPost->date->get()->format("m-d-Y");
-                                    if(isset($blogPost->views)) {
-                                        $views = $blogPost->views;
-                                    } else {
-                                        $views = 0;
-                                    }
+                            {
+                                $docId = $blogPost->doc_id;
+                                $title = $blogPost->title;
+                                $createdAt = $blogPost->date->get()->format("m-d-Y");
+                                if(isset($blogPost->views)) {
+                                    $views = $blogPost->views;
+                                } else {
+                                    $views = 0;
+                                }
 
-                                    if(isset($blogPost->user_liked)) {
-                                        $likes = count($blogPost->user_liked);
-                                    } else {
-                                        $likes = 0;
-                                    }
-                                    $blogPostId = $blogPost->doc_id;
-                                    $showBlogPostLink = "show.php?blog_id=$blogPostId";
-                                    $editBlogPostLink = "edit.php?blog_id=$blogPostId";
-                                    $deleteBlogPostLink = "../../Controller/delete_blog_action.php?blog_id=$blogPostId";
-                                    echo "
+                                if(isset($blogPost->user_liked)) {
+                                    $likes = count($blogPost->user_liked);
+                                } else {
+                                    $likes = 0;
+                                }
+                                /*if(isset($blogPost->is_published) && trim($blogPost->is_published) !== "") {
+                                    $isPublished = "Yes";
+                                } else {
+                                    $isPublished = "No";
+                                }*/
+                                if(isset($blogPost->published_at) && trim($blogPost->published_at) !== "") {
+                                    $publishedAt = $blogPost->published_at->get()->format("m-d-Y");
+                                } else {
+                                    $publishedAt = "";
+                                }
+                                $blogPostId = $blogPost->doc_id;
+                                $showBlogPostLink = "blog_show.php?blog_id=$blogPostId";
+                                $editBlogPostLink = "blog_edit.php?blog_id=$blogPostId";
+                                $deleteBlogPostLink = "../Controller/delete_blog_action.php?blog_id=$blogPostId";
+                                echo "
                                 <tr>
-                                    <td>$title</td>
-                                    <td>$createdAt</td>
-                                    <td>$views</td>
-                                    <td>$likes</td>
+                                    <td class='text-center' style='vertical-align: middle'><input type='checkbox' value=$docId></td>
+                                    <td class='text-center' style='vertical-align: middle'>$title</td>
+                                    <td class='text-center' style='min-width: 70px; vertical-align: middle'>$createdAt</td>
+                                    <td class='text-center' style='min-width: 70px; vertical-align: middle'>$publishedAt</td>
+                                    <td class='text-center' style='vertical-align: middle'>$views</td>
+                                    <td class='text-center' style='vertical-align: middle'>$likes</td>
                                     <td class='text-center'>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$showBlogPostLink><i data-feather='zoom-in'></i></a>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$editBlogPostLink><i data-feather='edit'></i></a>
@@ -132,7 +149,7 @@ $profilePic = $helper->setProfilePic($realtor);
                                     </div>
                                 </div>
                                 ";
-                                };
+                            };
                             ?>
                             </tbody>
                         </table>
@@ -144,5 +161,47 @@ $profilePic = $helper->setProfilePic($realtor);
     </div>
 </div>
 <?php include '../layout/realtor/scripts.php';?>
+<script>
+    $( document ).ready(function() {
+        let storiesArray = [];
+        $(".checkAll").click(function () {
+            $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+            if($(this).prop('checked') == true)
+            {
+                $('input[type=checkbox][class!=checkAll]:checked').each(function(){
+                    storiesArray.push($(this).val())
+                });
+            } else {
+                storiesArray = [];
+            }
+        });
+        $(document).on('change', 'input[type=checkbox]', function() {
+            if($("input[type=checkbox]").length == 1) return;
+            if($("input[type=checkbox]:checked").length > 0)
+            {
+                $("#publishStoryButton").prop("disabled", false)
+            } else {
+                $("#publishStoryButton").prop("disabled", true)
+            }
+            if($(this).prop('checked') == true)
+            {
+                if($(this).val() != "on")
+                {
+                    storiesArray.push($(this).val())
+                }
+            } else if($(this).prop('checked') == false)
+            {
+                const removeFromArray = function (arr, ...theArgs) {
+                    return arr.filter( val => !theArgs.includes(val) )
+                };
+                storiesArray = removeFromArray(storiesArray, $(this).val());
+            }
+        });
+
+        $("#publishStoryForm").submit(function (e) {
+            $("#selected_stories").val(JSON.stringify(storiesArray))
+        })
+    });
+</script>
 </body>
 </html>
