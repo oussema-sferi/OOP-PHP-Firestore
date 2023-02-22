@@ -42,19 +42,20 @@ $router->get($storiesBasePath . '/delete', StoryController::class . '::deleteAct
 
 // PRO SERVICES
 $proServicesBasePath = '/pro-services';
-// list stories
+// list pro services
 $router->get($proServicesBasePath . '/list', ProServiceController::class . '::listAction');
-// create story
+// create pro service
 $router->get($proServicesBasePath . '/new', ProServiceController::class . '::addForm');
 $router->post($proServicesBasePath . '/new-save', ProServiceController::class . '::createAction');
-// update story
+// update pro service
 $router->get($proServicesBasePath . '/edit', ProServiceController::class . '::editForm');
 $router->post($proServicesBasePath . '/edit-save', ProServiceController::class . '::editSaveAction');
-// show story
+// show pro service
 $router->get($proServicesBasePath . '/show', ProServiceController::class . '::showAction');
-// delete story
+// delete pro service
 $router->get($proServicesBasePath . '/delete', ProServiceController::class . '::deleteAction');
-
+// import pro services via CSV
+$router->post($proServicesBasePath . '/import', ProServiceController::class . '::importCsvAction');
 
 $router->get('/', function () {
     echo 'Home Page';
