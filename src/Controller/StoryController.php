@@ -69,28 +69,14 @@ class StoryController
         ];
         // Create and save new blog post in DB
         $this->story->create($data);
-        $helper = new HelperService();
-        $realtorLinkedPortalClients = $this->client->fetchPortalClients($this->loggedUserId);
-        $allMobileAppClients = $this->client->fetchMobileAppClients();
-        $helper->clientCheckAndSaveSignUpDate($realtorLinkedPortalClients, $allMobileAppClients, $client);
-        // Here comes the push notifications
-        $realtorLinkedMobileClientsTokens = [];
-        foreach ($realtorLinkedPortalClients as $portalClient)
-        {
-            if(isset($portalClient->notification_token) && trim($portalClient->notification_token) !== "")
-            {
-                $realtorLinkedMobileClientsTokens[] = $portalClient->notification_token;
-            }
-        }
+        $redirectUri = "/stories/list";
         $notificationParameters = [
             "title" => "HoneyDoo Alert",
             "body" => "Your realtor has added a new story. Click here to read it."
         ];
-        if(count($realtorLinkedMobileClientsTokens) > 0) {
-            $helper->sendFCM($realtorLinkedMobileClientsTokens, $notificationParameters, "/stories/list");
-        } else {
-            header("Location: /stories/list.php");
-        }
+        // Here comes the push notifications
+        $helper = new HelperService();
+        $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, $notificationParameters, $redirectUri);
     }
 
     #[NoReturn] public function editForm(array $params = []): void

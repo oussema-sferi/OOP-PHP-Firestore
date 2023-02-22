@@ -73,28 +73,14 @@ class ProServiceController
             'date' => new Timestamp(new DateTime()),
         ];
         $this->proService->create($data);
-        $helper = new HelperService();
-        $realtorLinkedPortalClients = $this->client->fetchPortalClients($this->loggedUserId);
-        $allMobileAppClients = $this->client->fetchMobileAppClients();
-        $helper->clientCheckAndSaveSignUpDate($realtorLinkedPortalClients, $allMobileAppClients, $client);
-        // Here comes the push notifications
-        $realtorLinkedMobileClientsTokens = [];
-        foreach ($realtorLinkedPortalClients as $portalClient)
-        {
-            if(isset($portalClient->notification_token) && trim($portalClient->notification_token) !== "")
-            {
-                $realtorLinkedMobileClientsTokens[] = $portalClient->notification_token;
-            }
-        }
+        $redirectUri = "/pro-services/list";
         $notificationParameters = [
             "title" => "HoneyDoo Alert",
             "body" => "Your realtor has added a new recommended home pro. Click here to learn more."
         ];
-        if(count($realtorLinkedMobileClientsTokens) > 0) {
-            $helper->sendFCM($realtorLinkedMobileClientsTokens, $notificationParameters, "/pro-services/list");
-        } else {
-            header("Location: /pro-services/list.php");
-        }
+        // Here comes the push notifications
+        $helper = new HelperService();
+        $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, $notificationParameters, $redirectUri);
     }
 
     #[NoReturn] public function editForm(array $params = []): void
@@ -153,28 +139,14 @@ class ProServiceController
     {
         $id = $params["id"];
         $this->proService->delete($id);
-        $helper = new HelperService();
-        $realtorLinkedPortalClients = $this->client->fetchPortalClients($this->loggedUserId);
-        $allMobileAppClients = $this->client->fetchMobileAppClients();
-        $helper->clientCheckAndSaveSignUpDate($realtorLinkedPortalClients, $allMobileAppClients, $client);
-        // Here comes the push notifications
-        $realtorLinkedMobileClientsTokens = [];
-        foreach ($realtorLinkedPortalClients as $portalClient)
-        {
-            if(isset($portalClient->notification_token) && trim($portalClient->notification_token) !== "")
-            {
-                $realtorLinkedMobileClientsTokens[] = $portalClient->notification_token;
-            }
-        }
+        $redirectUri = "/pro-services/list";
         $notificationParameters = [
             "title" => "HoneyDoo Alert",
             "body" => "Your realtor has removed a recommended home pro."
         ];
-        if(count($realtorLinkedMobileClientsTokens) > 0) {
-            $helper->sendFCM($realtorLinkedMobileClientsTokens, $notificationParameters, "/pro-services/list");
-        } else {
-            header("Location: /pro-services/list.php");
-        }
+        // Here comes the push notifications
+        $helper = new HelperService();
+        $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, $notificationParameters, $redirectUri);
     }
 
     #[NoReturn] public function importCsvAction(array $params = []): void
@@ -208,28 +180,13 @@ class ProServiceController
         {
             $this->proService->create($row);
         }
-        // Here comes the push notifications
-        $helper = new HelperService();
-        $realtorLinkedPortalClients = $this->client->fetchPortalClients($this->loggedUserId);
-        $allMobileAppClients = $this->client->fetchMobileAppClients();
-        $helper->clientCheckAndSaveSignUpDate($realtorLinkedPortalClients, $allMobileAppClients, $client);
-        // Here comes the push notifications
-        $realtorLinkedMobileClientsTokens = [];
-        foreach ($realtorLinkedPortalClients as $portalClient)
-        {
-            if(isset($portalClient->notification_token) && trim($portalClient->notification_token) !== "")
-            {
-                $realtorLinkedMobileClientsTokens[] = $portalClient->notification_token;
-            }
-        }
+        $redirectUri = "/pro-services/list";
         $notificationParameters = [
             "title" => "HoneyDoo Alert",
             "body" => "Your realtor has added new recommended home pros. Click here to learn more."
         ];
-        if(count($realtorLinkedMobileClientsTokens) > 0) {
-            $helper->sendFCM($realtorLinkedMobileClientsTokens, $notificationParameters, "/pro-services/list");
-        } else {
-            header("Location: /pro-services/list.php");
-        }
+        // Here comes the push notifications
+        $helper = new HelperService();
+        $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, $notificationParameters, $redirectUri);
     }
 }

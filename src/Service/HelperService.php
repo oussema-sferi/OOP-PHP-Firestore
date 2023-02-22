@@ -3,9 +3,11 @@ namespace App\Service;
 
 class HelperService
 {
-    public function clientCheckAndSaveSignUpDate($userClients, $allMobileAppClients, $database): void
+    public function clientCheckAndSaveSignUpDate($database, $userId, $notificationParameters , $redirectUri): void
     {
-        foreach ($userClients as $userClient)
+        $realtorLinkedPortalClients = $database->fetchPortalClients($userId);
+        $allMobileAppClients = $database->fetchMobileAppClients();
+        foreach ($realtorLinkedPortalClients as $userClient)
         {
             $clientOneEmail = $userClient->email_1;
             $clientTwoEmail = $userClient->email_2;
@@ -36,6 +38,19 @@ class HelperService
                     ["path" => "notification_token", "value" => ""],
                 ]);
             }
+        }
+        $realtorLinkedMobileClientsTokens = [];
+        foreach ($realtorLinkedPortalClients as $portalClient)
+        {
+            if(isset($portalClient->notification_token) && trim($portalClient->notification_token) !== "")
+            {
+                $realtorLinkedMobileClientsTokens[] = $portalClient->notification_token;
+            }
+        }
+        if(count($realtorLinkedMobileClientsTokens) > 0) {
+            $this->sendFCM($realtorLinkedMobileClientsTokens, $notificationParameters, $redirectUri);
+        } else {
+            header("Location: $redirectUri");
         }
     }
 

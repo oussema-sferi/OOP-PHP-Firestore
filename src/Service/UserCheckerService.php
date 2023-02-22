@@ -4,7 +4,7 @@ namespace App\Service;
 
 class UserCheckerService
 {
-    public static function checkUser()
+    public static function checkUser(): void
     {
         if(!isset($_SESSION["user"]))
         {
