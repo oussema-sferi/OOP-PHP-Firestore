@@ -33,4 +33,21 @@ class ProService
         return $this->db->collection('realtor_home_pro_service')->add($data);
     }
 
+    public function find($docId)
+    {
+        $query = $this->db->collection('realtor_home_pro_service')->document($docId);
+        return $query->snapshot();
+    }
+
+    public function update($id, $data)
+    {
+        $proServiceRef = $this->db->collection('realtor_home_pro_service')->document($id);
+        return $proServiceRef->update($data);
+    }
+
+    public function delete($id)
+    {
+        $blogRef = $this->db->collection('realtor_home_pro_service')->document($id);
+        return $blogRef->delete();
+    }
 }

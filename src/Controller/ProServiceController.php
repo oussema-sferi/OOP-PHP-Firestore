@@ -100,8 +100,8 @@ class ProServiceController
     #[NoReturn] public function editForm(array $params = []): void
     {
         $id = $params['id'];
-        $story = $this->story->find($id);
-        require_once __DIR__ . '/../../templates/stories/edit.phtml';
+        $proService = $this->proService->find($id);
+        require_once __DIR__ . '/../../templates/pro-services/edit.phtml';
         die();
     }
 
@@ -110,7 +110,7 @@ class ProServiceController
         $image = $_FILES["image"]["name"];
         if( trim($image) !== "")
         {
-            $imagePath =  "/public/uploaded-images/stories/" . md5(uniqid()) . $_FILES["image"]["name"];
+            $imagePath =  "/public/uploaded-images/pro-services/" . md5(uniqid()) . $_FILES["image"]["name"];
             $imagePath = str_replace(" ", "", $imagePath);
             move_uploaded_file(
                 $_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . $imagePath
@@ -120,11 +120,15 @@ class ProServiceController
             $imageDbLink = "";
         }
         $id = $params["id"];
-        $title = $_POST["title"] ?? "";
-        $content = $_POST["content"] ?? "";
         $data = [
-            'title' => $title,
-            'distribution' => $content,
+            'company_name' => $params["companyName"] ?? "",
+            'company_email' => $params["companyEmail"] ?? "",
+            'company_phone_number' => $params["companyPhoneNumber"] ?? "",
+            'company_website_link' => $params["companyWebsiteLink"] ?? "",
+            'homePro_type' => $params["homeProType"] ?? "",
+            'comments' => $params["comments"] ?? "",
+            'my_notes' => $params["myNotes"] ?? "",
+            'realtor_id' => $this->loggedUserId,
             'img' => $imageDbLink,
             'date' => new Timestamp(new DateTime()),
         ];
@@ -133,23 +137,47 @@ class ProServiceController
         {
             if($value !== "") $finalData[] = ['path' => $key, 'value' => $value];
         }
-        $this->story->update($id, $finalData);
-        header("Location: /stories/list");
+        $this->proService->update($id, $finalData);
+        header("Location: /pro-services/list");
     }
 
     #[NoReturn] public function showAction(array $params = []): void
     {
         $id = $params["id"];
-        $story = $this->story->find($id);
-        require_once __DIR__ . '/../../templates/stories/show.phtml';
+        $proService = $this->proService->find($id);
+        require_once __DIR__ . '/../../templates/pro-services/show.phtml';
         die();
     }
 
     #[NoReturn] public function deleteAction(array $params = []): void
     {
         $id = $params["id"];
-        $this->story->delete($id);
-        header("Location: /stories/list");
-        die();
+        $this->proService->delete($id);
+
+
+        $client = new Client();
+        $helper = new HelperService();
+        $realtorLinkedPortalClients = $client->fetchPortalClients($this->loggedUserId);
+        $allMobileAppClients = $client->fetchMobileAppClients();
+        $helper->clientCheckAndSaveSignUpDate($realtorLinkedPortalClients, $allMobileAppClients, $client);
+        // Here comes the push notifications
+        $realtorLinkedMobileClientsTokens = [];
+        foreach ($realtorLinkedPortalClients as $portalClient)
+        {
+            if(isset($portalClient->notification_token) && trim($portalClient->notification_token) !== "")
+            {
+                $realtorLinkedMobileClientsTokens[] = $portalClient->notification_token;
+            }
+        }
+        $notificationParameters = [
+            "title" => "HoneyDoo Alert",
+            "body" => "Your realtor has removed a recommended home pro."
+        ];
+        if(count($realtorLinkedMobileClientsTokens) > 0) {
+            $helper->sendFCM($realtorLinkedMobileClientsTokens, $notificationParameters, "/pro-services/list");
+        } else {
+            header("Location: /pro-services/list.php");
+        }
+        
     }
 }

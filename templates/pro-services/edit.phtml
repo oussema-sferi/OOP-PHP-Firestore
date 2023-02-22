@@ -1,45 +1,18 @@
 <?php
-namespace App\View;
-use App\Model\Firestore_honeydoo;
-use App\Service\HelperService;
-
-require_once "../../../vendor/autoload.php";
-
-if(!isset($_SESSION["user"]))
-{
-    header("Location: login.php");
-} else {
-    if(isset($_SESSION["user"]["role"]) && $_SESSION["user"]["role"] == "ROLE_ADMIN")
-    {
-        header("Location: users_list.php");
-    }
-}
-$proServiceId = $_GET["pro_service_id"];
-$database = new Firestore_honeydoo();
-$proServiceToEdit = $database->fetchProServiceById($proServiceId);
-$companyName = $proServiceToEdit["company_name"];
-$companyEmail = $proServiceToEdit["company_email"];
-$companyPhoneNumber = $proServiceToEdit["company_phone_number"];
-$companyWebsiteLink = $proServiceToEdit["company_website_link"];
-$homeProType = $proServiceToEdit["homePro_type"];
-$companyComments = $proServiceToEdit["comments"];
-$companyNotes = $proServiceToEdit["my_notes"];
-
-//
-$realtor = $database->fetchRealtorById($_SESSION["user"]["realtor_id"]);
-$helper = new HelperService();
-$profilePic = $helper->setProfilePic($realtor);
+/* @var $proService
+ * @var $id
+ */
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php include '../layout/realtor/header.php';?>
+    <?php include __DIR__ . '/../layout/realtor/header.phtml';?>
     <title>Edit Pro Service</title>
 </head>
 <body class="nav-fixed">
-<?php include '../layout/realtor/navbar.php';?>
+<?php include __DIR__ . '/../layout/realtor/navbar.phtml';?>
 <div id="layoutSidenav">
-    <?php include '../layout/realtor/sidebar.php';?>
+    <?php include __DIR__ . '/../layout/realtor/sidebar.phtml';?>
     <div id="layoutSidenav_content">
         <main>
             <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
@@ -53,7 +26,7 @@ $profilePic = $helper->setProfilePic($realtor);
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="<?='list.php'?>"">
+                                <a class="btn btn-sm btn-light text-primary" href="/pro-services/list">
                                     <i class="me-1" data-feather="arrow-left"></i>
                                     Back to All Pro Services
                                 </a>
@@ -64,29 +37,25 @@ $profilePic = $helper->setProfilePic($realtor);
             </header>
             <!-- Main page content-->
             <div class="container-fluid px-4">
-                <form action="<?='../../Controller/edit_pro_service_action.php?pro_service_id=' . $proServiceId?>" method="post" enctype="multipart/form-data">
+                <form action="/pro-services/edit-save?id=<?=$id?>" method="post" enctype="multipart/form-data">
                     <div class="row gx-4">
                         <div class="col-lg-8">
                             <div class="card mb-4">
                                 <div class="card-header">Company Name</div>
-                                <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" placeholder="Enter company name..." name="companyName" value="<?=$companyName?>" required/></div>
+                                <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" placeholder="Enter company name..." name="companyName" value="<?=$proService["company_name"]?>" required/></div>
                             </div>
                             <div class="card mb-4">
                                 <div class="card-header">Company Email</div>
-                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter company email..." name="companyEmail" value="<?=$companyEmail?>" required/></div>
+                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter company email..." name="companyEmail" value="<?=$proService["company_email"]?>" required/></div>
                             </div>
                             <div class="card mb-4">
                                 <div class="card-header">Company Phone Number</div>
-                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter company phone number..." name="companyPhoneNumber" value="<?=$companyPhoneNumber?>" required/></div>
+                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter company phone number..." name="companyPhoneNumber" value="<?=$proService["company_phone_number"]?>" required/></div>
                             </div>
                             <div class="card mb-4">
                                 <div class="card-header">Company Website Link</div>
-                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter company website link..." name="companyWebsiteLink" value="<?=$companyWebsiteLink?>" required/></div>
+                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter company website link..." name="companyWebsiteLink" value="<?=$proService["company_website_link"]?>" required/></div>
                             </div>
-                            <!--<div class="card mb-4">
-                                <div class="card-header">Home Pro Type</div>
-                                <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" placeholder="Enter home pro type..." name="homeProType" value="<?/*=$homeProType*/?>" required/></div>
-                            </div>-->
                             <div class="card mb-4">
                                 <div class="card-header">Home Pro Type</div>
                                 <div class="card-body">
@@ -113,15 +82,15 @@ $profilePic = $helper->setProfilePic($realtor);
                             </div>
                             <div class="card mb-4">
                                 <div class="card-header">Comments</div>
-                                <div class="card-body"><textarea class="lh-base form-control" type="text" placeholder="Enter your comments..." rows="5" name="comments" required><?=$companyComments?></textarea></div>
+                                <div class="card-body"><textarea class="lh-base form-control" type="text" placeholder="Enter your comments..." rows="5" name="comments" required><?=$proService["comments"]?></textarea></div>
                             </div>
                             <div class="card mb-4">
                                 <div class="card-header">My Notes</div>
-                                <div class="card-body"><textarea class="lh-base form-control" type="text" placeholder="Enter your notes..." rows="5" name="myNotes" required><?=$companyNotes?></textarea></div>
+                                <div class="card-body"><textarea class="lh-base form-control" type="text" placeholder="Enter your notes..." rows="5" name="myNotes" required><?=$proService["my_notes"]?></textarea></div>
                             </div>
                             <div class="card mb-4">
                                 <div class="card-header">Image</div>
-                                <div class="card-body"><input type="file" accept="image/jpeg/png" name="proServiceImage"></div>
+                                <div class="card-body"><input type="file" accept="image/jpeg/png" name="image"></div>
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -135,13 +104,13 @@ $profilePic = $helper->setProfilePic($realtor);
                 </form>
             </div>
         </main>
-        <?php include '../layout/realtor/footer.php';?>
+        <?php include __DIR__ . '/../layout/realtor/footer.phtml';?>
     </div>
 </div>
-<?php include '../layout/realtor/scripts.php';?>
+<?php include __DIR__ . '/../layout/realtor/scripts.phtml';?>
 <script>
     $( document ).ready(function() {
-        let homeProType = <?php echo json_encode($homeProType); ?>;
+        let homeProType = <?php echo json_encode($proService["homePro_type"]); ?>;
         $("#homeProType").val(homeProType);
     });
 </script>
