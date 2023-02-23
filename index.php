@@ -54,6 +54,8 @@ $router->post($proServicesBasePath . '/edit-save', ProServiceController::class .
 $router->get($proServicesBasePath . '/show', ProServiceController::class . '::showAction');
 // delete pro service
 $router->get($proServicesBasePath . '/delete', ProServiceController::class . '::deleteAction');
+// download import pro services template
+$router->get($proServicesBasePath . '/template-download', ProServiceController::class . '::downloadImportTemplate');
 // import pro services via CSV
 $router->post($proServicesBasePath . '/import', ProServiceController::class . '::importCsvAction');
 

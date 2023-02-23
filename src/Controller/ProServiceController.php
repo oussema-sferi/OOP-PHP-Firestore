@@ -187,4 +187,12 @@ class ProServiceController
         $helper = new HelperService();
         $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, $notificationParameters, $redirectUri);
     }
+
+    #[NoReturn] public function downloadImportTemplate(array $params = []): void
+    {
+        $filename =  __DIR__ . '/../../public/uploaded-files/templates/import-pro-services.xlsx';
+        $redirectUri = "/pro-services/list";
+        $helper = new HelperService();
+        $helper->templateDownload($filename, $redirectUri);
+    }
 }
