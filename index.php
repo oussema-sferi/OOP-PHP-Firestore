@@ -29,10 +29,10 @@ $router->post('/registration', RegistrationController::class . '::registrationAc
 $router->get('/user/my-profile', UserController::class . '::myProfileShowAction');
 
 // Update profile picture
-$router->post('/user/update-profile-picture', UserController::class . '::updateProfilePictureAction');
+$router->post('/user/update-profile-picture', UserController::class . '::updateMyProfilePictureAction');
 
 // Edit profile action
-$router->post('/user/edit-profile', UserController::class . '::editProfileAction');
+$router->post('/user/edit-profile', UserController::class . '::editMyProfileAction');
 
 // Realtor STORIES
 $storiesBasePath = '/stories';

@@ -28,7 +28,7 @@ class UserController
         require_once __DIR__ . '/../../templates/user/my-profile.phtml';
     }
 
-    public function updateProfilePictureAction(array $params = []): void
+    public function updateMyProfilePictureAction(array $params = []): void
     {
         $realtorId = $params["id"];
         $imagePath = "/public/uploaded-images/profile-pictures/" . md5(uniqid()) . $_FILES["profilePicture"]["name"];
@@ -49,7 +49,7 @@ class UserController
         die();
     }
 
-    public function editProfileAction(array $params = []): void
+    public function editMyProfileAction(array $params = []): void
     {
 
         $realtorId = $params["id"];
