@@ -59,4 +59,10 @@ class Client
         $client = $this->db->collection('realtor_clients')->document($id);
         return $client->update($data);
     }
+
+    public function delete($id)
+    {
+        $client = $this->db->collection('realtor_clients')->document($id);
+        return $client->delete();
+    }
 }
