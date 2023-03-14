@@ -66,9 +66,9 @@ $router->get($proServicesBasePath . '/show', ProServiceController::class . '::sh
 // delete pro service
 $router->get($proServicesBasePath . '/delete', ProServiceController::class . '::deleteAction');
 // download import pro services template
-$router->get($proServicesBasePath . '/template-download', ProServiceController::class . '::downloadImportTemplate');
+$router->get($proServicesBasePath . '/template-download', ProServiceController::class . '::templateDownloadAction');
 // import pro services via CSV
-$router->post($proServicesBasePath . '/import', ProServiceController::class . '::importCsvAction');
+$router->post($proServicesBasePath . '/import', ProServiceController::class . '::importFromFileAction');
 
 // Realtor CLIENTS
 $clientsBasePath = '/clients';
@@ -91,9 +91,9 @@ $router->get($clientsBasePath . '/emails-unsubscription-confirmation', ClientCon
 // send email invitation to client
 $router->post($clientsBasePath . '/send-invitation-to-client', ClientController::class . '::sendEmailInvitationToClientAction');
 // CSV template download
-$router->get($clientsBasePath . '/template-download', ClientController::class . '::clientsTemplateDownloadAction');
+$router->get($clientsBasePath . '/template-download', ClientController::class . '::templateDownloadAction');
 // clients import from CSV action
-$router->post($clientsBasePath . '/import-from-file', ClientController::class . '::clientsImportFromFileAction');
+$router->post($clientsBasePath . '/import-from-file', ClientController::class . '::importFromFileAction');
 
 $router->get('/', function () {
     echo 'Home Page';

@@ -147,14 +147,14 @@ class ProServiceController
         $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, $notificationParameters, $redirectUri);
     }
 
-    #[NoReturn] public function importCsvAction(array $params = []): void
+    #[NoReturn] public function importFromFileAction(array $params = []): void
     {
-        $filePath =  "/public/uploaded-files/pro_services/" . md5(uniqid()) . $_FILES["excelHomeProsfile"]["name"];
+        $fileFullPath = $_SERVER['DOCUMENT_ROOT'] . "/public/uploaded-files/pro-services/" . md5(uniqid()) . $_FILES["excelHomeProsfile"]["name"];
         move_uploaded_file(
-            $_FILES["excelHomeProsfile"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . $filePath
+            $_FILES["excelHomeProsfile"]["tmp_name"], $fileFullPath
         );
-        $reader = IOFactory::createReaderForFile($_SERVER['DOCUMENT_ROOT'] . $filePath);
-        $spreadsheet = $reader->load($_SERVER['DOCUMENT_ROOT'] . $filePath);
+        $reader = IOFactory::createReaderForFile($fileFullPath);
+        $spreadsheet = $reader->load($fileFullPath);
         $activeSheet = $spreadsheet->getActiveSheet();
         $activeSheetArray = $activeSheet->toArray(null, true, true, true, true);
         array_shift($activeSheetArray);
@@ -188,11 +188,12 @@ class ProServiceController
         $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, $notificationParameters, $redirectUri);
     }
 
-    #[NoReturn] public function downloadImportTemplate(array $params = []): void
+    #[NoReturn] public function templateDownloadAction(array $params = []): void
     {
-        $filename =  __DIR__ . '/../../public/uploaded-files/templates/import-pro-services.xlsx';
-        $redirectUri = "/pro-services/list";
+        $filename = $_SERVER["DOCUMENT_ROOT"] . "/public/uploaded-files/templates/import-pro-services.xlsx";
         $helper = new HelperService();
-        $helper->templateDownload($filename, $redirectUri);
+        $helper->templateDownload($filename);
+        header("Location: /pro-services/list");
+        die();
     }
 }

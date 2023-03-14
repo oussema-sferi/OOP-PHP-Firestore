@@ -190,7 +190,7 @@ class ClientController
         die();
     }
 
-    #[NoReturn] public function clientsTemplateDownloadAction(array $params = []): void
+    #[NoReturn] public function templateDownloadAction(array $params = []): void
     {
         $filename = $_SERVER["DOCUMENT_ROOT"] . "/public/uploaded-files/templates/import-clients.xlsx";
         $helper = new HelperService();
@@ -199,7 +199,7 @@ class ClientController
         die();
     }
 
-    #[NoReturn] public function clientsImportFromFileAction(array $params = []): void
+    #[NoReturn] public function importFromFileAction(array $params = []): void
     {
         $path = "";
         if (isset($_POST["submit"]))
