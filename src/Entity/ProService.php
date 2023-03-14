@@ -4,19 +4,22 @@ namespace App\Entity;
 
 
 use App\DBConfig;
+use Google\Cloud\Firestore\CollectionReference;
 
 class ProService
 {
     protected $db;
+    private CollectionReference $collection;
     public function __construct()
     {
         $this->db = DBConfig::getDbConnection();
+        $this->collection = $this->db->collection('realtor_home_pro_service');
     }
 
     public function findAllByUser($userId)
     {
         $res = [];
-        $query = $this->db->collection('realtor_home_pro_service')->where('realtor_id', '=', $userId);
+        $query = $this->collection->where('realtor_id', '=', $userId);
         $documents = $query->documents();
         foreach ($documents as $document) {
             if ($document->exists()) {
@@ -30,24 +33,24 @@ class ProService
 
     public function create($data)
     {
-        return $this->db->collection('realtor_home_pro_service')->add($data);
+        return $this->collection->add($data);
     }
 
     public function find($docId)
     {
-        $query = $this->db->collection('realtor_home_pro_service')->document($docId);
+        $query = $this->collection->document($docId);
         return $query->snapshot();
     }
 
     public function update($id, $data)
     {
-        $proServiceRef = $this->db->collection('realtor_home_pro_service')->document($id);
-        return $proServiceRef->update($data);
+        $proService = $this->collection->document($id);
+        return $proService->update($data);
     }
 
     public function delete($id)
     {
-        $blogRef = $this->db->collection('realtor_home_pro_service')->document($id);
-        return $blogRef->delete();
+        $proService = $this->collection->document($id);
+        return $proService->delete();
     }
 }
