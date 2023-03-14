@@ -25,6 +25,15 @@
                                     Stories List
                                 </h1>
                             </div>
+                            <div class="col mb-3">
+                                <form id="publishStoryForm" action="/stories/publish" method="post">
+                                    <input type="hidden" id="selected_stories" name="selectedStories">
+                                    <button type="submit" id="publishStoryButton" class="btn btn-sm btn-light text-primary" href="#" disabled>
+                                        <i class="me-1" data-feather="send"></i>
+                                        Publish story
+                                    </button>
+                                </form>
+                            </div>
                             <div class="col-12 col-xl-auto mb-3">
                                 <a class="btn btn-sm btn-light text-primary" href="/stories/new">
                                     <i class="me-1" data-feather="plus"></i>

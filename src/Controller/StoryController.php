@@ -134,4 +134,23 @@ class StoryController
         header("Location: /stories/list");
         die();
     }
+
+    #[NoReturn] public function publishStoryAction(array $params = []): void
+    {
+        $storiesIds = json_decode($params["selectedStories"]);
+        $finalData = [];
+        $data = [
+            'is_published' => true,
+            'published_at' => new Timestamp(new DateTime()),
+        ];
+        foreach ($data as $key => $value)
+        {
+            $finalData[] = ['path' => $key, 'value' => $value];
+        }
+        foreach ($storiesIds as $storyId)
+        {
+            $this->story->update($storyId, $finalData);
+        }
+        header("Location: /stories/list");
+    }
 }

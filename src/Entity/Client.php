@@ -43,9 +43,20 @@ class Client
         return $res;
     }
 
-    public function update($clientCollectionId, $data)
+    public function create($data)
     {
-        $clientCollectionRef = $this->db->collection('realtor_clients')->document($clientCollectionId);
-        return $clientCollectionRef->update($data);
+        return $this->db->collection('realtor_clients')->add($data);
+    }
+
+    public function find($id)
+    {
+        $query = $this->db->collection('realtor_clients')->document($id);
+        return $query->snapshot();
+    }
+
+    public function update($id, $data)
+    {
+        $client = $this->db->collection('realtor_clients')->document($id);
+        return $client->update($data);
     }
 }

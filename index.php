@@ -9,6 +9,7 @@ use App\Controller\LoginController;
 use App\Controller\RegistrationController;
 use App\Controller\StoryController;
 use App\Controller\ProServiceController;
+use App\Controller\ClientController;
 
 $router = new Router();
 
@@ -24,11 +25,11 @@ $router->get('/registration', RegistrationController::class . '::show');
 $router->post('/registration', RegistrationController::class . '::registrationAction');
 
 
-// STORIES
+// Realtor STORIES
 $storiesBasePath = '/stories';
 // list stories
 $router->get($storiesBasePath . '/list', StoryController::class . '::listAction');
-// create story
+// create new story
 $router->get($storiesBasePath . '/new', StoryController::class . '::addForm');
 $router->post($storiesBasePath . '/new-save', StoryController::class . '::createAction');
 // update story
@@ -38,13 +39,15 @@ $router->post($storiesBasePath . '/edit-save', StoryController::class . '::editS
 $router->get($storiesBasePath . '/show', StoryController::class . '::showAction');
 // delete story
 $router->get($storiesBasePath . '/delete', StoryController::class . '::deleteAction');
+// publish story
+$router->post($storiesBasePath . '/publish', StoryController::class . '::publishStoryAction');
 
 
-// PRO SERVICES
+// Realtor PRO SERVICES
 $proServicesBasePath = '/pro-services';
 // list pro services
 $router->get($proServicesBasePath . '/list', ProServiceController::class . '::listAction');
-// create pro service
+// create new pro service
 $router->get($proServicesBasePath . '/new', ProServiceController::class . '::addForm');
 $router->post($proServicesBasePath . '/new-save', ProServiceController::class . '::createAction');
 // update pro service
@@ -58,6 +61,21 @@ $router->get($proServicesBasePath . '/delete', ProServiceController::class . '::
 $router->get($proServicesBasePath . '/template-download', ProServiceController::class . '::downloadImportTemplate');
 // import pro services via CSV
 $router->post($proServicesBasePath . '/import', ProServiceController::class . '::importCsvAction');
+
+// Realtor CLIENTS
+$storiesBasePath = '/clients';
+// list clients
+$router->get($storiesBasePath . '/list', ClientController::class . '::listAction');
+// create new client
+$router->get($storiesBasePath . '/new', ClientController::class . '::addForm');
+$router->post($storiesBasePath . '/new-save', ClientController::class . '::createAction');
+// update client
+$router->get($storiesBasePath . '/edit', ClientController::class . '::editForm');
+$router->post($storiesBasePath . '/edit-save', ClientController::class . '::editSaveAction');
+// show client
+$router->get($storiesBasePath . '/show', ClientController::class . '::showAction');
+// delete client
+$router->get($storiesBasePath . '/delete', ClientController::class . '::deleteAction');
 
 $router->get('/', function () {
     echo 'Home Page';

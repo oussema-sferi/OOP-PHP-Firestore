@@ -3,7 +3,7 @@ namespace App\Service;
 
 class HelperService
 {
-    public function clientCheckAndSaveSignUpDate($database, $userId, $notificationParameters , $redirectUri): void
+    public function clientCheckAndSaveSignUpDate($database, $userId, array $notificationParameters , string $redirectUri, bool $sendNotif = true): void
     {
         $realtorLinkedPortalClients = $database->fetchPortalClients($userId);
         $allMobileAppClients = $database->fetchMobileAppClients();
@@ -39,18 +39,21 @@ class HelperService
                 ]);
             }
         }
-        $realtorLinkedMobileClientsTokens = [];
-        foreach ($realtorLinkedPortalClients as $portalClient)
+        if($sendNotif)
         {
-            if(isset($portalClient->notification_token) && trim($portalClient->notification_token) !== "")
+            $realtorLinkedMobileClientsTokens = [];
+            foreach ($realtorLinkedPortalClients as $portalClient)
             {
-                $realtorLinkedMobileClientsTokens[] = $portalClient->notification_token;
+                if(isset($portalClient->notification_token) && trim($portalClient->notification_token) !== "")
+                {
+                    $realtorLinkedMobileClientsTokens[] = $portalClient->notification_token;
+                }
             }
-        }
-        if(count($realtorLinkedMobileClientsTokens) > 0) {
-            $this->sendFCM($realtorLinkedMobileClientsTokens, $notificationParameters, $redirectUri);
-        } else {
-            header("Location: $redirectUri");
+            if(count($realtorLinkedMobileClientsTokens) > 0) {
+                $this->sendFCM($realtorLinkedMobileClientsTokens, $notificationParameters, $redirectUri);
+            } else {
+                header("Location: $redirectUri");
+            }
         }
     }
 

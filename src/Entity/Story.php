@@ -31,9 +31,9 @@ class Story
         return $this->db->collection('blogPost')->add($data);
     }
 
-    public function find($docId)
+    public function find($id)
     {
-        $query = $this->db->collection('blogPost')->document($docId);
+        $query = $this->db->collection('blogPost')->document($id);
         return $query->snapshot();
     }
 
