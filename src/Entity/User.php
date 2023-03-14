@@ -69,4 +69,17 @@ class User
         $realtor = $this->collection->document($id);
         return $realtor->update($data);
     }
+
+    public function findByEmail($email)
+    {
+        $query = $this->db->collection('realtor')->where('email', '=', $email);
+        $documents = $query->documents();
+        foreach ($documents as $document) {
+            if ($document->exists()) {
+                return $document->data();
+            } else {
+                return false;
+            }
+        }
+    }
 }

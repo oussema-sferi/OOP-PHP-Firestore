@@ -27,9 +27,11 @@ $router->post('/registration', RegistrationController::class . '::registrationAc
 
 // RESET PASSWORD STEPS
 $resetPasswordBasePath = '/reset-password';
-// STEP 1
+// STEP 1 Enter email & send password request
 $router->get($resetPasswordBasePath . '/request', ResetPasswordController::class . '::showRequestPasswordAction');
-/*$router->post('/registration', ResetPasswordController::class . '::registrationAction');*/
+$router->post($resetPasswordBasePath . '/request', ResetPasswordController::class . '::requestPasswordAction');
+// STEP 2 check email
+$router->get($resetPasswordBasePath . '/check-email', ResetPasswordController::class . '::checkEmailAction');
 
 // My Profile
 $router->get('/user/my-profile', DashboardController::class . '::myProfileShowAction');
