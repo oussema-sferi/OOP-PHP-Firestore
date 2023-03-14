@@ -36,14 +36,14 @@
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
                                 <div id="formContainer" style="display: none">
-                                    <form action="<?='../Controller/import_clients_csv_action.php'?>" method="post" enctype="multipart/form-data">
+                                    <form action="/clients/import-from-file" method="post" enctype="multipart/form-data">
                                         <input id="excelcontactsfile" type="file" name="excelclientsfile" class="form-control-sm" style="width: 210px" accept=".csv,.ods, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
                                         <input class="btn btn-sm btn-success" type="submit" name="submit" value="Confirm">
                                         <a id="backButton" class="btn btn-sm btn-secondary">Back</a>
                                     </form>
                                 </div>
                                 <div id="buttonsContainer">
-                                    <a class="btn btn-sm btn-light text-primary" href="<?='../Controller/template_download.php?template=clients'?>">
+                                    <a class="btn btn-sm btn-light text-primary" href="/clients/template-download">
                                         <i class="me-1" data-feather="download"></i>
                                         Download Client Template
                                     </a>

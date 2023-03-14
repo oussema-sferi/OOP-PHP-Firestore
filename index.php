@@ -82,6 +82,10 @@ $router->get($clientsBasePath . '/emails-unsubscription', ClientController::clas
 $router->get($clientsBasePath . '/emails-unsubscription-confirmation', ClientController::class . '::emailsUnsubscriptionConfirmationAction');
 // send email invitation to client
 $router->post($clientsBasePath . '/send-invitation-to-client', ClientController::class . '::sendEmailInvitationToClientAction');
+// CSV template download
+$router->get($clientsBasePath . '/template-download', ClientController::class . '::clientsTemplateDownloadAction');
+// clients import from CSV action
+$router->post($clientsBasePath . '/import-from-file', ClientController::class . '::clientsImportFromFileAction');
 
 $router->get('/', function () {
     echo 'Home Page';

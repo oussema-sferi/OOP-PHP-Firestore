@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 use App\Entity\Client;
 use App\Entity\InvitationEmail;
+use App\Model\Firestore_honeydoo;
 use App\Service\HelperService;
 use App\Service\MailerService;
 use App\Service\UserCheckerService;
@@ -13,6 +14,7 @@ use App\Entity\User;
 use Google\Cloud\Core\Timestamp;
 use JetBrains\PhpStorm\NoReturn;
 use DateTime;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ClientController
 {
@@ -183,6 +185,64 @@ class ClientController
             $mailer->sendInvitationMail($emailContent, $emailSubject, [$subscribedClient["email_1"], $subscribedClient["email_2"]]);
             $data = [['path' => 'email_invite_sent_at', 'value' => new Timestamp(new DateTime())]];
             $this->client->update($subscribedClient->id(), $data);
+        }
+        header("Location: /clients/list");
+        die();
+    }
+
+    #[NoReturn] public function clientsTemplateDownloadAction(array $params = []): void
+    {
+        $filename = $_SERVER["DOCUMENT_ROOT"] . "/public/uploaded-files/templates/import-clients.xlsx";
+        $helper = new HelperService();
+        $helper->templateDownload($filename);
+        header("Location: /clients/list");
+        die();
+    }
+
+    #[NoReturn] public function clientsImportFromFileAction(array $params = []): void
+    {
+        $path = "";
+        if (isset($_POST["submit"]))
+        {
+            $fileFullPath = $_SERVER['DOCUMENT_ROOT'] . "/public/uploaded-files/clients/" . md5(uniqid()) . $_FILES["excelclientsfile"]["name"];
+            move_uploaded_file(
+                $_FILES["excelclientsfile"]["tmp_name"], $fileFullPath
+            );
+            $reader = IOFactory::createReaderForFile($fileFullPath);
+            $spreadsheet = $reader->load($fileFullPath);
+            $activeSheet = $spreadsheet->getActiveSheet();
+            $activeSheetArray = $activeSheet->toArray(null, true, true, true, true);
+            array_shift($activeSheetArray);
+            $allData = [];
+            foreach ($activeSheetArray as $row)
+            {
+                $rowData = [
+                    'first_name_1' => $row["A"],
+                    'last_name_1' => $row["B"],
+                    'email_1' => $row["C"],
+                    'phone_1' => $row["D"],
+                    'first_name_2' => $row["E"],
+                    'last_name_2' => $row["F"],
+                    'email_2' => $row["G"],
+                    'phone_2' => $row["H"],
+                    'address_1' => $row["I"],
+                    'address_2' => $row["J"],
+                    'city' => $row["K"],
+                    'state' => $row["L"],
+                    'zip' => $row["M"],
+                    'home_type' => $row["N"],
+                    'notes' => $row["O"],
+                    'is_subscribed' => true,
+                    'is_deleted' => false,
+                    'realtor_id' => $this->loggedUserId,
+                    'created_at' => new Timestamp(new DateTime()),
+                ];
+                $allData[] = $rowData;
+            }
+            foreach ($allData as $client)
+            {
+                $this->client->create($client);
+            }
         }
         header("Location: /clients/list");
         die();
