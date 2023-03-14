@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 use App\Entity\Client;
+use App\Entity\InvitationEmail;
 use App\Service\HelperService;
+use App\Service\MailerService;
 use App\Service\UserCheckerService;
 use App\Entity\Story;
 use App\Entity\User;
@@ -14,17 +16,17 @@ use DateTime;
 
 class ClientController
 {
-    private Story $story;
     private User $user;
     private Client $client;
+    private InvitationEmail $invitationEmail;
     private string $loggedUserId;
     private string $baseUri;
     public function __construct()
     {
         UserCheckerService::checkUser();
-        $this->story = new Story();
         $this->user = new User();
         $this->client = new Client();
+        $this->invitationEmail = new InvitationEmail();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
     }
@@ -125,6 +127,63 @@ class ClientController
     {
         $id = $params["id"];
         $this->client->delete($id);
+        header("Location: /clients/list");
+        die();
+    }
+
+    #[NoReturn] public function emailsUnsubscriptionAction(array $params = []): void
+    {
+        $clientId = $params["id"];
+        $data = [
+            ['path' => 'is_subscribed', 'value' => false]
+        ];
+        $this->client->update($clientId, $data);
+        header("Location: /clients/emails-unsubscription-confirmation");
+        die();
+    }
+
+    #[NoReturn] public function emailsUnsubscriptionConfirmationAction(array $params = []): void
+    {
+        require_once __DIR__ . '/../../templates/emails/emails-unsubscription-confirmation.phtml';
+        die();
+    }
+
+    #[NoReturn] public function sendEmailInvitationToClientAction(array $params = []): void
+    {
+        $clientsIds = json_decode($params["selectedClients"]);
+        $clientsArray = [];
+        foreach ($clientsIds as $clientId)
+        {
+            $clientsArray[] = $this->client->find($clientId);
+        }
+        $subscribedClients = [];
+        foreach ($clientsArray as $client)
+        {
+            if($client["is_subscribed"]) $subscribedClients[] = $client;
+        }
+        $unsubscriptionLink = $this->baseUri . "/clients/emails-unsubscription?id=";
+        $email = $this->invitationEmail->fetchEmail();
+        $emailContent = $email["content"];
+        $emailSubject = $email["subject"];
+        $realtor = $this->user->fetchUserById($this->loggedUserId);
+        $realtorInfo = [
+            "{{realtor_name}}" => $realtor["realtor_title"],
+            "{{realtor_photo}}" => "'" . $realtor["realtor_photo"] . "'",
+            "{{current_year}}" => date("Y"),
+        ];
+        foreach ($realtorInfo as $key => $value)
+        {
+            $emailContent = str_replace($key, $value, $emailContent);
+        }
+        $emailSubject = str_replace("{{realtor_name}}", $_SESSION["user"]["realtor_title"], $emailSubject);
+        foreach ($subscribedClients as $subscribedClient)
+        {
+            $mailer = new MailerService();
+            $emailContent = str_replace("{{unsubscribe}}", $unsubscriptionLink . $subscribedClient->id(), $emailContent);
+            $mailer->sendInvitationMail($emailContent, $emailSubject, [$subscribedClient["email_1"], $subscribedClient["email_2"]]);
+            $data = [['path' => 'email_invite_sent_at', 'value' => new Timestamp(new DateTime())]];
+            $this->client->update($subscribedClient->id(), $data);
+        }
         header("Location: /clients/list");
         die();
     }

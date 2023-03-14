@@ -63,19 +63,25 @@ $router->get($proServicesBasePath . '/template-download', ProServiceController::
 $router->post($proServicesBasePath . '/import', ProServiceController::class . '::importCsvAction');
 
 // Realtor CLIENTS
-$storiesBasePath = '/clients';
+$clientsBasePath = '/clients';
 // list clients
-$router->get($storiesBasePath . '/list', ClientController::class . '::listAction');
+$router->get($clientsBasePath . '/list', ClientController::class . '::listAction');
 // create new client
-$router->get($storiesBasePath . '/new', ClientController::class . '::addForm');
-$router->post($storiesBasePath . '/new-save', ClientController::class . '::createAction');
+$router->get($clientsBasePath . '/new', ClientController::class . '::addForm');
+$router->post($clientsBasePath . '/new-save', ClientController::class . '::createAction');
 // update client
-$router->get($storiesBasePath . '/edit', ClientController::class . '::editForm');
-$router->post($storiesBasePath . '/edit-save', ClientController::class . '::editSaveAction');
+$router->get($clientsBasePath . '/edit', ClientController::class . '::editForm');
+$router->post($clientsBasePath . '/edit-save', ClientController::class . '::editSaveAction');
 // show client
-$router->get($storiesBasePath . '/show', ClientController::class . '::showAction');
+$router->get($clientsBasePath . '/show', ClientController::class . '::showAction');
 // delete client
-$router->get($storiesBasePath . '/delete', ClientController::class . '::deleteAction');
+$router->get($clientsBasePath . '/delete', ClientController::class . '::deleteAction');
+// client email invitations unsubscription action
+$router->get($clientsBasePath . '/emails-unsubscription', ClientController::class . '::emailsUnsubscriptionAction');
+// client unsubscription confirmation
+$router->get($clientsBasePath . '/emails-unsubscription-confirmation', ClientController::class . '::emailsUnsubscriptionConfirmationAction');
+// send email invitation to client
+$router->post($clientsBasePath . '/send-invitation-to-client', ClientController::class . '::sendEmailInvitationToClientAction');
 
 $router->get('/', function () {
     echo 'Home Page';
