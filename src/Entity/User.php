@@ -11,6 +11,8 @@ class User
     {
         $this->db = DBConfig::getDbConnection();
     }
+
+
     public function fetchLoggedUser($email, $userPassword)
     {
         $query = $this->db->collection('realtor')->where('email', '=', $email);
@@ -39,7 +41,6 @@ class User
                 return false;
             }
         }
-
     }
 
     public function checkIfUserExists($email)
@@ -58,5 +59,11 @@ class User
     {
         $realtorRef = $this->db->collection('realtor')->document($id);
         return $realtorRef->update([['path' => 'realtor_id', 'value' => $id]]);
+    }
+
+    public function update($id, $data)
+    {
+        $realtor = $this->db->collection('realtor')->document($id);
+        return $realtor->update($data);
     }
 }

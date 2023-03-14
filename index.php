@@ -2,6 +2,7 @@
 declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 
+use App\Controller\UserController;
 use App\Service\UserCheckerService;
 use App\Router;
 use App\Handler\Contact;
@@ -24,6 +25,14 @@ $router->get('/logout', LoginController::class . '::logoutAction');
 $router->get('/registration', RegistrationController::class . '::show');
 $router->post('/registration', RegistrationController::class . '::registrationAction');
 
+// My Profile
+$router->get('/user/my-profile', UserController::class . '::myProfileShowAction');
+
+// Update profile picture
+$router->post('/user/update-profile-picture', UserController::class . '::updateProfilePictureAction');
+
+// Edit profile action
+$router->post('/user/edit-profile', UserController::class . '::editProfileAction');
 
 // Realtor STORIES
 $storiesBasePath = '/stories';
