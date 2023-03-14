@@ -2,10 +2,9 @@
 declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 
-use App\Controller\UserController;
+use App\Controller\DashboardController;
 use App\Service\UserCheckerService;
 use App\Router;
-use App\Handler\Contact;
 use App\Controller\LoginController;
 use App\Controller\RegistrationController;
 use App\Controller\StoryController;
@@ -26,13 +25,13 @@ $router->get('/registration', RegistrationController::class . '::show');
 $router->post('/registration', RegistrationController::class . '::registrationAction');
 
 // My Profile
-$router->get('/user/my-profile', UserController::class . '::myProfileShowAction');
+$router->get('/user/my-profile', DashboardController::class . '::myProfileShowAction');
 
 // Update profile picture
-$router->post('/user/update-profile-picture', UserController::class . '::updateMyProfilePictureAction');
+$router->post('/user/update-profile-picture', DashboardController::class . '::updateMyProfilePictureAction');
 
 // Edit profile action
-$router->post('/user/edit-profile', UserController::class . '::editMyProfileAction');
+$router->post('/user/edit-profile', DashboardController::class . '::editMyProfileAction');
 
 // Realtor STORIES
 $storiesBasePath = '/stories';
@@ -100,18 +99,7 @@ $router->get('/', function () {
     echo 'Home Page';
 });
 
-$router->get('/about', function (array $params = []) {
-    echo 'About Page';
-    if(!empty($params['username']))
-    {
-        echo '<h1> Hello ' . $params['username'] . '</h1>';
-    }
-});
-
-$router->get('/contact', Contact::class . '::execute');
-
-$router->post('/contact', function ($params) {
+/*$router->post('/contact', function ($params) {
     var_dump($params);
-});
-
+});*/
 $router->run();

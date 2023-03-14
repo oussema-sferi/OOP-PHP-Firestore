@@ -8,7 +8,7 @@ use App\Service\UserCheckerService;
 use Google\Cloud\Core\Timestamp;
 use DateTime;
 
-class UserController
+class DashboardController
 {
     private User $user;
     private string $loggedUserId;
