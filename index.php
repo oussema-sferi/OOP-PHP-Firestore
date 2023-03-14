@@ -10,6 +10,7 @@ use App\Controller\RegistrationController;
 use App\Controller\StoryController;
 use App\Controller\ProServiceController;
 use App\Controller\ClientController;
+use App\Controller\ResetPasswordController;
 
 $router = new Router();
 
@@ -23,6 +24,12 @@ $router->get('/logout', LoginController::class . '::logoutAction');
 // REGISTRATION
 $router->get('/registration', RegistrationController::class . '::show');
 $router->post('/registration', RegistrationController::class . '::registrationAction');
+
+// RESET PASSWORD STEPS
+$resetPasswordBasePath = '/reset-password';
+// STEP 1
+$router->get($resetPasswordBasePath . '/request', ResetPasswordController::class . '::showRequestPasswordAction');
+/*$router->post('/registration', ResetPasswordController::class . '::registrationAction');*/
 
 // My Profile
 $router->get('/user/my-profile', DashboardController::class . '::myProfileShowAction');

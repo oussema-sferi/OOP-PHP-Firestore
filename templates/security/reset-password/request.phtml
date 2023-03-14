@@ -1,25 +1,16 @@
-<?php
-if(isset($_SESSION['user'])) {
-    if(isset($_SESSION["user"]["role"]) && $_SESSION["user"]["role"] == "ROLE_ADMIN")
-    {
-        header("Location: ../users_list.php");
-    } else {
-        header("Location: ../blog_posts.php");
-    }
-}
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php include '../../layout/security/header.php';?>
+    <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/security/header.phtml';?>
     <title>Forgot Password - HoneyDoo Realtor Portal</title>
 </head>
 <body class="bg-primary">
 <div id="layoutAuthentication">
     <div id="layoutAuthentication_content">
         <main>
-            <center><img src="https://realtors.honeydoo.io/app/Ressources/assets/img/HoneyDoo-logo.png" width="400" style="margin: 50px 0 25px;"></center>
+            <div class="text-center">
+                <img src="https://realtors.honeydoo.io/app/Ressources/assets/img/HoneyDoo-logo.png" width="400" style="margin: 50px 0 25px;">
+            </div>
             <div class="container-xl px-4">
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
@@ -37,13 +28,13 @@ if(isset($_SESSION['user'])) {
                                     </div>
                                     <!-- Form Group (submit options)-->
                                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                        <a class="small" href="<?=$baseUrl . 'common/security/login.php'?>">Return to login</a>
+                                        <a class="small" href="/login">Return to login</a>
                                         <input class="btn btn-primary" type="submit" value="Reset Password">
                                     </div>
                                 </form>
                             </div>
                             <div class="card-footer text-center">
-                                <div class="small"><a href="<?=$baseUrl . 'common/security/registration.php'?>">Need an account? Sign up!</a></div>
+                                <div class="small"><a href="/registration">Need an account? Sign up!</a></div>
                             </div>
                         </div>
                     </div>
@@ -52,7 +43,7 @@ if(isset($_SESSION['user'])) {
         </main>
     </div>
     <div id="layoutAuthentication_footer">
-        <?php include '../../layout/security/footer.php';?>
+        <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/security/footer.phtml';?>
     </div>
 </div>
 </body>

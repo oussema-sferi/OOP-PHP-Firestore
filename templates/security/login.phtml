@@ -19,7 +19,9 @@ if(isset($_SESSION['registration_success_flash_message'])) {
 <div id="layoutAuthentication">
     <div id="layoutAuthentication_content">
         <main>
-            <center><img src="https://realtors.honeydoo.io/app/Ressources/assets/img/HoneyDoo-logo.png" width="400" style="margin: 50px 0 25px;"></center>
+            <div class="text-center">
+                <img src="https://realtors.honeydoo.io/app/Ressources/assets/img/HoneyDoo-logo.png" width="400" style="margin: 50px 0 25px;">
+            </div>
             <div class="container-xl px-4">
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
@@ -51,7 +53,7 @@ if(isset($_SESSION['registration_success_flash_message'])) {
                                     </div>
                                     <!-- Form Group (login box)-->
                                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                        <a class="small" href="<?=$baseUrl . 'common/forgot-password/request.php'?>">Forgot Password?</a>
+                                        <a class="small" href="/reset-password/request">Forgot Password?</a>
                                         <input class="btn btn-primary" type="submit" value="Login">
                                     </div>
                                 </form>
