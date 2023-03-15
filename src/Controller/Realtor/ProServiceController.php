@@ -3,11 +3,11 @@
 declare(strict_types=1);
 
 namespace App\Controller\Realtor;
+use App\Entity\PortalClient;
 use App\Entity\ProService;
 use App\Service\HelperService;
 use App\Service\UserCheckerService;
 use App\Entity\User;
-use App\Entity\Client;
 use Google\Cloud\Core\Timestamp;
 use JetBrains\PhpStorm\NoReturn;
 use DateTime;
@@ -15,7 +15,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ProServiceController
 {
-    private Client $client;
+    private PortalClient $client;
     private ProService $proService;
     private string $loggedUserId;
     private string $baseUri;
@@ -23,7 +23,7 @@ class ProServiceController
     {
         UserCheckerService::checkUser();
         $this->proService = new ProService();
-        $this->client = new Client();
+        $this->client = new PortalClient();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
     }

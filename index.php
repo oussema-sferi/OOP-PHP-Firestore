@@ -9,7 +9,7 @@ use App\Controller\LoginController;
 use App\Controller\RegistrationController;
 use App\Controller\Realtor\StoryController;
 use App\Controller\Realtor\ProServiceController;
-use App\Controller\Realtor\ClientController;
+use App\Controller\Realtor\PortalClientController;
 use App\Controller\Admin\PortalClientController as AdminPortalClientController;
 use App\Controller\Admin\RealtorController as AdminRealtorController;
 use App\Controller\Admin\MobileAppClientController as AdminMobileAppClientController;
@@ -102,27 +102,27 @@ $router->post($proServicesBasePath . '/import', ProServiceController::class . ':
 // Realtor CLIENTS
 $clientsBasePath = '/clients';
 // list clients
-$router->get($clientsBasePath . '/list', ClientController::class . '::listAction');
+$router->get($clientsBasePath . '/list', PortalClientController::class . '::listAction');
 // create new client
-$router->get($clientsBasePath . '/new', ClientController::class . '::addForm');
-$router->post($clientsBasePath . '/new-save', ClientController::class . '::createAction');
+$router->get($clientsBasePath . '/new', PortalClientController::class . '::addForm');
+$router->post($clientsBasePath . '/new-save', PortalClientController::class . '::createAction');
 // update client
-$router->get($clientsBasePath . '/edit', ClientController::class . '::editForm');
-$router->post($clientsBasePath . '/edit-save', ClientController::class . '::editSaveAction');
+$router->get($clientsBasePath . '/edit', PortalClientController::class . '::editForm');
+$router->post($clientsBasePath . '/edit-save', PortalClientController::class . '::editSaveAction');
 // show client
-$router->get($clientsBasePath . '/show', ClientController::class . '::showAction');
+$router->get($clientsBasePath . '/show', PortalClientController::class . '::showAction');
 // delete client
-$router->get($clientsBasePath . '/delete', ClientController::class . '::deleteAction');
+$router->get($clientsBasePath . '/delete', PortalClientController::class . '::deleteAction');
 // client email invitations unsubscription action
-$router->get($clientsBasePath . '/emails-unsubscription', ClientController::class . '::emailsUnsubscriptionAction');
+$router->get($clientsBasePath . '/emails-unsubscription', PortalClientController::class . '::emailsUnsubscriptionAction');
 // client unsubscription confirmation
-$router->get($clientsBasePath . '/emails-unsubscription-confirmation', ClientController::class . '::emailsUnsubscriptionConfirmationAction');
+$router->get($clientsBasePath . '/emails-unsubscription-confirmation', PortalClientController::class . '::emailsUnsubscriptionConfirmationAction');
 // send email invitation to client
-$router->post($clientsBasePath . '/send-invitation-to-client', ClientController::class . '::sendEmailInvitationToClientAction');
+$router->post($clientsBasePath . '/send-invitation-to-client', PortalClientController::class . '::sendEmailInvitationToClientAction');
 // CSV template download
-$router->get($clientsBasePath . '/template-download', ClientController::class . '::templateDownloadAction');
+$router->get($clientsBasePath . '/template-download', PortalClientController::class . '::templateDownloadAction');
 // clients import from CSV action
-$router->post($clientsBasePath . '/import-from-file', ClientController::class . '::importFromFileAction');
+$router->post($clientsBasePath . '/import-from-file', PortalClientController::class . '::importFromFileAction');
 
 
 // ADMIN ROUTES

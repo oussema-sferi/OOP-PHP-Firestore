@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Controller\Realtor;
-use App\Entity\Client;
+use App\Entity\PortalClient;
 use App\Service\HelperService;
 use App\Service\UserCheckerService;
 use App\Entity\Story;
@@ -16,7 +16,7 @@ class StoryController
 {
     private Story $story;
     private User $user;
-    private Client $client;
+    private PortalClient $client;
     private string $loggedUserId;
     private string $baseUri;
     public function __construct()
@@ -24,7 +24,7 @@ class StoryController
         UserCheckerService::checkUser();
         $this->story = new Story();
         $this->user = new User();
-        $this->client = new Client();
+        $this->client = new PortalClient();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
     }

@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 namespace App\Controller\Realtor;
-use App\Entity\Client;
 use App\Entity\InvitationEmail;
+use App\Entity\PortalClient;
 use App\Service\HelperService;
 use App\Service\MailerService;
 use App\Service\UserCheckerService;
@@ -15,10 +15,10 @@ use JetBrains\PhpStorm\NoReturn;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-class ClientController
+class PortalClientController
 {
     private User $user;
-    private Client $client;
+    private PortalClient $client;
     private InvitationEmail $invitationEmail;
     private string $loggedUserId;
     private string $baseUri;
@@ -26,7 +26,7 @@ class ClientController
     {
         UserCheckerService::checkUser();
         $this->user = new User();
-        $this->client = new Client();
+        $this->client = new PortalClient();
         $this->invitationEmail = new InvitationEmail();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];

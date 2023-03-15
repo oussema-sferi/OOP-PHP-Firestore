@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\DBConfig;
 use Google\Cloud\Firestore\CollectionReference;
 
-class Client
+class PortalClient
 {
     protected $db;
     private CollectionReference $collection;
