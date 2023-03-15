@@ -13,6 +13,7 @@ use App\Controller\Realtor\PortalClientController;
 use App\Controller\Admin\PortalClientController as AdminPortalClientController;
 use App\Controller\Admin\RealtorController as AdminRealtorController;
 use App\Controller\Admin\MobileAppClientController as AdminMobileAppClientController;
+use App\Controller\Admin\EmailController as AdminEmailController;
 use App\Controller\ResetPasswordController;
 
 $router = new Router();
@@ -165,6 +166,15 @@ $router->post($mobileAppClientsBasePath . '/edit', AdminMobileAppClientControlle
 $router->get($mobileAppClientsBasePath . '/show', AdminMobileAppClientController::class . '::showAction');
 // delete client
 $router->get($mobileAppClientsBasePath . '/delete', AdminMobileAppClientController::class . '::deleteAction');
+
+// EMAILS MENU
+$emailsBasePath = $adminBasePath . '/emails';
+// Invitation email
+$router->get($emailsBasePath . '/invitation', AdminEmailController::class . '::invitationEmailAction');
+$router->post($emailsBasePath . '/invitation', AdminEmailController::class . '::saveInvitationEmailAction');
+// Invitation email
+$router->get($emailsBasePath . '/reset-password', AdminEmailController::class . '::resetPasswordEmailAction');
+$router->post($emailsBasePath . '/reset-password', AdminEmailController::class . '::saveResetPasswordEmailAction');
 
 
 $router->get('/', function () {

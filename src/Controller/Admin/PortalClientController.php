@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Controller\Admin;
-use App\Entity\Client;
+use App\Entity\PortalClient;
 use App\Entity\InvitationEmail;
 use App\Service\HelperService;
 use App\Service\MailerService;
@@ -18,13 +18,13 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 class PortalClientController
 {
     private User $user;
-    private Client $client;
+    private PortalClient $client;
     private string $loggedUserId;
     private string $baseUri;
     public function __construct()
     {
         $this->user = new User();
-        $this->client = new Client();
+        $this->client = new PortalClient();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
     }

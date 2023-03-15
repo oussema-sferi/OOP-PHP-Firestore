@@ -23,7 +23,7 @@ class InvitationEmail
     }
 
 
-    public function updateContent($data)
+    public function updateEmail($data)
     {
         $email = $this->collection->document('invitation_email');
         return $email->update($data);
