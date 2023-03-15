@@ -125,10 +125,19 @@ $router->post($clientsBasePath . '/import-from-file', ClientController::class . 
 
 // ADMIN ROUTES
 $adminBasePath = '/admin';
-// Realtors list
+// list realtors
 $realtorsBasePath = $adminBasePath . '/realtors';
 $router->get($realtorsBasePath . '/list', RealtorController::class . '::listAction');
-
+// create new realtor
+$router->get($realtorsBasePath . '/new', RealtorController::class . '::addForm');
+$router->post($realtorsBasePath . '/new', RealtorController::class . '::createAction');
+// update realtor
+$router->get($realtorsBasePath . '/edit', RealtorController::class . '::editForm');
+$router->post($realtorsBasePath . '/edit', RealtorController::class . '::editSaveAction');
+// show realtor
+$router->get($realtorsBasePath . '/show', RealtorController::class . '::showAction');
+// delete realtor
+$router->get($realtorsBasePath . '/delete', RealtorController::class . '::deleteAction');
 
 
 $router->get('/', function () {

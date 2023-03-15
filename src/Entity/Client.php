@@ -68,4 +68,10 @@ class Client
         $client = $this->collection->document($id);
         return $client->delete();
     }
+
+    public function markClientAsDeleted($clientId)
+    {
+        $client = $this->db->collection('realtor_clients')->document($clientId);
+        return $client->update([['path' => 'is_deleted', 'value' => true]]);
+    }
 }

@@ -1,18 +1,18 @@
 <?php
-/* @var $client
+/* @var $realtor
  * @var $id
  */
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/header.phtml';?>
-    <title>Edit Client</title>
+    <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/admin/header.phtml';?>
+    <title>Edit Realtor</title>
 </head>
 <body class="nav-fixed">
-<?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/navbar.phtml';?>
+<?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/admin/navbar.phtml';?>
 <div id="layoutSidenav">
-    <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/sidebar.phtml';?>
+    <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/admin/sidebar.phtml';?>
     <div id="layoutSidenav_content">
         <main>
             <header class="page-header page-header-compact page-header-light border-bottom bg-white">
@@ -22,13 +22,13 @@
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="edit"></i></div>
-                                    Edit Client
+                                    Edit Realtor
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="/clients/list">
+                                <a class="btn btn-sm btn-light text-primary" href="/admin/realtors/list">
                                     <i class="me-1" data-feather="arrow-left"></i>
-                                    Back to My Clients
+                                    Back to Realtors List
                                 </a>
                             </div>
                         </div>
@@ -37,115 +37,56 @@
             </header>
             <!-- Main page content-->
             <div class="container-fluid px-4">
-                <form action="/clients/edit-save?id=<?=$id?>" method="post" class="mt-3">
-                    <h6 class="heading-small text-blue mb-3">Client 1</h6>
-                    <div class="pl-lg-4">
-                        <div class="row mb-5">
-                            <div class="col-md-3">
-                                <label class="small mb-1" for="firstName1">First name</label>
-                                <input class="form-control" id="firstName1" type="text" value="<?=$client["first_name_1"]?>" name="firstName1"/>
+                <form action="/admin/realtors/edit?id=<?=$id?>" method="post">
+                    <div class="row gx-4">
+                        <div class="col-lg-2">
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="card mb-4">
+                                <div class="card-header">Full name</div>
+                                <div class="card-body"><input class="form-control" type="text" name="fullName" placeholder="Enter full name" value="<?=$realtor["realtor_title"]?>"/></div>
                             </div>
-                            <div class="col-md-3">
-                                <label class="small mb-1" for="lastName1">Last name</label>
-                                <input class="form-control" id="lastName1" type="text" value="<?=$client["last_name_1"]?>" name="lastName1"/>
+                            <div class="card mb-4">
+                                <div class="card-header">Email</div>
+                                <div class="card-body"><input class="form-control" type="text" name="email" placeholder="Enter email" value="<?=$realtor["email"]?>"/></div>
                             </div>
-
-                            <div class="col-md-3">
-                                <label class="small mb-1" for="email1">Email</label>
-                                <input class="form-control" id="email1" type="text" value="<?=$client["email_1"]?>" name="email1"/>
+                            <div class="card mb-4">
+                                <div class="card-header">Company</div>
+                                <div class="card-body"><input class="form-control" type="text" name="companyName" placeholder="Enter company name" value="<?=$realtor["realtor_sub_title"]?>"/></div>
                             </div>
-                            <div class="col-md-3">
-                                <label class="small mb-1" for="phoneNumber1">Phone Number</label>
-                                <input class="form-control" id="phoneNumber1" type="text" value="<?=$client["phone_1"]?>" name="phoneNumber1"/>
+                            <div class="card mb-4">
+                                <div class="card-header">Phone Number</div>
+                                <div class="card-body"><input class="form-control" type="text" name="phoneNumber" placeholder="Enter phone number" value="<?=$realtor["phone_number"]?>"/></div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header">Address Line 1</div>
+                                <div class="card-body"><input class="form-control" type="text" name="address1" placeholder="Enter address line 1" value="<?=$realtor["address_line_1"]?>"/></div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header">Address Line 2</div>
+                                <div class="card-body"><input class="form-control" type="text" name="address2" placeholder="Enter address line 2" value="<?=$realtor["address_line_2"]?>"/></div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header">City</div>
+                                <div class="card-body"><input class="form-control" type="text" name="city" placeholder="Enter city" value="<?=$realtor["city"]?>"/></div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header">Zip Code</div>
+                                <div class="card-body"><input class="form-control" type="text" name="zipCode" placeholder="Enter zip code" value="<?=$realtor["zip_code"]?>"/></div>
+                            </div>
+                            <div class="text-center">
+                                <input class="fw-500 btn btn-primary" type="submit" value="Save">
                             </div>
                         </div>
-                    </div>
-
-                    <h6 class="heading-small text-blue mb-3">Client 2</h6>
-                    <div class="pl-lg-4">
-                        <div class="row mb-5">
-                            <div class="col-md-3">
-                                <label class="small mb-1" for="firstName2">First name</label>
-                                <input class="form-control" id="firstName2" type="text" value="<?=$client["first_name_2"]?>" name="firstName2"/>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="small mb-1" for="lastName2">Last name</label>
-                                <input class="form-control" id="lastName2" type="text" value="<?=$client["last_name_2"]?>" name="lastName2"/>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label class="small mb-1" for="email2">Email</label>
-                                <input class="form-control" id="email2" type="text" value="<?=$client["email_2"]?>" name="email2"/>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="small mb-1" for="phoneNumber2">Phone Number</label>
-                                <input class="form-control" id="phoneNumber2" type="text" value="<?=$client["phone_2"]?>" name="phoneNumber2"/>
-                            </div>
+                        <div class="col-lg-2">
                         </div>
-                    </div>
-
-                    <h6 class="heading-small text-blue mb-3">Home Detail</h6>
-                    <div class="pl-lg-4">
-                        <div class="row mb-5">
-                            <div class="col-md-4">
-                                <label class="small mb-1" for="address1">Address 1</label>
-                                <input class="form-control" id="address1" type="text" value="<?=$client["address_1"]?>" name="address1"/>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="small mb-1" for="address2">Address 2</label>
-                                <input class="form-control" id="address2" type="text" value="<?=$client["address_2"]?>" name="address2"/>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="small mb-1" for="state">State</label>
-                                <input class="form-control" id="state" type="text" value="<?=$client["state"]?>" name="state"/>
-                            </div>
-                        </div>
-
-                        <div class="row mb-5">
-                            <div class="col-md-4">
-                                <label class="small mb-1" for="city">City</label>
-                                <input class="form-control" id="city" type="text" value="<?=$client["city"]?>" name="city"/>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="small mb-1" for="zipCode">Zip Code</label>
-                                <input class="form-control" id="zipCode" type="text" value="<?=$client["zip"]?>" name="zipCode"/>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="small mb-1" for="homeType">Home Type</label>
-                                <select class="form-control" id="homeType" name="homeType">
-                                    <option>Select Home Type</option>
-                                    <option value="Single Family Home">Single Family Home</option>
-                                    <option value="Townhome">Townhome</option>
-                                    <option value="Condo">Condo</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <h6 class="heading-small text-blue mb-3">Personal Notes/Reminders</h6>
-                    <div class="pl-lg-4">
-                        <div class="row mb-5">
-                            <div class="col-md-12">
-                                <label class="small mb-1" for="notes">Notes</label>
-                                <textarea class="lh-base form-control" type="text" rows="5" style="resize: none" name="notes"><?=$client["notes"]?></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="text-align: right">
-                        <div><input class="btn btn-lg btn-primary" type="submit" value="Save"></div>
                     </div>
                 </form>
             </div>
         </main>
-        <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/footer.phtml';?>
+        <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/admin/footer.phtml';?>
     </div>
 </div>
-<?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/scripts.phtml';?>
-<script>
-    $( document ).ready(function() {
-        let selectedHomeType = "<?php echo($client["home_type"]);?>";
-        $("#homeType").val(selectedHomeType)
-    })
-</script>
+<?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/admin/scripts.phtml';?>
 </body>
 </html>

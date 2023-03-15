@@ -134,4 +134,10 @@ class User
         }
         return $res;
     }
+
+    public function markRealtorAsDeleted($realtorId)
+    {
+        $realtor = $this->db->collection('realtor')->document($realtorId);
+        return $realtor->update([['path' => 'is_deleted', 'value' => true]]);
+    }
 }
