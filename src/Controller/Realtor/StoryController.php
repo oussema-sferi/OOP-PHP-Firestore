@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Realtor;
 use App\Entity\Client;
 use App\Service\HelperService;
 use App\Service\UserCheckerService;
@@ -33,13 +33,13 @@ class StoryController
     {
         $stories = $this->story->findAllByUser($this->loggedUserId);
         $realtor = $this->user->fetchUserById($this->loggedUserId);
-        require_once __DIR__ . '/../../templates/stories/list.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/stories/list.phtml';
         die();
     }
 
     #[NoReturn] public function addForm(array $params = []): void
     {
-        require_once __DIR__ . '/../../templates/stories/new.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/stories/new.phtml';
         die();
     }
 
@@ -83,7 +83,7 @@ class StoryController
     {
         $id = $params['id'];
         $story = $this->story->find($id);
-        require_once __DIR__ . '/../../templates/stories/edit.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/stories/edit.phtml';
         die();
     }
 
@@ -123,7 +123,7 @@ class StoryController
     {
         $id = $params["id"];
         $story = $this->story->find($id);
-        require_once __DIR__ . '/../../templates/stories/show.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/stories/show.phtml';
         die();
     }
 

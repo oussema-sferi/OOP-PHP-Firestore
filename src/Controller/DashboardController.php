@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 use App\Entity\User;
+use App\Service\HelperService;
 use App\Service\UserCheckerService;
 use Google\Cloud\Core\Timestamp;
 use DateTime;
+use JetBrains\PhpStorm\NoReturn;
 
 class DashboardController
 {
@@ -23,12 +25,12 @@ class DashboardController
 
     public function myProfileShowAction(array $params = []): void
     {
-        $theUser = $this->user->fetchUserById($this->loggedUserId);
+        $user = $this->user->fetchUserById($this->loggedUserId);
         $baseUri = $this->baseUri;
-        require_once __DIR__ . '/../../templates/user/my-profile.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/dashboard/my-profile.phtml';
     }
 
-    public function updateMyProfilePictureAction(array $params = []): void
+    #[NoReturn] public function updateMyProfilePictureAction(array $params = []): void
     {
         $realtorId = $params["id"];
         $imagePath = "/public/uploaded-images/profile-pictures/" . md5(uniqid()) . $_FILES["profilePicture"]["name"];
@@ -45,11 +47,13 @@ class DashboardController
             if($value !== "") $finalData[] = ['path' => $key, 'value' => $value];
         }
         $this->user->update($realtorId, $finalData);
-        header("Location: /user/my-profile");
+        $user = $this->user->fetchUserById($this->loggedUserId);
+        $_SESSION["user"] = $user;
+        header("Location: /dashboard/my-profile");
         die();
     }
 
-    public function editMyProfileAction(array $params = []): void
+    #[NoReturn] public function editMyProfileAction(array $params = []): void
     {
 
         $realtorId = $params["id"];
@@ -66,7 +70,76 @@ class DashboardController
             $finalData[] = ['path' => $key, 'value' => $value];
         }
         $this->user->update($realtorId, $finalData);
-        header("Location: /user/my-profile");
+        $user = $this->user->fetchUserById($this->loggedUserId);
+        $_SESSION["user"] = $user;
+        header("Location: /dashboard/my-profile");
         die();
+    }
+
+    public function showCheckPasswordAction(array $params = []): void
+    {
+        $realtor = $this->user->fetchUserById($this->loggedUserId);
+        $helper = new HelperService();
+        if(isset($_SESSION['validate_password_error_flash_message'])) {
+            $errorMessage = $_SESSION['validate_password_error_flash_message'];
+            unset($_SESSION['validate_password_error_flash_message']);
+        }
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/security/change-password/check-password.phtml';
+    }
+
+    public function checkPasswordAction(array $params = []): void
+    {
+        $password = $params["actualPassword"];
+        if($this->user->validateActualPassword($_SESSION["user"]["email"], $password))
+        {
+            $_SESSION["user_is_authorized"] = true;
+            header("Location: /dashboard/change-password");
+        } else {
+            $_SESSION['validate_password_error_flash_message'] = "Your password is invalid !";
+            header("Location: /dashboard/password-verification");
+        }
+    }
+
+    public function showChangePasswordAction(array $params = []): void
+    {
+        if(!isset($_SESSION['user_is_authorized']) || !$_SESSION['user_is_authorized'])
+        {
+            header("Location: /dashboard/password-verification");
+        }
+        $realtor = $this->user->fetchUserById($this->loggedUserId);
+        $helper = new HelperService();
+        if(isset($_SESSION['change_password_error_flash_message'])) {
+            $errorMessage = $_SESSION['change_password_error_flash_message'];
+            unset($_SESSION['change_password_error_flash_message']);
+        }
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/security/change-password/change-password.phtml';
+    }
+
+    public function changePasswordAction(array $params = []): void
+    {
+        if(!isset($_SESSION['user_is_authorized']) || !$_SESSION['user_is_authorized'])
+        {
+            header("Location: /dashboard/password-verification");
+        }
+        $password = trim($params["newPassword"]);
+        $confirmPassword = trim($params["confirmPassword"]);
+        if($password !== $confirmPassword)
+        {
+            $_SESSION['change_password_error_flash_message'] = "Your passwords did not match! Please try again";
+            header("Location: /dashboard/change-password");
+            die();
+        }
+        if (!(strlen($password) >= 8 && strpbrk($password, "!#$@.,:;()"))){
+            // next code block
+            $_SESSION['change_password_error_flash_message'] = "Your password is not strong enough. Please use another one and try again.";
+            header("Location: /dashboard/change-password");
+            die();
+        }
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $user = $this->user->findByEmail($_SESSION["user"]["email"]);
+        $finalData[] = ['path' => 'password', 'value' => $hashedPassword];
+        $this->user->update($user["realtor_id"], $finalData);
+        unset($_SESSION['user_is_authorized']);
+        header("Location: /stories/list");
     }
 }

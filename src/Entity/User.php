@@ -82,4 +82,21 @@ class User
             }
         }
     }
+
+    public function validateActualPassword($userEmail, $password)
+    {
+        $query = $this->db->collection('realtor')->where('email', '=', $userEmail);
+        $documents = $query->documents();
+
+        foreach ($documents as $document) {
+            if ($document->exists()) {
+                if (password_verify($password, $document->data()["password"]))
+                {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }
+    }
 }

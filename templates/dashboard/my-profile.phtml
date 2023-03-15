@@ -1,5 +1,5 @@
 <?php
-/* @var $theUser
+/* @var $user
  * @var $baseUri
  */
 $profPic = isset($theUser["realtor_photo"]) && trim($theUser["realtor_photo"]) != '' ? $theUser["realtor_photo"] : $baseUri . '/public/assets/img/illustrations/profiles/profile-4.png';
@@ -35,7 +35,7 @@ $profPic = isset($theUser["realtor_photo"]) && trim($theUser["realtor_photo"]) !
                 <div class="row">
                     <div class="col-xl-4">
                         <!-- Profile picture card-->
-                        <form action="/user/update-profile-picture?id=<?=$theUser["realtor_id"]?>" method="post" enctype="multipart/form-data">
+                        <form action="/dashboard/update-profile-picture?id=<?=$user["realtor_id"]?>" method="post" enctype="multipart/form-data">
                             <div class="card mb-4 mb-xl-0">
                                 <div class="card-header text-center">Add/Edit Profile Picture</div>
                                 <div class="card-body text-center">
@@ -53,16 +53,16 @@ $profPic = isset($theUser["realtor_photo"]) && trim($theUser["realtor_photo"]) !
                         <div class="card">
                             <div class="card-header text-center">Account Details</div>
                             <div class="card-body">
-                                <form action="/user/edit-profile?id=<?=$theUser["realtor_id"]?>" method="post" class="mt-4">
+                                <form action="/dashboard/edit-profile?id=<?=$user["realtor_id"]?>" method="post" class="mt-4">
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputFirstName">Full name</label>
-                                            <input class="form-control" id="fullName" name="fullName" placeholder="Enter your full name..." type="text" value="<?= $theUser["realtor_title"]?>" disabled/>
+                                            <input class="form-control" id="fullName" name="fullName" placeholder="Enter your full name..." type="text" value="<?= $user["realtor_title"]?>" disabled/>
                                         </div>
 
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                                            <input class="form-control" id="emailAddress" name="emailAddress" placeholder="Enter your email address..." type="email" value="<?= $theUser["email"]?>" disabled/>
+                                            <input class="form-control" id="emailAddress" name="emailAddress" placeholder="Enter your email address..." type="email" value="<?= $user["email"]?>" disabled/>
                                         </div>
                                     </div>
 
@@ -70,18 +70,18 @@ $profPic = isset($theUser["realtor_photo"]) && trim($theUser["realtor_photo"]) !
 
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputLastName">Phone Number</label>
-                                            <input class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number..." type="text" value="<?= $theUser["phone_number"]?>" disabled/>
+                                            <input class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number..." type="text" value="<?= $user["phone_number"]?>" disabled/>
                                         </div>
 
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputOrgName">Company name</label>
-                                            <input class="form-control" id="companyName" name="companyName" placeholder="Enter your company name..." type="text" value="<?= $theUser["realtor_sub_title"]?>" disabled/>
+                                            <input class="form-control" id="companyName" name="companyName" placeholder="Enter your company name..." type="text" value="<?= $user["realtor_sub_title"]?>" disabled/>
                                         </div>
                                     </div>
                                     <div class="row gx-3 mb-3">
                                         <div class="col">
                                             <label class="small mb-1" for="notes">About me</label>
-                                            <textarea class="lh-base form-control" id="aboutMe" name="aboutMe" placeholder="Add a short description for your clients to read..." type="text" rows="2" style="resize: none" disabled><?= $theUser["about_me"] ?? "" ?></textarea>
+                                            <textarea class="lh-base form-control" id="aboutMe" name="aboutMe" placeholder="Add a short description for your clients to read..." type="text" rows="2" style="resize: none" disabled><?= $user["about_me"] ?? "" ?></textarea>
                                         </div>
                                     </div>
                                     <!-- Save changes button-->

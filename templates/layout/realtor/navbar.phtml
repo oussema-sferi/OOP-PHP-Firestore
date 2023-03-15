@@ -1,6 +1,6 @@
 <?php
 $user = $_SESSION["user"];
-$profilePic = isset($user["realtor_photo"]) && trim($user["realtor_photo"]) != '' ? $user["realtor_photo"] : '/../../public/assets/img/illustrations/profiles/profile-4.png';
+$profilePic = isset($user["realtor_photo"]) && trim($user["realtor_photo"]) != '' ? $user["realtor_photo"] : $_SERVER["DOCUMENT_ROOT"] . '/public/assets/img/illustrations/profiles/profile-4.png';
 ?>
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" style="background-color: #262144!important" id="sidenavAccordion">
     <!-- Sidenav Toggle Button-->
@@ -22,9 +22,13 @@ $profilePic = isset($user["realtor_photo"]) && trim($user["realtor_photo"]) != '
                     </div>
                 </h6>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/user/my-profile">
+                <a class="dropdown-item" href="/dashboard/my-profile">
                     <div class="dropdown-item-icon"><i data-feather="user"></i></div>
                     My Profile
+                </a>
+                <a class="dropdown-item" href="/dashboard/password-verification">
+                    <div class="dropdown-item-icon"><i data-feather="lock"></i></div>
+                    Change My Password
                 </a>
                 <a class="dropdown-item" href="/logout">
                     <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>

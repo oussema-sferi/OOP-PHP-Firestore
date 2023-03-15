@@ -7,9 +7,9 @@ use App\Service\UserCheckerService;
 use App\Router;
 use App\Controller\LoginController;
 use App\Controller\RegistrationController;
-use App\Controller\StoryController;
-use App\Controller\ProServiceController;
-use App\Controller\ClientController;
+use App\Controller\Realtor\StoryController;
+use App\Controller\Realtor\ProServiceController;
+use App\Controller\Realtor\ClientController;
 use App\Controller\ResetPasswordController;
 
 $router = new Router();
@@ -40,14 +40,24 @@ $router->post($resetPasswordBasePath . '/reset', ResetPasswordController::class 
 // STEP 5 Change password confirmation
 $router->get($resetPasswordBasePath . '/confirmation', ResetPasswordController::class . '::changePasswordConfirmationAction');
 
-// My Profile
-$router->get('/user/my-profile', DashboardController::class . '::myProfileShowAction');
+// My Profile page
+$router->get('/dashboard/my-profile', DashboardController::class . '::myProfileShowAction');
 
-// Update profile picture
-$router->post('/user/update-profile-picture', DashboardController::class . '::updateMyProfilePictureAction');
+// Update My profile picture
+$router->post('/dashboard/update-profile-picture', DashboardController::class . '::updateMyProfilePictureAction');
 
-// Edit profile action
-$router->post('/user/edit-profile', DashboardController::class . '::editMyProfileAction');
+// Edit My profile action
+$router->post('/dashboard/edit-profile', DashboardController::class . '::editMyProfileAction');
+
+// Change my password
+// check current password page
+$router->get('/dashboard/password-verification', DashboardController::class . '::showCheckPasswordAction');
+// check current password action
+$router->post('/dashboard/password-verification', DashboardController::class . '::checkPasswordAction');
+// change password page
+$router->get('/dashboard/change-password', DashboardController::class . '::showChangePasswordAction');
+// change password action
+$router->post('/dashboard/change-password', DashboardController::class . '::changePasswordAction');
 
 // Realtor STORIES
 $storiesBasePath = '/stories';

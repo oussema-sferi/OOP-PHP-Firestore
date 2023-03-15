@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Realtor;
 use App\Entity\ProService;
 use App\Service\HelperService;
 use App\Service\UserCheckerService;
@@ -33,13 +33,13 @@ class ProServiceController
         $user = new User();
         $proServices = $this->proService->findAllByUser($this->loggedUserId);
         $realtor = $user->fetchUserById($this->loggedUserId);
-        require_once __DIR__ . '/../../templates/pro-services/list.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/pro-services/list.phtml';
         die();
     }
 
     #[NoReturn] public function addForm(array $params = []): void
     {
-        require_once __DIR__ . '/../../templates/pro-services/new.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/pro-services/new.phtml';
         die();
     }
 
@@ -85,7 +85,7 @@ class ProServiceController
     {
         $id = $params['id'];
         $proService = $this->proService->find($id);
-        require_once __DIR__ . '/../../templates/pro-services/edit.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/pro-services/edit.phtml';
         die();
     }
 
@@ -129,7 +129,7 @@ class ProServiceController
     {
         $id = $params["id"];
         $proService = $this->proService->find($id);
-        require_once __DIR__ . '/../../templates/pro-services/show.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/pro-services/show.phtml';
         die();
     }
 

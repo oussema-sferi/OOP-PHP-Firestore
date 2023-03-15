@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Realtor;
 use App\Entity\Client;
 use App\Entity\InvitationEmail;
-use App\Model\Firestore_honeydoo;
 use App\Service\HelperService;
 use App\Service\MailerService;
 use App\Service\UserCheckerService;
@@ -41,13 +40,13 @@ class ClientController
         $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, [], "", false);
         $clients = $this->client->fetchPortalClients($this->loggedUserId);
         $realtor = $this->user->fetchUserById($this->loggedUserId);
-        require_once __DIR__ . '/../../templates/clients/list.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/clients/list.phtml';
         die();
     }
 
     #[NoReturn] public function addForm(array $params = []): void
     {
-        require_once __DIR__ . '/../../templates/clients/new.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/clients/new.phtml';
         die();
     }
 
@@ -83,7 +82,7 @@ class ClientController
     {
         $id = $params['id'];
         $client = $this->client->find($id);
-        require_once __DIR__ . '/../../templates/clients/edit.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/clients/edit.phtml';
         die();
     }
 
@@ -121,7 +120,7 @@ class ClientController
     {
         $id = $params["id"];
         $client = $this->client->find($id);
-        require_once __DIR__ . '/../../templates/clients/show.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/clients/show.phtml';
         die();
     }
 
@@ -146,7 +145,7 @@ class ClientController
 
     #[NoReturn] public function emailsUnsubscriptionConfirmationAction(array $params = []): void
     {
-        require_once __DIR__ . '/../../templates/emails/emails-unsubscription-confirmation.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/emails/emails-unsubscription-confirmation.phtml';
         die();
     }
 

@@ -23,7 +23,7 @@ class ResetPasswordController
 
     public function showRequestPasswordAction(array $params = []): void
     {
-        require_once __DIR__ . '/../../templates/security/reset-password/request.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/security/reset-password/request.phtml';
     }
 
     public function requestPasswordAction(array $params = []): void
@@ -58,7 +58,7 @@ class ResetPasswordController
 
     public function checkEmailAction(array $params = []): void
     {
-        require_once __DIR__ . '/../../templates/security/reset-password/check-email.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/security/reset-password/check-email.phtml';
     }
 
     public function validateTokenAction(array $params = []): void
@@ -97,7 +97,7 @@ class ResetPasswordController
             $errorMessage = $_SESSION['change_password_error_flash_message'];
             unset($_SESSION['change_password_error_flash_message']);
         }
-        require_once __DIR__ . '/../../templates/security/reset-password/reset.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/security/reset-password/reset.phtml';
     }
 
     public function changePasswordAction(array $params = []): void
@@ -141,6 +141,6 @@ class ResetPasswordController
     public function changePasswordConfirmationAction(array $params = []): void
     {
 
-        require_once __DIR__ . '/../../templates/security/reset-password/confirmation.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/security/reset-password/confirmation.phtml';
     }
 }

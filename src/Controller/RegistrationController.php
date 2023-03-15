@@ -11,7 +11,7 @@ class RegistrationController
 {
     public function show(array $params = []): void
     {
-        require_once __DIR__ . '/../../templates/security/registration.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/security/registration.phtml';
     }
 
     public function registrationAction(array $params = []): void
