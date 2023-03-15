@@ -1,0 +1,129 @@
+<?php
+/* @var $realtors
+ * @var $this->user
+ */
+/*print_r($this->user);
+die();*/
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/admin/header.phtml';?>
+    <title>Realtors List</title>
+</head>
+<body class="nav-fixed">
+<?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/admin/navbar.phtml';?>
+<div id="layoutSidenav">
+    <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/admin/sidebar.phtml';?>
+    <div id="layoutSidenav_content">
+        <main>
+            <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+                <div class="container-fluid px-4">
+                    <div class="page-header-content">
+                        <div class="row align-items-center justify-content-between pt-3">
+                            <div class="col-auto mb-3">
+                                <h1 class="page-header-title">
+                                    <div class="page-header-icon"><i data-feather="list"></i></div>
+                                    Realtors List
+                                </h1>
+                            </div>
+                            <div class="col-12 col-xl-auto mb-3">
+                                <a class="btn btn-sm btn-light text-primary" href="/stories/new">
+                                    <i class="me-1" data-feather="plus"></i>
+                                    Create New Realtor
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- Main page content-->
+            <div class="container-fluid px-4">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Added Clients</th>
+                                <th>Email</th>
+                                <th>Company Name</th>
+                                <th>Phone Number</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Added Clients</th>
+                                <th>Email</th>
+                                <th>Company Name</th>
+                                <th>Phone Number</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            <?php
+                            foreach ($realtors as $user)
+                            {
+                                $id = $user->doc_id;
+                                $fullName = $user->realtor_title;
+                                $email = $user->email;
+                                $companyName = $user->realtor_sub_title;
+                                $phoneNumber = $user->phone_number;
+                                $addedClientsCount = count($this->user->fetchUserAddedClients($id));
+                                $showRealtorLink = "show?id=$id";
+                                $editRealtorLink = "edit?id=$id";
+                                $deleteRealtorLink = "delete?id=$id";
+                                echo "
+                                <tr>
+                                    <td>$fullName</td>                              
+                                    <td>$addedClientsCount</td>                              
+                                    <td>$email</td>
+                                    <td>$companyName</td>
+                                    <td>$phoneNumber</td>                                                                                                                                
+                                    <td class='text-center'>
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$showRealtorLink><i data-feather='zoom-in'></i></a>
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$editRealtorLink><i data-feather='edit'></i></a>
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark' data-bs-toggle='modal' data-bs-target='#approveUserModal$id'><i data-feather='trash-2'></i></a>                                                                                                 
+                                    </td>                                                                                                                          
+                                </tr>
+                                
+                                <div class='modal fade' id='approveUserModal$id' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
+                                    <div class='modal-dialog modal-dialog-centered' role='document'>
+                                        <div class='modal-content'>
+                                            <div class='modal-header d-block'>
+                                                <button class='btn-close float-end' type='button' data-bs-dismiss='modal' aria-label='Close'></button>
+                                                <h5 class='modal-title text-center' id='exampleModalCenterTitle'>Removal Confirmation</h5>
+                                            </div>
+                                            <div class='modal-body text-center'>
+                                                Do you really want to delete this realtor ?
+                                            </div>
+                                            <div class='modal-footer justify-content-center'>
+                                                <a class='btn btn-secondary' type='button' data-bs-dismiss='modal'>No</a>
+                                                <a class='btn btn-success' type='button' href='$deleteRealtorLink'>Yes</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                ";
+                            };
+                            ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/admin/footer.phtml';?>
+    </div>
+</div>
+<?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/admin/scripts.phtml';?>
+<script>
+    $( document ).ready(function() {
+        $("th, td").addClass("text-center")
+        $("th, td").css("vertical-align","middle")
+    });
+</script>
+</body>
+</html>

@@ -99,4 +99,39 @@ class User
             }
         }
     }
+
+    public function fetchUsersByRole($role)
+    {
+        $res = [];
+        $query = $this->db->collection('realtor')
+            ->where('role', '=', $role)
+            ->orderBy('is_deleted')
+            ->where('is_deleted', '!=', true)
+            ->orderBy('date', 'DESC')
+        ;
+        $documents = $query->documents();
+        foreach ($documents as $document) {
+            if ($document->exists()) {
+                $obj_merged = (object) array_merge(
+                    ["doc_id" => $document->id()], (array) $document->data());
+                $res[] = $obj_merged;
+            }
+        }
+        return $res;
+    }
+
+    public function fetchUserAddedClients($userId): array
+    {
+        $res = [];
+        $query = $this->db->collection('realtor_clients')->where('realtor_id', '=', $userId);
+        $documents = $query->documents();
+        foreach ($documents as $document) {
+            if ($document->exists()) {
+                $obj_merged = (object) array_merge(
+                    ["doc_id" => $document->id()], (array) $document->data());
+                $res[] = $obj_merged;
+            }
+        }
+        return $res;
+    }
 }

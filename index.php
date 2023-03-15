@@ -10,6 +10,7 @@ use App\Controller\RegistrationController;
 use App\Controller\Realtor\StoryController;
 use App\Controller\Realtor\ProServiceController;
 use App\Controller\Realtor\ClientController;
+use App\Controller\Admin\RealtorController;
 use App\Controller\ResetPasswordController;
 
 $router = new Router();
@@ -120,6 +121,15 @@ $router->post($clientsBasePath . '/send-invitation-to-client', ClientController:
 $router->get($clientsBasePath . '/template-download', ClientController::class . '::templateDownloadAction');
 // clients import from CSV action
 $router->post($clientsBasePath . '/import-from-file', ClientController::class . '::importFromFileAction');
+
+
+// ADMIN ROUTES
+$adminBasePath = '/admin';
+// Realtors list
+$realtorsBasePath = $adminBasePath . '/realtors';
+$router->get($realtorsBasePath . '/list', RealtorController::class . '::listAction');
+
+
 
 $router->get('/', function () {
     echo 'Home Page';
