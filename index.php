@@ -186,7 +186,7 @@ $router->post($emailsBasePath . '/reset-password', AdminEmailController::class .
 
 
 $router->get('/', function () {
-    echo 'Home Page';
+    header("Location: /login");
 });
 
 /*$router->post('/contact', function ($params) {
