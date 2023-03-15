@@ -15,6 +15,9 @@ use App\Controller\Admin\MobileAppClientController as AdminMobileAppClientContro
 use App\Controller\Admin\EmailController as AdminEmailController;
 use App\Controller\ResetPasswordController;
 
+
+session_start();
+
 $router = new Router();
 
 // LOGIN
