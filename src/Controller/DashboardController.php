@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 use App\Entity\User;
+use App\Service\AuthCheckerService;
 use App\Service\HelperService;
 use App\Service\UserCheckerService;
 use Google\Cloud\Core\Timestamp;
@@ -17,7 +18,7 @@ class DashboardController
     private string $baseUri;
     public function __construct()
     {
-        UserCheckerService::checkUser();
+        AuthCheckerService::checkIfNotAuthenticated();
         $this->user = new User();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];

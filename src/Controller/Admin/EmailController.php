@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\InvitationEmail;
 use App\Entity\ResetPassword;
+use App\Service\AuthCheckerService;
 use JetBrains\PhpStorm\NoReturn;
 use Google\Cloud\Core\Timestamp;
 use DateTime;
@@ -18,6 +19,7 @@ class EmailController
     private string $baseUri;
     public function __construct()
     {
+        AuthCheckerService::checkIfAdmin();
         $this->invitationEmail = new InvitationEmail();
         $this->resetPassword = new ResetPassword();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];

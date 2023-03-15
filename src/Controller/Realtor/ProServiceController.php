@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\Realtor;
 use App\Entity\PortalClient;
 use App\Entity\ProService;
+use App\Service\AuthCheckerService;
 use App\Service\HelperService;
-use App\Service\UserCheckerService;
 use App\Entity\User;
 use Google\Cloud\Core\Timestamp;
 use JetBrains\PhpStorm\NoReturn;
@@ -21,7 +21,7 @@ class ProServiceController
     private string $baseUri;
     public function __construct()
     {
-        UserCheckerService::checkUser();
+        AuthCheckerService::checkIfRealtor();
         $this->proService = new ProService();
         $this->client = new PortalClient();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 use App\Entity\ResetPassword;
 use App\Entity\User;
+use App\Service\AuthCheckerService;
 use App\Service\MailerService;
 use Google\Cloud\Core\Timestamp;
 use DateTime;
@@ -16,6 +17,7 @@ class ResetPasswordController
     private string $baseUri;
     public function __construct()
     {
+        AuthCheckerService::checkIfAuthenticated();
         $this->user = new User();
         $this->resetPassword = new ResetPassword();
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];

@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controller;
 use App\Entity\User;
+use App\Service\AuthCheckerService;
 
 class LoginController
 {
+    public function __construct()
+    {
+        AuthCheckerService::checkIfAuthenticated();
+    }
     public function show(array $params = []): void
     {
         require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/security/login.phtml';

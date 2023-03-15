@@ -3,7 +3,6 @@ declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 
 use App\Controller\DashboardController;
-use App\Service\UserCheckerService;
 use App\Router;
 use App\Controller\LoginController;
 use App\Controller\RegistrationController;
@@ -43,6 +42,8 @@ $router->get($resetPasswordBasePath . '/reset', ResetPasswordController::class .
 $router->post($resetPasswordBasePath . '/reset', ResetPasswordController::class . '::changePasswordAction');
 // STEP 5 Change password confirmation
 $router->get($resetPasswordBasePath . '/confirmation', ResetPasswordController::class . '::changePasswordConfirmationAction');
+
+
 
 // My Profile page
 $router->get('/dashboard/my-profile', DashboardController::class . '::myProfileShowAction');

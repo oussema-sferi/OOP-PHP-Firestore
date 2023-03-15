@@ -7,7 +7,7 @@ use App\Entity\InvitationEmail;
 use App\Entity\PortalClient;
 use App\Service\HelperService;
 use App\Service\MailerService;
-use App\Service\UserCheckerService;
+use App\Service\AuthCheckerService;
 use App\Entity\Story;
 use App\Entity\User;
 use Google\Cloud\Core\Timestamp;
@@ -24,7 +24,7 @@ class PortalClientController
     private string $baseUri;
     public function __construct()
     {
-        UserCheckerService::checkUser();
+        AuthCheckerService::checkIfRealtor();
         $this->user = new User();
         $this->client = new PortalClient();
         $this->invitationEmail = new InvitationEmail();

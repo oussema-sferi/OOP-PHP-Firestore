@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Realtor;
 use App\Entity\PortalClient;
+use App\Service\AuthCheckerService;
 use App\Service\HelperService;
-use App\Service\UserCheckerService;
 use App\Entity\Story;
 use App\Entity\User;
 use Google\Cloud\Core\Timestamp;
@@ -21,7 +21,7 @@ class StoryController
     private string $baseUri;
     public function __construct()
     {
-        UserCheckerService::checkUser();
+        AuthCheckerService::checkIfRealtor();
         $this->story = new Story();
         $this->user = new User();
         $this->client = new PortalClient();

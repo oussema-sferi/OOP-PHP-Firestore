@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Controller\Admin;
-use App\Service\HelperService;
+use App\Service\AuthCheckerService;
 use App\Entity\User;
 use App\Entity\PortalClient;
 use Google\Cloud\Core\Timestamp;
@@ -18,6 +18,7 @@ class RealtorController
     private string $baseUri;
     public function __construct()
     {
+        AuthCheckerService::checkIfAdmin();
         $this->user = new User();
         $this->client = new PortalClient();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];

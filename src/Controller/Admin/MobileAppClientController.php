@@ -3,18 +3,12 @@
 declare(strict_types=1);
 
 namespace App\Controller\Admin;
-use App\Entity\Client;
-use App\Entity\InvitationEmail;
 use App\Entity\MobileAppClient;
-use App\Service\HelperService;
-use App\Service\MailerService;
-use App\Service\UserCheckerService;
-use App\Entity\Story;
+use App\Service\AuthCheckerService;
 use App\Entity\User;
 use Google\Cloud\Core\Timestamp;
 use JetBrains\PhpStorm\NoReturn;
 use DateTime;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class MobileAppClientController
 {
@@ -24,6 +18,7 @@ class MobileAppClientController
     private string $baseUri;
     public function __construct()
     {
+        AuthCheckerService::checkIfAdmin();
         $this->user = new User();
         $this->mobileAppClient = new MobileAppClient();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
