@@ -10,8 +10,9 @@ use App\Controller\RegistrationController;
 use App\Controller\Realtor\StoryController;
 use App\Controller\Realtor\ProServiceController;
 use App\Controller\Realtor\ClientController;
-use App\Controller\Admin\ClientController as AdminClientController;
-use App\Controller\Admin\RealtorController;
+use App\Controller\Admin\PortalClientController as AdminPortalClientController;
+use App\Controller\Admin\RealtorController as AdminRealtorController;
+use App\Controller\Admin\MobileAppClientController as AdminMobileAppClientController;
 use App\Controller\ResetPasswordController;
 
 $router = new Router();
@@ -129,29 +130,41 @@ $adminBasePath = '/admin';
 // REALTORS MENU
 // list realtors
 $realtorsBasePath = $adminBasePath . '/realtors';
-$router->get($realtorsBasePath . '/list', RealtorController::class . '::listAction');
+$router->get($realtorsBasePath . '/list', AdminRealtorController::class . '::listAction');
 // create new realtor
-$router->get($realtorsBasePath . '/new', RealtorController::class . '::addForm');
-$router->post($realtorsBasePath . '/new', RealtorController::class . '::createAction');
+$router->get($realtorsBasePath . '/new', AdminRealtorController::class . '::addForm');
+$router->post($realtorsBasePath . '/new', AdminRealtorController::class . '::createAction');
 // update realtor
-$router->get($realtorsBasePath . '/edit', RealtorController::class . '::editForm');
-$router->post($realtorsBasePath . '/edit', RealtorController::class . '::editSaveAction');
+$router->get($realtorsBasePath . '/edit', AdminRealtorController::class . '::editForm');
+$router->post($realtorsBasePath . '/edit', AdminRealtorController::class . '::editSaveAction');
 // show realtor
-$router->get($realtorsBasePath . '/show', RealtorController::class . '::showAction');
+$router->get($realtorsBasePath . '/show', AdminRealtorController::class . '::showAction');
 // delete realtor
-$router->get($realtorsBasePath . '/delete', RealtorController::class . '::deleteAction');
+$router->get($realtorsBasePath . '/delete', AdminRealtorController::class . '::deleteAction');
 
-// CLIENTS MENU
+// PORTAL CLIENTS MENU
 // list clients
-$realtorsBasePath = $adminBasePath . '/clients';
-$router->get($realtorsBasePath . '/list', AdminClientController::class . '::listAction');
+$portalClientsBasePath = $adminBasePath . '/portal-clients';
+$router->get($portalClientsBasePath . '/list', AdminPortalClientController::class . '::listAction');
 // edit client
-$router->get($realtorsBasePath . '/edit', AdminClientController::class . '::editForm');
-$router->post($realtorsBasePath . '/edit', AdminClientController::class . '::editSaveAction');
+$router->get($portalClientsBasePath . '/edit', AdminPortalClientController::class . '::editForm');
+$router->post($portalClientsBasePath . '/edit', AdminPortalClientController::class . '::editSaveAction');
 // show client
-$router->get($realtorsBasePath . '/show', AdminClientController::class . '::showAction');
+$router->get($portalClientsBasePath . '/show', AdminPortalClientController::class . '::showAction');
 // delete client
-$router->get($realtorsBasePath . '/delete', AdminClientController::class . '::deleteAction');
+$router->get($portalClientsBasePath . '/delete', AdminPortalClientController::class . '::deleteAction');
+
+// MOBILE APP CLIENTS MENU
+// list clients
+$mobileAppClientsBasePath = $adminBasePath . '/mobile-app-clients';
+$router->get($mobileAppClientsBasePath . '/list', AdminMobileAppClientController::class . '::listAction');
+// edit client
+$router->get($mobileAppClientsBasePath . '/edit', AdminMobileAppClientController::class . '::editForm');
+$router->post($mobileAppClientsBasePath . '/edit', AdminMobileAppClientController::class . '::editSaveAction');
+// show client
+$router->get($mobileAppClientsBasePath . '/show', AdminMobileAppClientController::class . '::showAction');
+// delete client
+$router->get($mobileAppClientsBasePath . '/delete', AdminMobileAppClientController::class . '::deleteAction');
 
 
 $router->get('/', function () {

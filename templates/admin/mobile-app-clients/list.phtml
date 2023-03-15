@@ -1,0 +1,120 @@
+<?php
+/* @var $mobileAppClients
+ * @var $this->user
+ */
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/admin/header.phtml';?>
+    <title>App Users List</title>
+</head>
+<body class="nav-fixed">
+<?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/admin/navbar.phtml';?>
+<div id="layoutSidenav">
+    <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/admin/sidebar.phtml';?>
+    <div id="layoutSidenav_content">
+        <main>
+            <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+                <div class="container-fluid px-4">
+                    <div class="page-header-content">
+                        <div class="row align-items-center justify-content-between pt-3">
+                            <div class="col-auto mb-3">
+                                <h1 class="page-header-title">
+                                    <div class="page-header-icon"><i data-feather="list"></i></div>
+                                    App Users List
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- Main page content-->
+            <div class="container-fluid px-4">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                            <tr>
+                                <th class='text-center' style='vertical-align: middle'>Full Name</th>
+                                <th class='text-center' style='vertical-align: middle'>Email</th>
+                                <th class='text-center' style='vertical-align: middle'>Phone Number</th>
+                                <th class='text-center' style='vertical-align: middle'>Created At</th>
+                                <th class="text-center" style='vertical-align: middle'>Actions</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>Created At</th>
+                                <th>Actions</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            <?php
+                            foreach ($mobileAppClients as $client)
+                            {
+                                $id = $client->uid;
+                                $fullName = $client->full_name;
+                                $email = $client->email;
+                                $phoneNumber = $client->phone;
+                                $createdAt = $client->created_date->get()->format("m-d-Y");
+                                $showClientLink = "show?id=$id";
+                                $editClientLink = "edit?id=$id";
+                                $deleteClientLink = "delete?id=$id";
+                                echo "
+                                <tr>
+                                    <td class='text-center' style='vertical-align: middle'>$fullName</td>                                                    
+                                    <td class='text-center' style='vertical-align: middle'>$email</td>
+                                    <td class='text-center' style='vertical-align: middle'>$phoneNumber</td>                    
+                                    <td class='text-center' style='vertical-align: middle'>$createdAt</td>      
+                                    <td class='text-center'>
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$showClientLink><i data-feather='zoom-in'></i></a>
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$editClientLink><i data-feather='edit'></i></a>
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark' data-bs-toggle='modal' data-bs-target='#approveUserModal$id'><i data-feather='trash-2'></i></a>                                                                                                 
+                                    </td>                    
+                                </tr>
+                                <div class='modal fade' id='approveUserModal$id' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
+                                    <div class='modal-dialog modal-dialog-centered' role='document'>
+                                        <div class='modal-content'>
+                                            <div class='modal-header d-block'>
+                                                <button class='btn-close float-end' type='button' data-bs-dismiss='modal' aria-label='Close'></button>
+                                                <h5 class='modal-title text-center' id='exampleModalCenterTitle'>Removal Confirmation</h5>
+                                            </div>
+                                            <div class='modal-body text-center'>
+                                                Do you really want to delete this App user ?
+                                            </div>
+                                            <div class='modal-footer justify-content-center'>
+                                                <a class='btn btn-secondary' type='button' data-bs-dismiss='modal'>No</a>
+                                                <a class='btn btn-success' type='button' href='$deleteClientLink'>Yes</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                ";
+                            };
+                            ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/admin/footer.phtml';?>
+    </div>
+</div>
+<?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/admin/scripts.phtml';?>
+<script>
+    $(document).ready(function() {
+        const datatablesSimple = document.getElementById('datatablesSimple');
+        if (datatablesSimple) {
+            new simpleDatatables.DataTable(datatablesSimple, {
+                sortable: false,
+            });
+        }
+    });
+</script>
+</body>
+</html>

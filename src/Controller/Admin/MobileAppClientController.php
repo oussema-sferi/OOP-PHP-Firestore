@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 use App\Entity\Client;
 use App\Entity\InvitationEmail;
+use App\Entity\MobileAppClient;
 use App\Service\HelperService;
 use App\Service\MailerService;
 use App\Service\UserCheckerService;
@@ -15,32 +16,32 @@ use JetBrains\PhpStorm\NoReturn;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-class ClientController
+class MobileAppClientController
 {
     private User $user;
-    private Client $client;
+    private MobileAppClient $mobileAppClient;
     private string $loggedUserId;
     private string $baseUri;
     public function __construct()
     {
         $this->user = new User();
-        $this->client = new Client();
+        $this->mobileAppClient = new MobileAppClient();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
     }
 
     #[NoReturn] public function listAction(array $params = []): void
     {
-        $portalClients = $this->client->fetchAllClients();
-        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/admin/clients/list.phtml';
+        $mobileAppClients = $this->mobileAppClient->fetchAllMobileAppClients();
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/admin/mobile-app-clients/list.phtml';
         die();
     }
 
     #[NoReturn] public function editForm(array $params = []): void
     {
         $id = $params['id'];
-        $client = $this->client->find($id);
-        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/admin/clients/edit.phtml';
+        $client = $this->mobileAppClient->find($id);
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/admin/mobile-app-clients/edit.phtml';
         die();
     }
 
@@ -70,23 +71,23 @@ class ClientController
         {
             $finalData[] = ['path' => $key, 'value' => $value];
         }
-        $this->client->update($id, $finalData);
-        header("Location: /admin/clients/list");
+        $this->mobileAppClient->update($id, $finalData);
+        header("Location: /admin/mobile-app-clients/list");
     }
 
     #[NoReturn] public function showAction(array $params = []): void
     {
         $id = $params["id"];
-        $client = $this->client->find($id);
-        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/admin/clients/show.phtml';
+        $client = $this->mobileAppClient->find($id);
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/admin/mobile-app-clients/show.phtml';
         die();
     }
 
     #[NoReturn] public function deleteAction(array $params = []): void
     {
         $id = $params["id"];
-        $this->client->delete($id);
-        header("Location: /admin/clients/list");
+        $this->mobileAppClient->markAsDeleted($id);
+        header("Location: /admin/mobile-app-clients/list");
         die();
     }
 }
