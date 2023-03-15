@@ -18,8 +18,12 @@ use App\Controller\ResetPasswordController;
 $router = new Router();
 
 // LOGIN
-$router->get('/login', LoginController::class . '::show');
+$router->get('/login', LoginController::class . '::loginShow');
 $router->post('/login', LoginController::class . '::loginAction');
+
+// MASTER LOGIN
+$router->get('/admin/master-login', LoginController::class . '::masterLoginShow');
+$router->post('/admin/master-login', LoginController::class . '::masterLoginAction');
 
 // LOGOUT
 $router->get('/logout', LoginController::class . '::logoutAction');

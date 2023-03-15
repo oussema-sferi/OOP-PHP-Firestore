@@ -1,13 +1,11 @@
 <?php
-/* @var $errorMessage
- * @var $successfulRegistrationMessage
- */
+/* @var $errorMessage */
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <?php include_once __DIR__ . '/../layout/security/header.phtml';?>
-    <title>Login - HoneyDoo Realtor Portal</title>
+    <title>Master Login - HoneyDoo Realtor Portal</title>
 </head>
 <body class="bg-primary">
 <div id="layoutAuthentication">
@@ -21,10 +19,10 @@
                     <div class="col-lg-5">
                         <!-- Basic login form-->
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
-                            <div class="card-header justify-content-center text-center"><h3 class="fw-light my-4">Realtor Sign-In Page</h3></div>
+                            <div class="card-header justify-content-center text-center"><h3 class="fw-light my-4">Admin Master Sign-In Page</h3></div>
                             <div class="card-body">
                                 <!-- Login form-->
-                                <form action="/login" method="post">
+                                <form action="/admin/master-login" method="post">
                                     <?php
                                     if(isset($errorMessage))
                                     {
@@ -35,25 +33,26 @@
                                         echo "<div class='alert alert-success'>$successfulRegistrationMessage</div>";
                                     }
                                     ?>
-                                    <!-- Form Group (email address)-->
+                                    <!-- Form Group (Admin email address)-->
                                     <div class="mb-3">
-                                        <label class="small mb-1" for="email">Email Address</label>
-                                        <input class="form-control" type="email" name="email" placeholder="Enter your email address" required/>
+                                        <label class="small mb-1" for="email">Admin Email Address</label>
+                                        <input class="form-control" type="email" name="adminEmail" placeholder="Enter your email address" required/>
+                                    </div>
+                                    <!-- Form Group (Realtor email address)-->
+                                    <div class="mb-3">
+                                        <label class="small mb-1" for="email">Realtor Email Address</label>
+                                        <input class="form-control" type="email" name="realtorEmail" placeholder="Enter your email address" required/>
                                     </div>
                                     <!-- Form Group (password)-->
                                     <div class="mb-3">
-                                        <label class="small mb-1" for="password">Password</label>
-                                        <input class="form-control" type="password" name="password" placeholder="Enter your password" required/>
+                                        <label class="small mb-1" for="password">Master Password</label>
+                                        <input class="form-control" type="password" name="masterPassword" placeholder="Enter your password" required/>
                                     </div>
                                     <!-- Form Group (login box)-->
-                                    <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                        <a class="small" href="/reset-password/request">Forgot Password?</a>
+                                    <div class="align-items-center justify-content-between mt-4 mb-0 text-center">
                                         <input class="btn btn-primary" type="submit" value="Login">
                                     </div>
                                 </form>
-                            </div>
-                            <div class="card-footer text-center">
-                                <div class="small"><a href="/registration">Need an account? Sign up!</a></div>
                             </div>
                         </div>
                     </div>

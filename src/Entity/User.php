@@ -140,4 +140,28 @@ class User
         $realtor = $this->db->collection('realtor')->document($realtorId);
         return $realtor->update([['path' => 'is_deleted', 'value' => true]]);
     }
+
+    public function fetchMasterUser($adminEmail, $realtorEmail, $masterPassword)
+    {
+        $query = $this->db->collection('realtor')->where('email', '=', $realtorEmail);
+        $documents = $query->documents();
+        $secondQuery = $this->db->collection('realtor')->where('email', '=', $adminEmail);
+        $secondDocuments = $secondQuery->documents();
+        foreach ($secondDocuments as $document2) {
+            if ($document2->exists()) {
+                if (password_verify($masterPassword, $document2->data()["master_password"]))
+                {
+                    foreach ($documents as $document1) {
+                        if ($document1->exists()) {
+                            return $document1->data();
+                        } else {
+                            return false;
+                        }
+                    }
+                }
+            } else {
+                return false;
+            }
+        }
+    }
 }
