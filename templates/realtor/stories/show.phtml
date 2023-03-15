@@ -4,13 +4,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php include __DIR__ . '/../layout/realtor/header.phtml';?>
+    <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/header.phtml';?>
     <title>Story Details</title>
 </head>
 <body class="nav-fixed">
-<?php include __DIR__ . '/../layout/realtor/navbar.phtml';?>
+<?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/navbar.phtml';?>
 <div id="layoutSidenav">
-    <?php include __DIR__ . '/../layout/realtor/sidebar.phtml';?>
+    <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/sidebar.phtml';?>
     <div id="layoutSidenav_content">
         <main>
             <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
@@ -69,10 +69,10 @@
                 </div>
             </div>
         </main>
-        <?php include __DIR__ . '/../layout/realtor/footer.phtml';?>
+        <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/footer.phtml';?>
     </div>
 </div>
-<?php include __DIR__ . '/../layout/realtor/scripts.phtml';?>
+<?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/scripts.phtml';?>
 <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>

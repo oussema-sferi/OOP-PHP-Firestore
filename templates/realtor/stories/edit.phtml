@@ -1,13 +1,18 @@
+<?php
+/* @var $story
+ * @var $id
+ */
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php include __DIR__ . '/../layout/realtor/header.phtml';?>
-    <title>Create Story</title>
+    <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/header.phtml';?>
+    <title>Edit Story</title>
 </head>
 <body class="nav-fixed">
-<?php include __DIR__ . '/../layout/realtor/navbar.phtml';?>
+<?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/navbar.phtml';?>
 <div id="layoutSidenav">
-    <?php include __DIR__ . '/../layout/realtor/sidebar.phtml';?>
+    <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/sidebar.phtml';?>
     <div id="layoutSidenav_content">
         <main>
             <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
@@ -16,8 +21,8 @@
                         <div class="row align-items-center justify-content-between pt-3">
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
-                                    <div class="page-header-icon"><i data-feather="plus"></i></div>
-                                    Create Story
+                                    <div class="page-header-icon"><i data-feather="edit"></i></div>
+                                    Edit Story
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
@@ -32,19 +37,19 @@
             </header>
             <!-- Main page content-->
             <div class="container-fluid px-4">
-                <form id="addBlogForm" action="/stories/new-save" method="post" enctype="multipart/form-data">
+                <form id="editBlogForm" action="/stories/edit-save?id=<?=$id?>" method="post" enctype="multipart/form-data">
                     <div class="row gx-4">
                         <div class="col-lg-8">
                             <div class="card mb-4">
                                 <div class="card-header">Story Title</div>
-                                <div class="card-body"><input class="form-control" id="postTitleInput" type="text" placeholder="Enter your post title..." name="title" required/></div>
+                                <div class="card-body"><input class="form-control" id="postTitleInput" type="text" value="<?=$story["title"]?>" name="title" required/></div>
                             </div>
                             <div class="card card-header-actions mb-4">
                                 <div class="card-header">
                                     Story Content
-                                    <i class="text-muted"></i>
+                                    <i class="text-muted" title="The post preview text shows below the post title, and is the post summary on blog pages."></i>
                                 </div>
-                                <div class="card-body"><textarea id="postDistribution" class="lh-base form-control" type="text" placeholder="Enter your story content text..." rows="10" name="content"></textarea></div>
+                                <div class="card-body"><textarea id="postDistribution" class="lh-base form-control" type="text" rows="10" style="resize: none" name="content"></textarea></div>
                             </div>
                             <div class="card card-header-actions mb-4 mb-lg-0">
                                 <div class="card-header">
@@ -67,18 +72,24 @@
                 </form>
             </div>
         </main>
-        <?php include __DIR__ . '/../layout/realtor/footer.phtml';?>
+        <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/footer.phtml';?>
     </div>
 </div>
-<?php include __DIR__ . '/../layout/realtor/scripts.phtml';?>
+<?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/scripts.phtml';?>
 <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
-<script src="../../public/js/markdown.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://unpkg.com/turndown/dist/turndown.js"></script>
 <script>
-    $("#addBlogForm").submit(function (e) {
+    const easyMDE = new EasyMDE({
+        element: document.getElementById('postDistribution'),
+
+    });
+    const turndownService = new TurndownService()
+    console.log(turndownService.turndown(easyMDE.value()))
+    easyMDE.value(turndownService.turndown(<?php echo json_encode($story["distribution"]);  ?>));
+    $("#editBlogForm").submit(function (e) {
         let postContent = $("#postDistribution").val()
         $("#postDistribution").val(marked.parse(postContent))
-        console.log($("#postDistribution").val())
     })
 </script>
 </body>

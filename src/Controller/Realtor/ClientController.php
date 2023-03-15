@@ -40,13 +40,13 @@ class ClientController
         $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, [], "", false);
         $clients = $this->client->fetchPortalClients($this->loggedUserId);
         $realtor = $this->user->fetchUserById($this->loggedUserId);
-        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/clients/list.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/clients/list.phtml';
         die();
     }
 
     #[NoReturn] public function addForm(array $params = []): void
     {
-        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/clients/new.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/clients/new.phtml';
         die();
     }
 
@@ -82,7 +82,7 @@ class ClientController
     {
         $id = $params['id'];
         $client = $this->client->find($id);
-        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/clients/edit.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/clients/edit.phtml';
         die();
     }
 
@@ -120,7 +120,7 @@ class ClientController
     {
         $id = $params["id"];
         $client = $this->client->find($id);
-        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/clients/show.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/clients/show.phtml';
         die();
     }
 

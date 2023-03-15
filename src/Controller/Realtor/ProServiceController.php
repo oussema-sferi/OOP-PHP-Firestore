@@ -33,13 +33,13 @@ class ProServiceController
         $user = new User();
         $proServices = $this->proService->findAllByUser($this->loggedUserId);
         $realtor = $user->fetchUserById($this->loggedUserId);
-        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/pro-services/list.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/pro-services/list.phtml';
         die();
     }
 
     #[NoReturn] public function addForm(array $params = []): void
     {
-        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/pro-services/new.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/pro-services/new.phtml';
         die();
     }
 
@@ -85,7 +85,7 @@ class ProServiceController
     {
         $id = $params['id'];
         $proService = $this->proService->find($id);
-        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/pro-services/edit.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/pro-services/edit.phtml';
         die();
     }
 
@@ -129,7 +129,7 @@ class ProServiceController
     {
         $id = $params["id"];
         $proService = $this->proService->find($id);
-        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/pro-services/show.phtml';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/pro-services/show.phtml';
         die();
     }
 
