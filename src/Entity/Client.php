@@ -74,4 +74,19 @@ class Client
         $client = $this->db->collection('realtor_clients')->document($clientId);
         return $client->update([['path' => 'is_deleted', 'value' => true]]);
     }
+
+    public function fetchAllClients(): array
+    {
+        $res = [];
+        $query = $this->db->collection('realtor_clients')->where('is_deleted', '!=', true);
+        $documents = $query->documents();
+        foreach ($documents as $document) {
+            if ($document->exists()) {
+                $obj_merged = (object) array_merge(
+                    ["doc_id" => $document->id()], (array) $document->data());
+                $res[] = $obj_merged;
+            }
+        }
+        return $res;
+    }
 }

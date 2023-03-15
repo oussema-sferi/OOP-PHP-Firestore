@@ -10,6 +10,7 @@ use App\Controller\RegistrationController;
 use App\Controller\Realtor\StoryController;
 use App\Controller\Realtor\ProServiceController;
 use App\Controller\Realtor\ClientController;
+use App\Controller\Admin\ClientController as AdminClientController;
 use App\Controller\Admin\RealtorController;
 use App\Controller\ResetPasswordController;
 
@@ -125,6 +126,7 @@ $router->post($clientsBasePath . '/import-from-file', ClientController::class . 
 
 // ADMIN ROUTES
 $adminBasePath = '/admin';
+// REALTORS MENU
 // list realtors
 $realtorsBasePath = $adminBasePath . '/realtors';
 $router->get($realtorsBasePath . '/list', RealtorController::class . '::listAction');
@@ -138,6 +140,18 @@ $router->post($realtorsBasePath . '/edit', RealtorController::class . '::editSav
 $router->get($realtorsBasePath . '/show', RealtorController::class . '::showAction');
 // delete realtor
 $router->get($realtorsBasePath . '/delete', RealtorController::class . '::deleteAction');
+
+// CLIENTS MENU
+// list clients
+$realtorsBasePath = $adminBasePath . '/clients';
+$router->get($realtorsBasePath . '/list', AdminClientController::class . '::listAction');
+// edit client
+$router->get($realtorsBasePath . '/edit', AdminClientController::class . '::editForm');
+$router->post($realtorsBasePath . '/edit', AdminClientController::class . '::editSaveAction');
+// show client
+$router->get($realtorsBasePath . '/show', AdminClientController::class . '::showAction');
+// delete client
+$router->get($realtorsBasePath . '/delete', AdminClientController::class . '::deleteAction');
 
 
 $router->get('/', function () {
