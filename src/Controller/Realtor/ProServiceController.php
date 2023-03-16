@@ -12,6 +12,8 @@ use Google\Cloud\Core\Timestamp;
 use JetBrains\PhpStorm\NoReturn;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
 
 class ProServiceController
 {
@@ -195,5 +197,53 @@ class ProServiceController
         $helper->templateDownload($filename);
         header("Location: /pro-services/list");
         die();
+    }
+
+    public function exportToCsv(array $params = []): void
+    {
+        $proServices = $this->proService->findAllByUser($this->loggedUserId);
+        $data = [];
+        $data[] = ['Company Name', 'Address', 'City', 'State', 'Created At', 'Email Invite Sent At', 'Client Signed-up At'];
+        foreach ($proServices as $service) {
+            $rowData = [
+                'company_name' => $row["A"],
+                'company_email' => $row["B"],
+                'company_phone_number' => $row["C"],
+                'company_website_link' => $row["D"],
+                'homePro_type' => $row["E"],
+                'comments' => $row["F"],
+                'my_notes' => $row["G"],
+                'date' => new Timestamp(new DateTime()),
+                'realtor_id' => $this->loggedUserId
+            ];
+            $data[] = [
+                'Company Name' => $service->company_name ?? "",
+                'Company Email' => $service->company_email ?? "",
+                'Company Phone Number' => $service->company_phone_number ?? "",
+                'Company Website Link' => $service->company_website_link ?? "",
+                'Home Pro Type' => $service->homePro_type ?? "",
+                'Comments' => $service->comments ?? "",
+                'My Notes' => $service->my_notes ?? "",
+            ];
+        }
+        $sheetName = 'my_pro_services_'. date_create()->format('d-m-y');
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet()->fromArray($data);
+        $sheet->setTitle($sheetName);
+        $writer = new Xls($spreadsheet);
+        $filePath = $_SERVER["DOCUMENT_ROOT"] . "/public/downloaded-files/pro-services-to-csv/" . $sheetName . "_" . uniqid() . '.xls';
+        $writer->save($filePath);
+        // Return the Excel file as an attachment
+        if (file_exists($filePath)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . basename($filePath) . '"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($filePath));
+            readfile($filePath);
+            unlink($filePath);
+        }
     }
 }
