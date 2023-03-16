@@ -13,15 +13,14 @@ use DateTime;
 
 class EmailController
 {
-    private InvitationEmail $invitationEmail;
-    private ResetPassword $resetPassword;
     private string $loggedUserId;
     private string $baseUri;
-    public function __construct()
+    public function __construct(
+        private readonly InvitationEmail $invitationEmail,
+        private readonly ResetPassword $resetPassword
+    )
     {
         AuthCheckerService::checkIfAdmin();
-        $this->invitationEmail = new InvitationEmail();
-        $this->resetPassword = new ResetPassword();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
     }

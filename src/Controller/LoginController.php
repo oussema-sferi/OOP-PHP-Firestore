@@ -8,11 +8,9 @@ use App\Service\AuthCheckerService;
 
 class LoginController
 {
-    private User $user;
-    public function __construct()
+    public function __construct(private readonly User $user)
     {
         AuthCheckerService::checkIfAuthenticated();
-        $this->user = new User();
     }
     public function loginShow(array $params = []): void
     {
