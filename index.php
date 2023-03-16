@@ -71,6 +71,17 @@ $router->get('/dashboard/change-password', DashboardController::class . '::showC
 // change password action
 $router->post('/dashboard/change-password', DashboardController::class . '::changePasswordAction');
 
+// ADMIN
+// Change my master password
+// check current password page
+$router->get('/dashboard/master-password-verification', DashboardController::class . '::showCheckMasterPasswordAction');
+// check current password action
+$router->post('/dashboard/master-password-verification', DashboardController::class . '::checkMasterPasswordAction');
+// change password page
+$router->get('/dashboard/change-master-password', DashboardController::class . '::showChangeMasterPasswordAction');
+// change password action
+$router->post('/dashboard/change-master-password', DashboardController::class . '::changeMasterPasswordAction');
+
 // Realtor STORIES
 $storiesBasePath = '/stories';
 // list stories

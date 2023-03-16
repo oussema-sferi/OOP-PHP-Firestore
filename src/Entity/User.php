@@ -164,4 +164,21 @@ class User
             }
         }
     }
+
+    public function validateActualMasterPassword($adminEmail, $masterPassword)
+    {
+        $query = $this->db->collection('realtor')->where('email', '=', $adminEmail);
+        $documents = $query->documents();
+
+        foreach ($documents as $document) {
+            if ($document->exists()) {
+                if (password_verify($masterPassword, $document->data()["master_password"]))
+                {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }
+    }
 }

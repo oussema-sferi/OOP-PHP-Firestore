@@ -142,4 +142,74 @@ class DashboardController
         unset($_SESSION['user_is_authorized']);
         header("Location: /stories/list");
     }
+
+
+    public function showCheckMasterPasswordAction(array $params = []): void
+    {
+        AuthCheckerService::checkIfAdmin();
+        $user = $this->user->fetchUserById($this->loggedUserId);
+        if(isset($_SESSION['validate_master_password_error_flash_message'])) {
+            $errorMessage = $_SESSION['validate_master_password_error_flash_message'];
+            unset($_SESSION['validate_master_password_error_flash_message']);
+        }
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/security/change-master-password/check-password.phtml';
+    }
+
+    public function checkMasterPasswordAction(array $params = []): void
+    {
+        AuthCheckerService::checkIfAdmin();
+        $masterPassword = $params["actualMasterPassword"];
+        if($this->user->validateActualMasterPassword($_SESSION["user"]["email"], $masterPassword))
+        {
+            $_SESSION["master_is_authorized"] = true;
+            header("Location: /dashboard/change-master-password");
+        } else {
+            $_SESSION['validate_master_password_error_flash_message'] = "Your password is invalid !";
+            header("Location: /dashboard/master-password-verification");
+        }
+    }
+
+    public function showChangeMasterPasswordAction(array $params = []): void
+    {
+        AuthCheckerService::checkIfAdmin();
+        if(!isset($_SESSION['master_is_authorized']) || !$_SESSION['master_is_authorized'])
+        {
+            header("Location: /dashboard/master-password-verification");
+        }
+        $user = $this->user->fetchUserById($this->loggedUserId);
+        if(isset($_SESSION['change_master_password_error_flash_message'])) {
+            $errorMessage = $_SESSION['change_master_password_error_flash_message'];
+            unset($_SESSION['change_master_password_error_flash_message']);
+        }
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/security/change-master-password/change-password.phtml';
+    }
+
+    public function changeMasterPasswordAction(array $params = []): void
+    {
+        AuthCheckerService::checkIfAdmin();
+        if(!isset($_SESSION['master_is_authorized']) || !$_SESSION['master_is_authorized'])
+        {
+            header("Location: /dashboard/master-password-verification");
+        }
+        $password = trim($params["newMasterPassword"]);
+        $confirmPassword = trim($params["confirmMasterPassword"]);
+        if($password !== $confirmPassword)
+        {
+            $_SESSION['change_master_password_error_flash_message'] = "Your passwords did not match! Please try again";
+            header("Location: /dashboard/change-master-password");
+            die();
+        }
+        if (!(strlen($password) >= 8 && strpbrk($password, "!#$@.,:;()"))){
+            // next code block
+            $_SESSION['change_master_password_error_flash_message'] = "Your password is not strong enough. Please use another one and try again.";
+            header("Location: /dashboard/change-master-password");
+            die();
+        }
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $user = $this->user->findByEmail($_SESSION["user"]["email"]);
+        $finalData[] = ['path' => 'master_password', 'value' => $hashedPassword];
+        $this->user->update($user["realtor_id"], $finalData);
+        unset($_SESSION['master_is_authorized']);
+        header("Location: /admin/realtors/list");
+    }
 }
