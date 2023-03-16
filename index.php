@@ -132,6 +132,8 @@ $router->post($clientsBasePath . '/send-invitation-to-client', PortalClientContr
 $router->get($clientsBasePath . '/template-download', PortalClientController::class . '::templateDownloadAction');
 // clients import from CSV action
 $router->post($clientsBasePath . '/import-from-file', PortalClientController::class . '::importFromFileAction');
+// clients export to CSV action
+$router->get($clientsBasePath . '/export-to-csv', PortalClientController::class . '::exportToCsv');
 
 
 // ADMIN ROUTES

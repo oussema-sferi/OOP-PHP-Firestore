@@ -14,6 +14,8 @@ use Google\Cloud\Core\Timestamp;
 use JetBrains\PhpStorm\NoReturn;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
 
 class PortalClientController
 {
@@ -245,5 +247,42 @@ class PortalClientController
         }
         header("Location: /clients/list");
         die();
+    }
+
+    public function exportToCsv(array $params = []): void
+    {
+        $realtorClients = $this->client->fetchPortalClients($this->loggedUserId);
+        $data = [];
+        $data[] = ['Client Name', 'Address', 'City', 'State', 'Created At', 'Email Invite Sent At', 'Client Signed-up At'];
+        foreach ($realtorClients as $client) {
+            $data[] = [
+                'Client Name' => $client->first_name_1 . " " . $client->last_name_1 ?? "",
+                'Address' => $client->address_1 ?? "",
+                'City' => $client->city ?? "",
+                'State' => $client->state ?? "",
+                'Created At' => isset($client->created_at) && $client->created_at !== "" ? $client->created_at->get()->format("m-d-Y") : "",
+                'Email Invite Sent At' => isset($client->email_invite_sent_at) && $client->email_invite_sent_at !== "" ? $client->email_invite_sent_at->get()->format("m-d-Y") : "",
+                'Client Signed-up At' => isset($client->mobile_app_signed_up_at) && $client->mobile_app_signed_up_at !== "" ? $client->mobile_app_signed_up_at->get()->format("m-d-Y") : ""
+            ];
+        }
+        $sheetName = 'my_clients_'. date_create()->format('d-m-y');
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet()->fromArray($data);
+        $sheet->setTitle($sheetName);
+        $writer = new Xls($spreadsheet);
+        $filePath = $_SERVER["DOCUMENT_ROOT"] . "/public/downloaded-files/clients-to-csv/" . $sheetName . "_" . uniqid() . '.xls';
+        $writer->save($filePath);
+        // Return the Excel file as an attachment
+        if (file_exists($filePath)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . basename($filePath) . '"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($filePath));
+            readfile($filePath);
+            unlink($filePath);
+        }
     }
 }
