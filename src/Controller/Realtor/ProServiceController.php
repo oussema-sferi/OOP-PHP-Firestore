@@ -203,19 +203,8 @@ class ProServiceController
     {
         $proServices = $this->proService->findAllByUser($this->loggedUserId);
         $data = [];
-        $data[] = ['Company Name', 'Address', 'City', 'State', 'Created At', 'Email Invite Sent At', 'Client Signed-up At'];
+        $data[] = ['Company Name', 'Company Email', 'Company Phone Number', 'Company Website Link', 'Home Pro Type', 'Comments', 'My Notes'];
         foreach ($proServices as $service) {
-            $rowData = [
-                'company_name' => $row["A"],
-                'company_email' => $row["B"],
-                'company_phone_number' => $row["C"],
-                'company_website_link' => $row["D"],
-                'homePro_type' => $row["E"],
-                'comments' => $row["F"],
-                'my_notes' => $row["G"],
-                'date' => new Timestamp(new DateTime()),
-                'realtor_id' => $this->loggedUserId
-            ];
             $data[] = [
                 'Company Name' => $service->company_name ?? "",
                 'Company Email' => $service->company_email ?? "",

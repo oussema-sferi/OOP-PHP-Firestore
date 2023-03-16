@@ -107,6 +107,8 @@ $router->get($proServicesBasePath . '/delete', ProServiceController::class . '::
 $router->get($proServicesBasePath . '/template-download', ProServiceController::class . '::templateDownloadAction');
 // import pro services via CSV
 $router->post($proServicesBasePath . '/import', ProServiceController::class . '::importFromFileAction');
+// pro services export to CSV action
+$router->get($proServicesBasePath . '/export-to-csv', ProServiceController::class . '::exportToCsv');
 
 // Realtor CLIENTS
 $clientsBasePath = '/clients';
