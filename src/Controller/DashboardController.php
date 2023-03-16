@@ -6,7 +6,6 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Service\AuthCheckerService;
 use App\Service\HelperService;
-use App\Service\UserCheckerService;
 use Google\Cloud\Core\Timestamp;
 use DateTime;
 use JetBrains\PhpStorm\NoReturn;
