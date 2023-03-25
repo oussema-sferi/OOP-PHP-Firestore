@@ -14,14 +14,15 @@ class MobileAppClientController
 {
     private string $loggedUserId;
     private string $baseUri;
-    public function __construct(
-        private readonly User   $user,
-        private readonly MobileAppClient $mobileAppClient
-    )
+    private User $user;
+    private MobileAppClient $mobileAppClient;
+    public function __construct()
     {
         AuthCheckerService::checkIfAdmin();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
+        $this->user = new User();
+        $this->mobileAppClient = new MobileAppClient();
     }
 
     #[NoReturn] public function listAction(array $params = []): void

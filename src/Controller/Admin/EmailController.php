@@ -15,14 +15,15 @@ class EmailController
 {
     private string $loggedUserId;
     private string $baseUri;
-    public function __construct(
-        private readonly InvitationEmail $invitationEmail,
-        private readonly ResetPassword $resetPassword
-    )
+    private InvitationEmail $invitationEmail;
+    private ResetPassword $resetPassword;
+    public function __construct()
     {
         AuthCheckerService::checkIfAdmin();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
+        $this->invitationEmail = new InvitationEmail();
+        $this->resetPassword = new ResetPassword();
     }
 
     #[NoReturn] public function invitationEmailAction(array $params = []): void

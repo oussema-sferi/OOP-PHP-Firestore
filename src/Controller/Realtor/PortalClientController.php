@@ -21,15 +21,17 @@ class PortalClientController
 {
     private string $loggedUserId;
     private string $baseUri;
-    public function __construct(
-        private readonly User         $user,
-        private readonly PortalClient $client,
-        private readonly InvitationEmail $invitationEmail
-    )
+    private readonly User $user;
+    private PortalClient $client;
+    private InvitationEmail $invitationEmail;
+    public function __construct()
     {
         AuthCheckerService::checkIfRealtor();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
+        $this->user = new User();
+        $this->client = new PortalClient();
+        $this->invitationEmail = new InvitationEmail();
     }
 
     #[NoReturn] public function listAction(array $params = []): void

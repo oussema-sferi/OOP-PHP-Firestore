@@ -13,13 +13,14 @@ use DateTime;
 class ResetPasswordController
 {
     private string $baseUri;
-    public function __construct(
-        private readonly User $user,
-        private readonly ResetPassword $resetPassword
-    )
+    private User $user;
+    private ResetPassword $resetPassword;
+    public function __construct()
     {
         AuthCheckerService::checkIfAuthenticated();
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
+        $this->user = new User();
+        $this->resetPassword = new ResetPassword();
     }
 
     public function showRequestPasswordAction(array $params = []): void

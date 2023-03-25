@@ -19,14 +19,15 @@ class ProServiceController
 {
     private string $loggedUserId;
     private string $baseUri;
-    public function __construct(
-        private readonly PortalClient $client,
-        private readonly ProService $proService
-    )
+    private PortalClient $client;
+    private ProService $proService;
+    public function __construct()
     {
         AuthCheckerService::checkIfRealtor();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
+        $this->client = new PortalClient();
+        $this->proService = new ProService();
     }
 
     #[NoReturn] public function listAction(array $params = []): void
