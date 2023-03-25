@@ -12,13 +12,11 @@ use JetBrains\PhpStorm\NoReturn;
 
 class DashboardController
 {
-    private User $user;
     private string $loggedUserId;
     private string $baseUri;
-    public function __construct()
+    public function __construct(private readonly User $user)
     {
         AuthCheckerService::checkIfNotAuthenticated();
-        $this->user = new User();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
     }

@@ -12,15 +12,14 @@ use DateTime;
 
 class RealtorController
 {
-    private User $user;
-    private PortalClient $client;
     private string $loggedUserId;
     private string $baseUri;
-    public function __construct()
+    public function __construct(
+        private readonly User $user,
+        private readonly PortalClient $client
+    )
     {
         AuthCheckerService::checkIfAdmin();
-        $this->user = new User();
-        $this->client = new PortalClient();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
     }
