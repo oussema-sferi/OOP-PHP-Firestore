@@ -1,11 +1,14 @@
 <?php
 namespace App\Service;
 
+use App\Entity\PortalClient;
+
 class HelperService
 {
     public function clientCheckAndSaveSignUpDate($database, $userId, array $notificationParameters , string $redirectUri, bool $sendNotif = true): void
     {
         $realtorLinkedPortalClients = $database->fetchPortalClients($userId);
+        /** @var PortalClient $database */
         $allMobileAppClients = $database->fetchMobileAppClients();
         foreach ($realtorLinkedPortalClients as $userClient)
         {

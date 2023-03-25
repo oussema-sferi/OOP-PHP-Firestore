@@ -33,6 +33,7 @@ class StoryController
     {
         $stories = $this->story->findAllByUser($this->loggedUserId);
         $realtor = $this->user->fetchUserById($this->loggedUserId);
+        $noImagePath = $_SERVER["DOCUMENT_ROOT"] . "/public/uploaded-images/stories/no-image/no-image-available.jpg";
         require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/stories/list.phtml';
         die();
     }

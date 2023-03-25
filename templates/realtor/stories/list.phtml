@@ -1,6 +1,7 @@
 <?php
 /* @var $stories
  * @var $realtor
+ * @var $noImagePath
  */
 ?>
 <!DOCTYPE html>
@@ -77,22 +78,17 @@
                             {
                                 $id = $story->doc_id;
                                 $title = $story->title;
+                                $content = $story->distribution;
+                                /*$image = isset($story->img) && file_exists($story->img) ? $story->img : $noImagePath;*/
+                                $image = isset($story->img) ? $story->img : $noImagePath;
                                 $createdAt = $story->date->get()->format("m-d-Y");
-                                if(isset($story->views)) {
-                                    $views = $story->views;
-                                } else {
-                                    $views = 0;
-                                }
+                                $views = $story->views ?? 0;
                                 if(isset($story->user_liked)) {
                                     $likes = count($story->user_liked);
                                 } else {
                                     $likes = 0;
                                 }
-                                if(isset($story->published_at) && trim($story->published_at) !== "") {
-                                    $publishedAt = $story->published_at->get()->format("m-d-Y");
-                                } else {
-                                    $publishedAt = "";
-                                }
+                                $publishedAt = isset($story->published_at) && trim($story->published_at) !== "" ? $story->published_at->get()->format("m-d-Y") : "";
                                 $showStoryLink = "show?id=$id";
                                 $editStoryLink = "edit?id=$id";
                                 $deleteStoryLink = "delete?id=$id";
@@ -105,12 +101,42 @@
                                     <td class='text-center' style='vertical-align: middle'>$views</td>
                                     <td class='text-center' style='vertical-align: middle'>$likes</td>
                                     <td class='text-center'>
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' data-bs-toggle='modal' data-bs-target='#previewStoryModal$id'><i data-feather='eye'></i></a>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$showStoryLink><i data-feather='zoom-in'></i></a>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$editStoryLink><i data-feather='edit'></i></a>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark' data-bs-toggle='modal' data-bs-target='#approveUserModal$id'><i data-feather='trash-2'></i></a>                                                                                                                              
                                     </td>                                                      
                                 </tr>
                                 
+                                <!-- Modal Preview Story-->
+                                <div class='modal fade' id='previewStoryModal$id' tabindex='-1' role='dialog' aria-labelledby='exampleModalScrollableTitle' aria-hidden='true'>
+                                    <div class='modal-dialog modal-dialog-scrollable' role='document'>
+                                        <div class='modal-content'>
+                                            <div class='modal-header d-block'>
+                                                <h5 class='modal-title text-center' id='exampleModalScrollableTitle'>Story Preview</h5>
+                                            </div>
+                                            <div class='modal-body'>
+                                                <div class='text-center mb-3'>
+                                                    <img src='$image' alt='no-image-available' height='200px' width='300px'>
+                                                </div>
+                                                <div class='text-center mb-3'>
+                                                    <h3>$title</h3>
+                                                </div>
+                                                <div>
+                                                    $content
+                                                </div>
+                                            </div>
+                                            <div class='text-center mb-3'>
+                                            <button class='btn' style='background-color: #00b386; color: white; border-radius: 20px' type='button' data-bs-dismiss='modal'>Close</button>
+                                            </div>
+                                            <!--<div class='modal-footer'>
+                                                
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Modal Delete Story-->
                                 <div class='modal fade' id='approveUserModal$id' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
                                     <div class='modal-dialog modal-dialog-centered' role='document'>
                                         <div class='modal-content'>
