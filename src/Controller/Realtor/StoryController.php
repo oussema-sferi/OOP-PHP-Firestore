@@ -16,6 +16,7 @@ class StoryController
 {
     private string $loggedUserId;
     private string $baseUri;
+    private string $noImagePath;
     private readonly Story $story;
     private User $user;
     private PortalClient $client;
@@ -24,6 +25,7 @@ class StoryController
         AuthCheckerService::checkIfRealtor();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
+        $this->noImagePath = $this->baseUri . "/public/uploaded-images/stories/no-image/no-image-available.jpg";
         $this->story = new Story();
         $this->client = new PortalClient();
         $this->user = new User();
@@ -33,7 +35,6 @@ class StoryController
     {
         $stories = $this->story->findAllByUser($this->loggedUserId);
         $realtor = $this->user->fetchUserById($this->loggedUserId);
-        $noImagePath = $_SERVER["DOCUMENT_ROOT"] . "/public/uploaded-images/stories/no-image/no-image-available.jpg";
         require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/stories/list.phtml';
         die();
     }
@@ -54,7 +55,7 @@ class StoryController
             move_uploaded_file(
                 $_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . $imagePath
             );
-            $imageDbLink = $this->baseUri . $imagePath;
+            $imageDbLink = $imagePath;
         } else {
             $imageDbLink = "";
         }
@@ -84,6 +85,7 @@ class StoryController
     {
         $id = $params['id'];
         $story = $this->story->find($id);
+        $image = isset($story["img"]) && trim($story["img"]) !== '' && file_exists($_SERVER["DOCUMENT_ROOT"] . $story["img"]) ? $this->baseUri . $story["img"] : $this->noImagePath;
         require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/stories/edit.phtml';
         die();
     }
@@ -98,7 +100,7 @@ class StoryController
             move_uploaded_file(
                 $_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . $imagePath
             );
-            $imageDbLink = $this->baseUri . $imagePath;
+            $imageDbLink = $imagePath;
         } else {
             $imageDbLink = "";
         }
@@ -124,6 +126,7 @@ class StoryController
     {
         $id = $params["id"];
         $story = $this->story->find($id);
+        $image = isset($story["img"]) && trim($story["img"]) !== '' && file_exists($_SERVER["DOCUMENT_ROOT"] . $story["img"]) ? $this->baseUri . $story["img"] : $this->noImagePath;
         require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/stories/show.phtml';
         die();
     }

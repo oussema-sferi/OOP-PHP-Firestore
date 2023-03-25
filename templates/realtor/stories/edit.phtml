@@ -1,6 +1,7 @@
 <?php
 /* @var $story
  * @var $id
+ * @var $image
  */
 ?>
 <!DOCTYPE html>
@@ -57,6 +58,9 @@
                                     <i class="text-muted"></i>
                                 </div>
                                 <div class="card-body">
+                                    <div class="mb-3">
+                                        <img src='<?=$image?>' alt='' height='150px' width='200px'>
+                                    </div>
                                     <input type="file" accept="image/jpeg/png" name="image">
                                 </div>
                             </div>

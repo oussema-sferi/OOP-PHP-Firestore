@@ -80,7 +80,8 @@
                                 $title = $story->title;
                                 $content = $story->distribution;
                                 /*$image = isset($story->img) && file_exists($story->img) ? $story->img : $noImagePath;*/
-                                $image = isset($story->img) ? $story->img : $noImagePath;
+                                /*var_dump(file_exists($_SERVER["DOCUMENT_ROOT"] . $story->img));*/
+                                $image = isset($story->img) && trim($story->img) !== '' && file_exists($_SERVER["DOCUMENT_ROOT"] . $story->img) ? $this->baseUri . $story->img : $this->noImagePath;
                                 $createdAt = $story->date->get()->format("m-d-Y");
                                 $views = $story->views ?? 0;
                                 if(isset($story->user_liked)) {

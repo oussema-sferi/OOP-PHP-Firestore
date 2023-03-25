@@ -1,5 +1,7 @@
 <?php
-/* @var $story */
+/* @var $story
+ * @var $image
+ */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,11 +58,7 @@
                                 <i class="text-muted" title="Markdown is supported within the post content editor."></i>
                             </div>
                             <div class="card-body">
-                                <?php
-                                $image = $story["img"];
-                                if(isset($image) && trim($image) !== "")
-                                    echo "<img src='$image' alt='' height='150px' width='200px'>";
-                                ?>
+                                <img src='<?=$image?>' alt='' height='150px' width='200px'>
                             </div>
                         </div>
                     </div>
