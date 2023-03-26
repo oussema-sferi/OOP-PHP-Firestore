@@ -19,6 +19,7 @@ class ProServiceController
 {
     private string $loggedUserId;
     private string $baseUri;
+    private string $noImagePath;
     private PortalClient $client;
     private ProService $proService;
     public function __construct()
@@ -26,6 +27,7 @@ class ProServiceController
         AuthCheckerService::checkIfRealtor();
         $this->loggedUserId = $_SESSION["user"]["realtor_id"];
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
+        $this->noImagePath = $this->baseUri . "/public/uploaded-images/pro-services/no-image/no-image-available.jpg";
         $this->client = new PortalClient();
         $this->proService = new ProService();
     }
@@ -55,7 +57,7 @@ class ProServiceController
             move_uploaded_file(
                 $_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . $imagePath
             );
-            $imageDbLink = $this->baseUri . $imagePath;
+            $imageDbLink = $imagePath;
         } else {
             $imageDbLink = "";
         }
@@ -87,6 +89,7 @@ class ProServiceController
     {
         $id = $params['id'];
         $proService = $this->proService->find($id);
+        $image = isset($proService["img"]) && trim($proService["img"]) !== '' && file_exists($_SERVER["DOCUMENT_ROOT"] . $proService["img"]) ? $this->baseUri . $proService["img"] : $this->noImagePath;
         require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/pro-services/edit.phtml';
         die();
     }
@@ -101,7 +104,7 @@ class ProServiceController
             move_uploaded_file(
                 $_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . $imagePath
             );
-            $imageDbLink = $this->baseUri . $imagePath;
+            $imageDbLink = $imagePath;
         } else {
             $imageDbLink = "";
         }
@@ -131,6 +134,7 @@ class ProServiceController
     {
         $id = $params["id"];
         $proService = $this->proService->find($id);
+        $image = isset($proService["img"]) && trim($proService["img"]) !== '' && file_exists($_SERVER["DOCUMENT_ROOT"] . $proService["img"]) ? $this->baseUri . $proService["img"] : $this->noImagePath;
         require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/pro-services/show.phtml';
         die();
     }

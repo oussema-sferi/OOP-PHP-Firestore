@@ -1,6 +1,7 @@
 <?php
 /* @var $proService
  * @var $id
+ * @var $image
  */
 ?>
 <!DOCTYPE html>
@@ -90,7 +91,12 @@
                             </div>
                             <div class="card mb-4">
                                 <div class="card-header">Image</div>
-                                <div class="card-body"><input type="file" accept="image/jpeg/png" name="image"></div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <img src='<?=$image?>' alt='no-image-available' height='150px' width='200px'>
+                                    </div>
+                                    <input type="file" accept="image/jpeg/png" name="image">
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-4">

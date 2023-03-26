@@ -1,5 +1,7 @@
 <?php
-/* @var $proService */
+/* @var $proService
+ * @var $image
+ */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,7 +71,9 @@
                         </div>
                         <div class="card mb-4">
                             <div class="card-header">Image</div>
-                            <div class="card-body"><img src="<?=$proService["img"] ?? ""?>" alt="N/A" height="150px" width="200px"></div>
+                            <div class="card-body">
+                                <img src='<?=$image?>' alt='no-image-available' height='150px' width='200px'>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-2">
