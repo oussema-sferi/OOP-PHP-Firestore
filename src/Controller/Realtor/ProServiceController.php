@@ -37,6 +37,10 @@ class ProServiceController
         $user = new User();
         $proServices = $this->proService->findAllByUser($this->loggedUserId);
         $realtor = $user->fetchUserById($this->loggedUserId);
+        if(isset($_SESSION['pro_service_success_flash_message'])) {
+            $successFlashMessage = $_SESSION['pro_service_success_flash_message'];
+            unset($_SESSION['pro_service_success_flash_message']);
+        }
         require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/pro-services/list.phtml';
         die();
     }
@@ -75,6 +79,7 @@ class ProServiceController
             'date' => new Timestamp(new DateTime()),
         ];
         $this->proService->create($data);
+        $_SESSION['pro_service_success_flash_message'] = "Your pro service has just been created successfully !";
         $redirectUri = "/pro-services/list";
         $notificationParameters = [
             "title" => "HoneyDoo Alert",
@@ -127,6 +132,7 @@ class ProServiceController
             if($value !== "") $finalData[] = ['path' => $key, 'value' => $value];
         }
         $this->proService->update($id, $finalData);
+        $_SESSION['pro_service_success_flash_message'] = "Your pro service has just been updated successfully !";
         header("Location: /pro-services/list");
     }
 
@@ -143,6 +149,7 @@ class ProServiceController
     {
         $id = $params["id"];
         $this->proService->delete($id);
+        $_SESSION['pro_service_success_flash_message'] = "Your pro service has just been deleted successfully !";
         $redirectUri = "/pro-services/list";
         $notificationParameters = [
             "title" => "HoneyDoo Alert",
@@ -184,6 +191,7 @@ class ProServiceController
         {
             $this->proService->create($row);
         }
+        $_SESSION['pro_service_success_flash_message'] = "Your pro services have just been imported successfully !";
         $redirectUri = "/pro-services/list";
         $notificationParameters = [
             "title" => "HoneyDoo Alert",
