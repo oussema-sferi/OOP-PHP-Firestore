@@ -77,7 +77,14 @@
                             foreach ($proServices as $proService)
                             {
                                 $id = $proService->doc_id;
+                                /*$content = $proService->distribution;*/
                                 $companyName = $proService->company_name;
+                                $companyEmail = $proService->company_email;
+                                $companyWebsite = $proService->company_website_link;
+                                $companyPhoneNumber = $proService->company_phone_number;
+                                $image = isset($proService->img) && trim($proService->img) !== '' && file_exists($_SERVER["DOCUMENT_ROOT"] . $proService->img) ? $this->baseUri . $proService->img : $this->noImagePath;
+                                $comments = $proService->comments;
+                                $notes = $proService->my_notes;
                                 $createdAt = $proService->date;
                                 $createdAtFormatted = $createdAt->get()->format("m-d-Y");
                                 $showProServiceLink = "show?id=$id";
@@ -88,12 +95,51 @@
                                     <td>$companyName</td>
                                     <td>$createdAtFormatted</td>
                                     <td class='text-center'>
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' data-bs-toggle='modal' data-bs-target='#previewHdProsModal$id'><i data-feather='eye'></i></a>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$showProServiceLink><i data-feather='zoom-in'></i></a>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$editProServiceLink><i data-feather='edit'></i></a>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark' data-bs-toggle='modal' data-bs-target='#approveUserModal$id'><i data-feather='trash-2'></i></a>                                                                                                                              
                                     </td>                                                                                          
                                 </tr>
                                 
+                                <!-- Modal Preview HD PROS-->
+                                <div class='modal fade' id='previewHdProsModal$id' tabindex='-1' role='dialog' aria-labelledby='exampleModalScrollableTitle' aria-hidden='true'>
+                                    <div class='modal-dialog modal-dialog-scrollable' role='document'>
+                                        <div class='modal-content'>
+                                            <div class='modal-body'>
+                                            <div>
+                                                <h5 class='mb-0'>$companyName</h5>
+                                                <span>$companyEmail</span><br>
+                                                <a href='$companyWebsite' target='_blank'>$companyWebsite</a><br>
+                                                <span class='mb-0'>$companyPhoneNumber</span>
+                                                 <hr>
+                                            </div>
+                                                <div class='text-center mb-3'>
+                                                    <img src='$image' alt='no-image-available' height='200px' width='300px'>
+                                                </div>
+                                                <div class='mb-3'>
+                                                    <h4>Comments (Public)</h4>
+                                                </div>
+                                                <p class='fw-bold'>
+                                                    $comments
+                                                </p>
+                                                <p class='fw-bold'>
+                                                    $notes
+                                                </p>
+                                                <hr>
+                                            </div>
+                                            <div class='text-center mb-3'>
+                                            <button class='btn' style='background-color: #00b386; color: white; border-radius: 20px' type='button' data-bs-dismiss='modal'>Close</button>
+                                            </div>
+                                            <!--<div class='modal-footer'>
+                                                
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                                 <!-- Modal Delete HD PROS-->
                                 <div class='modal fade' id='approveUserModal$id' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
                                     <div class='modal-dialog modal-dialog-centered' role='document'>
                                         <div class='modal-content'>

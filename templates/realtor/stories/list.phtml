@@ -79,8 +79,6 @@
                                 $id = $story->doc_id;
                                 $title = $story->title;
                                 $content = $story->distribution;
-                                /*$image = isset($story->img) && file_exists($story->img) ? $story->img : $noImagePath;*/
-                                /*var_dump(file_exists($_SERVER["DOCUMENT_ROOT"] . $story->img));*/
                                 $image = isset($story->img) && trim($story->img) !== '' && file_exists($_SERVER["DOCUMENT_ROOT"] . $story->img) ? $this->baseUri . $story->img : $this->noImagePath;
                                 $createdAt = $story->date->get()->format("m-d-Y");
                                 $views = $story->views ?? 0;
@@ -113,10 +111,7 @@
                                 <div class='modal fade' id='previewStoryModal$id' tabindex='-1' role='dialog' aria-labelledby='exampleModalScrollableTitle' aria-hidden='true'>
                                     <div class='modal-dialog modal-dialog-scrollable' role='document'>
                                         <div class='modal-content'>
-                                            <div class='modal-header d-block'>
-                                                <h5 class='modal-title text-center' id='exampleModalScrollableTitle'>Story Preview</h5>
-                                            </div>
-                                            <div class='modal-body'>
+                                            <div class='modal-body mt-3'>
                                                 <div class='text-center mb-3'>
                                                     <img src='$image' alt='no-image-available' height='200px' width='300px'>
                                                 </div>
