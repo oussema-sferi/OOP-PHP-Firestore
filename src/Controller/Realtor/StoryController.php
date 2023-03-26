@@ -35,6 +35,10 @@ class StoryController
     {
         $stories = $this->story->findAllByUser($this->loggedUserId);
         $realtor = $this->user->fetchUserById($this->loggedUserId);
+        if(isset($_SESSION['story_success_flash_message'])) {
+            $successFlashMessage = $_SESSION['story_success_flash_message'];
+            unset($_SESSION['story_success_flash_message']);
+        }
         require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/stories/list.phtml';
         die();
     }
@@ -71,6 +75,7 @@ class StoryController
         ];
         // Create and save new blog post in DB
         $this->story->create($data);
+        $_SESSION['story_success_flash_message'] = "Your story has just been created successfully !";
         $redirectUri = "/stories/list";
         $notificationParameters = [
             "title" => "HoneyDoo Alert",
@@ -119,6 +124,7 @@ class StoryController
             if($value !== "") $finalData[] = ['path' => $key, 'value' => $value];
         }
         $this->story->update($id, $finalData);
+        $_SESSION['story_success_flash_message'] = "Your story has just been updated successfully !";
         header("Location: /stories/list");
     }
 
@@ -135,6 +141,7 @@ class StoryController
     {
         $id = $params["id"];
         $this->story->delete($id);
+        $_SESSION['story_success_flash_message'] = "Your story has just been deleted successfully !";
         header("Location: /stories/list");
         die();
     }
