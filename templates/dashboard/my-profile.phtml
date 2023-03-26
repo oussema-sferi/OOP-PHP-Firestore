@@ -2,7 +2,7 @@
 /* @var $user
  * @var $baseUri
  */
-$profPic = isset($theUser["realtor_photo"]) && trim($theUser["realtor_photo"]) != '' ? $theUser["realtor_photo"] : $baseUri . '/public/assets/img/illustrations/profiles/profile-4.png';
+$profPic = isset($user["realtor_photo"]) && trim($user["realtor_photo"]) !== '' && file_exists($_SERVER["DOCUMENT_ROOT"] . $user["realtor_photo"]) ? $this->baseUri . $user["realtor_photo"] : $this->baseUri . '/public/assets/img/illustrations/profiles/profile-4.png';
 ?>
 <!DOCTYPE html>
 <html lang="en">
