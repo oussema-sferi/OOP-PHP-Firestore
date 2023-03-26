@@ -27,7 +27,7 @@ class PortalClientController
     public function __construct()
     {
         AuthCheckerService::checkIfRealtor();
-        $this->loggedUserId = $_SESSION["user"]["realtor_id"];
+        if(isset($_SESSION["user"]["realtor_id"])) $this->loggedUserId = $_SESSION["user"]["realtor_id"];
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
         $this->user = new User();
         $this->client = new PortalClient();
@@ -148,13 +148,14 @@ class PortalClientController
             ['path' => 'is_subscribed', 'value' => false]
         ];
         $this->client->update($clientId, $data);
-        header("Location: /clients/emails-unsubscription-confirmation");
-        die();
-    }
-
-    #[NoReturn] public function emailsUnsubscriptionConfirmationAction(array $params = []): void
-    {
-        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/emails/emails-unsubscription-confirmation.phtml';
+        $flashMessage = "You have just been unsubscribed successfully !";
+        if(isset($_SESSION["user"]["realtor_id"]))
+        {
+            $_SESSION['story_success_flash_message'] = $flashMessage;
+        } else {
+            $_SESSION['registration_success_flash_message'] = $flashMessage;
+        }
+        header("Location: /");
         die();
     }
 
