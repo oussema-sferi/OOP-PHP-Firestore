@@ -162,6 +162,8 @@ class StoryController
         {
             $this->story->update($storyId, $finalData);
         }
+        $text = count($storiesIds) === 1 ? "Story has" : "Stories have";
+        $_SESSION['story_success_flash_message'] = "$text just been published successfully !";
         header("Location: /stories/list");
     }
 }
