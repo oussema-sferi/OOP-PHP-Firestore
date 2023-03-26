@@ -42,6 +42,10 @@ class PortalClientController
         $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, [], "", false);
         $clients = $this->client->fetchPortalClients($this->loggedUserId);
         $realtor = $this->user->fetchUserById($this->loggedUserId);
+        if(isset($_SESSION['portal_clients_success_flash_message'])) {
+            $successFlashMessage = $_SESSION['portal_clients_success_flash_message'];
+            unset($_SESSION['portal_clients_success_flash_message']);
+        }
         require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/clients/list.phtml';
         die();
     }
@@ -77,6 +81,7 @@ class PortalClientController
         ];
         // Create and save new client in DB
         $this->client->create($data);
+        $_SESSION['portal_clients_success_flash_message'] = "Your client has just been created successfully !";
         header("Location: /clients/list");
     }
 
@@ -115,6 +120,7 @@ class PortalClientController
             $finalData[] = ['path' => $key, 'value' => $value];
         }
         $this->client->update($id, $finalData);
+        $_SESSION['portal_clients_success_flash_message'] = "Your client has just been updated successfully !";
         header("Location: /clients/list");
     }
 
@@ -130,6 +136,7 @@ class PortalClientController
     {
         $id = $params["id"];
         $this->client->delete($id);
+        $_SESSION['portal_clients_success_flash_message'] = "Your client has just been deleted successfully !";
         header("Location: /clients/list");
         die();
     }
@@ -187,6 +194,8 @@ class PortalClientController
             $data = [['path' => 'email_invite_sent_at', 'value' => new Timestamp(new DateTime())]];
             $this->client->update($subscribedClient->id(), $data);
         }
+        $text = count($subscribedClients) === 1 ? "Invitation has" : "Invitations have";
+        $_SESSION['portal_clients_success_flash_message'] = "$text just been sent successfully !";
         header("Location: /clients/list");
         die();
     }
@@ -244,6 +253,7 @@ class PortalClientController
             {
                 $this->client->create($client);
             }
+            $_SESSION['portal_clients_success_flash_message'] = "Your clients have just been imported successfully !";
         }
         header("Location: /clients/list");
         die();

@@ -64,6 +64,12 @@
             </header>
             <!-- Main page content-->
             <div class="container-fluid px-4">
+                <?php
+                if(isset($successFlashMessage))
+                {
+                    echo "<div class='alert alert-success' role='alert'>$successFlashMessage</div>";
+                }
+                ?>
                 <div class="card">
                     <div class="card-body">
                         <table id="datatablesSimple">
