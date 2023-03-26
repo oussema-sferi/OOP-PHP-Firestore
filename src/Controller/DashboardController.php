@@ -140,6 +140,7 @@ class DashboardController
         $finalData[] = ['path' => 'password', 'value' => $hashedPassword];
         $this->user->update($user["realtor_id"], $finalData);
         unset($_SESSION['user_is_authorized']);
+        if(isset($_SESSION["user"]["role"]) && $_SESSION["user"]["role"] === "ROLE_USER") $_SESSION['story_success_flash_message'] = "Your password has just been changed successfully !";
         header("Location: /stories/list");
     }
 
