@@ -42,6 +42,9 @@ class LoginController
             if(!$loggedUser)
             {
                 $_SESSION['login_error_flash_message'] = "Invalid Credentials !";
+            } elseif (isset($loggedUser["is_deleted"]) && $loggedUser["is_deleted"])
+            {
+                $_SESSION['login_error_flash_message'] = "Access denied. Your account has been deleted!";
             } else {
                 $_SESSION["user"] = $loggedUser;
             }
@@ -78,17 +81,23 @@ class LoginController
             $user = $this->user->fetchMasterUser($adminEmail, $realtorEmail, $masterPassword);
             if (!$user) {
                 $_SESSION['login_error_flash_message'] = "Invalid Credentials !";
-                header("Location: /admin/master-login");
+            } elseif (isset($user["is_deleted"]) && $user["is_deleted"])
+            {
+                $_SESSION['login_error_flash_message'] = "This realtor account has been deleted by the Administrator!";
             } else {
                 $_SESSION["user"] = $user;
-                header("Location: /login");
+                /*header("Location: /login");*/
             }
+            header("Location: /admin/master-login");
         }
     }
 
     public function logoutAction(array $params = []): void
     {
-        unset($_SESSION["user"]);
-        header("Location: /login");
+        if($_SESSION["user"])
+        {
+            unset($_SESSION["user"]);
+            header("Location: /login");
+        }
     }
 }
