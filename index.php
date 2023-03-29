@@ -135,6 +135,8 @@ $router->post($clientsBasePath . '/edit-save', PortalClientController::class . '
 $router->get($clientsBasePath . '/show', PortalClientController::class . '::showAction');
 // delete client
 $router->get($clientsBasePath . '/delete', PortalClientController::class . '::deleteAction');
+// delete selected clients
+$router->post($clientsBasePath . '/custom-delete', PortalClientController::class . '::deleteSelectedClientsAction');
 // client email invitations unsubscription action
 $router->get($clientsBasePath . '/emails-unsubscription', PortalClientController::class . '::emailsUnsubscriptionAction');
 // client unsubscription confirmation

@@ -141,6 +141,19 @@ class PortalClientController
         die();
     }
 
+    #[NoReturn] public function deleteSelectedClientsAction(array $params = []): void
+    {
+        $clientsIds = json_decode($params["selectedClients"]);
+        foreach ($clientsIds as $clientId)
+        {
+            $this->client->delete($clientId);
+        }
+        $text = count($clientsIds) === 1 ? "Client has" : "Clients have";
+        $_SESSION['portal_clients_success_flash_message'] = "$text just been deleted successfully !";
+        header("Location: /clients/list");
+        die();
+    }
+
     #[NoReturn] public function emailsUnsubscriptionAction(array $params = []): void
     {
         $clientId = $params["id"];

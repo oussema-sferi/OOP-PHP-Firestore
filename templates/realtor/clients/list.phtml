@@ -26,13 +26,22 @@
                                 </h1>
                             </div>
                             <div class="col mb-3">
-                                <form id="emailInvitaionForm" action="/clients/send-invitation-to-client" method="post">
-                                    <input type="hidden" id="selected_clients" name="selectedClients">
+                                <form id="selectedClientsForm" action="" method="post">
+                                    <input type="hidden" class="selected_clients" name="selectedClients">
                                     <button type="submit" id="sendInviteButton" class="btn btn-sm btn-light text-primary" href="#" disabled>
                                         <i class="me-1" data-feather="send"></i>
                                         Send invitation to download App
                                     </button>
+                                    <button data-bs-toggle=tooltip data-bs-placement=right title='Delete Selected Clients' type="submit" id="trashButton" class="btn btn-sm btn-light text-primary" href="#" disabled>
+                                        <i class="me-1" data-feather="trash-2"></i>
+                                    </button>
                                 </form>
+                                <!--<form id="customDeleteForm" action="/clients/custom-delete" method="post">
+                                    <input type="hidden" class="selected_clients" name="selectedClientsCustomDelete">
+                                    <button type="submit" id="trashButton" class="btn btn-sm btn-light text-primary" href="#" disabled>
+                                        <i class="me-1" data-feather="trash-2"></i>
+                                    </button>
+                                </form>-->
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
                                 <div id="formContainer" style="display: none">
@@ -218,8 +227,10 @@
             if($("input[type=checkbox]:checked").length > 0)
             {
                 $("#sendInviteButton").prop("disabled", false)
+                $("#trashButton").prop("disabled", false)
             } else {
                 $("#sendInviteButton").prop("disabled", true)
+                $("#trashButton").prop("disabled", true)
             }
             if($(this).prop('checked') == true)
             {
@@ -236,9 +247,20 @@
             }
         });
 
-        $("#emailInvitaionForm").submit(function (e) {
-            $("#selected_clients").val(JSON.stringify(clientsArray))
+        /*$("#emailInvitaionForm").submit(function (e) {
+            $(".selected_clients").val(JSON.stringify(clientsArray))
+        })*/
+        $("#sendInviteButton").click(function (e) {
+            e.preventDefault();
+            $(".selected_clients").val(JSON.stringify(clientsArray))
+            $('#selectedClientsForm').attr('action', "/clients/send-invitation-to-client").submit();
         })
+        $("#trashButton").click(function (e) {
+            e.preventDefault();
+            $(".selected_clients").val(JSON.stringify(clientsArray))
+            $('#selectedClientsForm').attr('action', "/clients/custom-delete").submit();
+        })
+
     });
 </script>
 </body>
