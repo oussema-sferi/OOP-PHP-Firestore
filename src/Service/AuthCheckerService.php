@@ -22,14 +22,10 @@ class AuthCheckerService
 
     public static function checkIfRealtor(): void
     {
-        $requestUri = parse_url($_SERVER['REQUEST_URI']);
-        if(!(str_contains($requestUri['path'], "clients/emails-unsubscription") && $_SERVER['REQUEST_METHOD'] === "GET"))
+        self::checkIfNotAuthenticated();
+        if(isset($_SESSION["user"]["role"]) && $_SESSION["user"]["role"] != "ROLE_USER")
         {
-            self::checkIfNotAuthenticated();
-            if(isset($_SESSION["user"]["role"]) && $_SESSION["user"]["role"] != "ROLE_USER")
-            {
-                header("Location: /admin/realtors/list");
-            }
+            header("Location: /admin/realtors/list");
         }
     }
     public static function checkIfAdmin(): void

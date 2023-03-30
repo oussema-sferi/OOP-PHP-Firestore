@@ -14,6 +14,7 @@ use App\Controller\Admin\RealtorController as AdminRealtorController;
 use App\Controller\Admin\MobileAppClientController as AdminMobileAppClientController;
 use App\Controller\Admin\EmailController as AdminEmailController;
 use App\Controller\ResetPasswordController;
+use App\Controller\MobileAppUserController;
 
 
 session_start();
@@ -137,10 +138,6 @@ $router->get($clientsBasePath . '/show', PortalClientController::class . '::show
 $router->get($clientsBasePath . '/delete', PortalClientController::class . '::deleteAction');
 // delete selected clients
 $router->post($clientsBasePath . '/custom-delete', PortalClientController::class . '::deleteSelectedClientsAction');
-// client email invitations unsubscription action
-$router->get($clientsBasePath . '/emails-unsubscription', PortalClientController::class . '::emailsUnsubscriptionAction');
-// client unsubscription confirmation
-$router->get($clientsBasePath . '/emails-unsubscription-confirmation', PortalClientController::class . '::emailsUnsubscriptionConfirmationAction');
 // send email invitation to client
 $router->post($clientsBasePath . '/send-invitation-to-client', PortalClientController::class . '::sendEmailInvitationToClientAction');
 // CSV template download
@@ -149,6 +146,13 @@ $router->get($clientsBasePath . '/template-download', PortalClientController::cl
 $router->post($clientsBasePath . '/import-from-file', PortalClientController::class . '::importFromFileAction');
 // clients export to CSV action
 $router->get($clientsBasePath . '/export-to-csv', PortalClientController::class . '::exportToCsv');
+
+// Mobile App User Routes
+$mobileAppUsersBasePath = '/mobile-app';
+// Mobile App User email invitations unsubscription action
+$router->get($mobileAppUsersBasePath . '/emails-unsubscription', MobileAppUserController::class . '::emailsUnsubscriptionAction');
+// Mobile App User unsubscription confirmation
+$router->get($mobileAppUsersBasePath . '/emails-unsubscription-confirmation', MobileAppUserController::class . '::emailsUnsubscriptionConfirmationAction');
 
 
 // ADMIN ROUTES
@@ -206,7 +210,4 @@ $router->get('/', function () {
     header("Location: /login");
 });
 
-/*$router->post('/contact', function ($params) {
-    var_dump($params);
-});*/
 $router->run();

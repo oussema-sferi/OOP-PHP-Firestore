@@ -158,24 +158,6 @@ class PortalClientController
         die();
     }
 
-    #[NoReturn] public function emailsUnsubscriptionAction(array $params = []): void
-    {
-        $clientId = $params["id"];
-        $data = [
-            ['path' => 'is_subscribed', 'value' => false]
-        ];
-        $this->client->update($clientId, $data);
-        $flashMessage = "You have just been unsubscribed successfully !";
-        if(isset($_SESSION["user"]["realtor_id"]))
-        {
-            $_SESSION['story_success_flash_message'] = $flashMessage;
-        } else {
-            $_SESSION['registration_success_flash_message'] = $flashMessage;
-        }
-        header("Location: /");
-        die();
-    }
-
     #[NoReturn] public function sendEmailInvitationToClientAction(array $params = []): void
     {
         $clientsIds = json_decode($params["selectedClients"]);
@@ -189,7 +171,7 @@ class PortalClientController
         {
             if($client["is_subscribed"]) $subscribedClients[] = $client;
         }
-        $unsubscriptionLink = $this->baseUri . "/clients/emails-unsubscription?id=";
+        $unsubscriptionLink = $this->baseUri . "/mobile-app/emails-unsubscription?id=";
         $email = $this->invitationEmail->fetchEmail();
         $emailContent = $email["content"];
         $emailSubject = $email["subject"];
