@@ -274,13 +274,17 @@ class PortalClientController
                 ];
                 $allData[] = $rowData;
             }
+
             $allPortalClients = $this->client->fetchPortalClients($this->loggedUserId);
+
             foreach ($allData as $importedClient)
             {
+                $counter = 0;
                 foreach ($allPortalClients as $portalClient)
                 {
                     if(($importedClient["email_1"] === $portalClient->email_1) && ($importedClient["email_2"] === $portalClient->email_2))
                     {
+                        $counter++;
                         array_splice($importedClient, count($importedClient) - 4, 4);
                         $finalData = [];
                         foreach ($importedClient as $key => $value)
@@ -288,9 +292,12 @@ class PortalClientController
                             $finalData[] = ['path' => $key, 'value' => $value];
                         }
                         $this->client->update($portalClient->doc_id, $finalData);
-                    } else {
-                        $this->client->create($importedClient);
+                        break;
                     }
+                }
+                if($counter === 0)
+                {
+                    $this->client->create($importedClient);
                 }
             }
             $importedClientsCount = count($allData);
