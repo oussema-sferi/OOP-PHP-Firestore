@@ -42,6 +42,10 @@ class PortalClientController
         $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, [], "", false);
         $clients = $this->client->fetchPortalClients($this->loggedUserId);
         $realtor = $this->user->fetchUserById($this->loggedUserId);
+        if(isset($_SESSION['portal_clients_error_flash_message'])) {
+            $errorFlashMessage = $_SESSION['portal_clients_error_flash_message'];
+            unset($_SESSION['portal_clients_error_flash_message']);
+        }
         if(isset($_SESSION['portal_clients_success_flash_message'])) {
             $successFlashMessage = $_SESSION['portal_clients_success_flash_message'];
             unset($_SESSION['portal_clients_success_flash_message']);
@@ -208,8 +212,15 @@ class PortalClientController
             $data = [['path' => 'email_invite_sent_at', 'value' => new Timestamp(new DateTime())]];
             $this->client->update($subscribedClient->id(), $data);
         }
-        $text = count($subscribedClients) === 1 ? "Invitation has" : "Invitations have";
-        $_SESSION['portal_clients_success_flash_message'] = "$text just been sent successfully !";
+        if(count($subscribedClients) === 0)
+        {
+            $_SESSION['portal_clients_error_flash_message'] = "No subscribed clients in the selected list !";
+        } elseif (count($subscribedClients) === 1)
+        {
+            $_SESSION['portal_clients_success_flash_message'] = "Invitation has just been sent successfully !";
+        } else {
+            $_SESSION['portal_clients_success_flash_message'] = "Invitations have just been sent successfully !";
+        }
         header("Location: /clients/list");
         die();
     }

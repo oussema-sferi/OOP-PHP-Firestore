@@ -81,6 +81,10 @@
                 {
                     echo "<div class='alert alert-success' role='alert'>$successFlashMessage</div>";
                 }
+                if(isset($errorFlashMessage))
+                {
+                    echo "<div class='alert alert-info' role='alert'>$errorFlashMessage</div>";
+                }
                 ?>
                 <div class="card">
                     <div class="card-body">
