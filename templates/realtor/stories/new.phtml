@@ -34,11 +34,32 @@
             <div class="container-fluid px-4">
                 <form id="addBlogForm" action="/stories/new-save" method="post" enctype="multipart/form-data">
                     <div class="row gx-4">
-                        <div class="col-lg-8">
+                        <div class="col-lg-2">
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="card card-header-actions mb-4 mb-lg-0">
+                                <div class="card-header">
+                                    Story Image
+                                    <i class="text-muted"></i>
+                                </div>
+                                <div class="card-body mt-3">
+                                    <input type="file" accept="image/jpeg/png" name="image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
                             <div class="card mb-4">
                                 <div class="card-header">Story Title</div>
-                                <div class="card-body"><input class="form-control" id="postTitleInput" type="text" placeholder="Enter your post title..." name="title" required/></div>
+                                <div class="card-body"><input class="form-control" id="postTitleInput" type="text" placeholder="Enter your story title..." name="title" required/></div>
                             </div>
+                        </div>
+                        <div class="col-lg-2">
+                        </div>
+                    </div>
+                    <div class="row gx-4">
+                        <div class="col-lg-2">
+                        </div>
+                        <div class="col-lg-8">
                             <div class="card card-header-actions mb-4">
                                 <div class="card-header">
                                     Story Content
@@ -46,22 +67,13 @@
                                 </div>
                                 <div class="card-body"><textarea id="postDistribution" class="lh-base form-control" type="text" placeholder="Enter your story content text..." rows="10" name="content"></textarea></div>
                             </div>
-                            <div class="card card-header-actions mb-4 mb-lg-0">
-                                <div class="card-header">
-                                    Story Image
-                                    <i class="text-muted"></i>
-                                </div>
-                                <div class="card-body">
-                                    <input type="file" accept="image/jpeg/png" name="image">
-                                </div>
-                            </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="card card-header-actions">
-                                <div class="card-body">
-                                    <div class="d-grid"><input class="fw-500 btn btn-primary" type="submit" value="Save"></div>
-                                </div>
-                            </div>
+                        <div class="col-lg-2">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-center">
+                            <div><input class="fw-500 btn btn-primary" type="submit" value="Save"></div>
                         </div>
                     </div>
                 </form>
