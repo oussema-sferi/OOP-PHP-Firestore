@@ -41,38 +41,64 @@
                     <div class="col-lg-2">
                     </div>
                     <div class="col-lg-8">
-                        <div class="card mb-4">
-                            <div class="card-header">Company Name</div>
-                            <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" value="<?= $proService["company_name"] ?? ""?>" disabled/></div>
+                        <div class="row gx-4 align-items-center">
+                            <div class="col-lg-8">
+                                <div class="card mb-4">
+                                    <div class="card-header">My Notes</div>
+                                    <div class="card-body"><textarea class="lh-base form-control" type="text" style="resize: none" rows="5" disabled><?=$proService["my_notes"] ?? ""?></textarea></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card mb-4">
+                                    <div class="card-header">Home Pro Type</div>
+                                    <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$proService["homePro_type"] ?? ""?>" disabled/></div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card mb-4">
-                            <div class="card-header">Company Email</div>
-                            <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$proService["company_email"] ?? ""?>" disabled/></div>
+                        <div class="row gx-4">
+                            <div class="col-lg">
+                                <div class="card mb-4">
+                                    <div class="card-header">Company Name</div>
+                                    <div class="card-body"><input class="form-control" id="proServiceTitleInput" type="text" value="<?= $proService["company_name"] ?? ""?>" disabled/></div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card mb-4">
-                            <div class="card-header">Company Phone Number</div>
-                            <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$proService["company_phone_number"] ?? ""?>" disabled/></div>
+                        <div class="row gx-4">
+                            <div class="col-lg-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">Company Email</div>
+                                    <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$proService["company_email"] ?? ""?>" disabled/></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">Company Phone Number</div>
+                                    <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$proService["company_phone_number"] ?? ""?>" disabled/></div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card mb-4">
-                            <div class="card-header">Company Website Link</div>
-                            <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$proService["company_website_link"] ?? ""?>" disabled/></div>
+                        <div class="row gx-4">
+                            <div class="col-lg">
+                                <div class="card mb-4">
+                                    <div class="card-header">Company Website Link</div>
+                                    <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$proService["company_website_link"] ?? ""?>" disabled/></div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card mb-4">
-                            <div class="card-header">Home Pro Type</div>
-                            <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$proService["homePro_type"] ?? ""?>" disabled/></div>
-                        </div>
-                        <div class="card mb-4">
-                            <div class="card-header">Comments</div>
-                            <div class="card-body"><textarea class="lh-base form-control" type="text" rows="5" disabled><?=$proService["comments"] ?? ""?></textarea></div>
-                        </div>
-                        <div class="card mb-4">
-                            <div class="card-header">My Notes</div>
-                            <div class="card-body"><textarea class="lh-base form-control" type="text" rows="5" disabled><?=$proService["my_notes"] ?? ""?></textarea></div>
-                        </div>
-                        <div class="card mb-4">
-                            <div class="card-header">Image</div>
-                            <div class="card-body">
-                                <img src='<?=$image?>' alt='no-image-available' height='150px' width='200px'>
+                        <div class="row gx-4 align-items-center">
+                            <div class="col-lg-8">
+                                <div class="card mb-4">
+                                    <div class="card-header">Comments</div>
+                                    <div class="card-body"><textarea class="lh-base form-control" type="text" rows="6" disabled><?=$proService["comments"] ?? ""?></textarea></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card mb-4">
+                                    <div class="card-header">Image</div>
+                                    <div class="card-body">
+                                        <img src='<?=$image?>' alt='no-image-available' height='150px' width='200px'>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
