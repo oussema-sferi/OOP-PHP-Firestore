@@ -152,7 +152,7 @@ class PortalClientController
         {
             $this->client->delete($clientId);
         }
-        $text = count($clientsIds) === 1 ? "Client has" : "Clients have";
+        $text = count($clientsIds) === 1 ? "Client has" : count($clientsIds) . " Clients have";
         $_SESSION['portal_clients_success_flash_message'] = "$text just been deleted successfully !";
         header("Location: /clients/list");
         die();
@@ -238,11 +238,11 @@ class PortalClientController
                     'last_name_1' => $row["B"],
                     'email_1' => $row["C"],
                     'phone_1' => $row["D"],
-                    'address_1' => $row["E"],
-                    'first_name_2' => $row["F"],
-                    'last_name_2' => $row["G"],
-                    'email_2' => $row["H"],
-                    'phone_2' => $row["I"],
+                    'first_name_2' => $row["E"],
+                    'last_name_2' => $row["F"],
+                    'email_2' => $row["G"],
+                    'phone_2' => $row["H"],
+                    'address_1' => $row["I"],
                     'address_2' => $row["J"],
                     'city' => $row["K"],
                     'state' => $row["L"],
@@ -293,24 +293,24 @@ class PortalClientController
     {
         $realtorClients = $this->client->fetchPortalClients($this->loggedUserId);
         $data = [];
-        $data[] = ['First Name 1', 'Last Name 1', 'Email 1', 'Phone 1', 'Address 1', 'First Name 2', 'Last Name 2', 'Email 2', 'Phone 2', 'Address 2', 'City', 'State', 'Zip Code', 'Home Type', 'Notes', 'Created At', 'Email Invite Sent At', 'Client Signed-up At'];
+        $data[] = ['First name (Client)', 'Last name (Client)', 'Email address (Client)', 'Phone number (Client)', "First name (Client's partner)", "Last name (Client's partner)", "Email address (Client's partner)", "Phone number (Client's partner)", 'Address (line 1)', "Address (line 2)", 'City', 'State', 'Zip', 'Home Type', 'Realtor notes', 'Created At', 'Email Invite Sent At', 'Client Signed-up At'];
         foreach ($realtorClients as $client) {
             $data[] = [
-                'First Name 1' => $client->first_name_1 ?? "",
-                'Last Name 1' => $client->last_name_1 ?? "",
-                'Email 1' => $client->email_1 ?? "",
-                'Phone 1' => $client->phone_1 ?? "",
-                'Address 1' => $client->address_1 ?? "",
-                'First Name 2' => $client->first_name_2 ?? "",
-                'Last Name 2' => $client->last_name_2 ?? "",
-                'Email 2' => $client->email_2 ?? "",
-                'Phone 2' => $client->phone_2 ?? "",
-                'Address 2' => $client->address_2 ?? "",
+                'First name (Client)' => $client->first_name_1 ?? "",
+                'Last name (Client)' => $client->last_name_1 ?? "",
+                'Email address (Client)' => $client->email_1 ?? "",
+                'Phone number (Client)' => $client->phone_1 ?? "",
+                "First name (Client's partner)" => $client->first_name_2 ?? "",
+                "Last name (Client's partner)" => $client->last_name_2 ?? "",
+                "Email address (Client's partner)" => $client->email_2 ?? "",
+                "Phone number (Client's partner)" => $client->phone_2 ?? "",
+                'Address (line 1)' => $client->address_1 ?? "",
+                'Address (line 2)' => $client->address_2 ?? "",
                 'City' => $client->city ?? "",
                 'State' => $client->state ?? "",
-                'Zip Code' => $client->zip ?? "",
+                'Zip' => $client->zip ?? "",
                 'Home Type' => $client->home_type ?? "",
-                'Notes' => $client->notes ?? "",
+                'Realtor notes' => $client->notes ?? "",
                 'Created At' => isset($client->created_at) && $client->created_at !== "" ? $client->created_at->get()->format("m-d-Y") : "",
                 'Email Invite Sent At' => isset($client->email_invite_sent_at) && $client->email_invite_sent_at !== "" ? $client->email_invite_sent_at->get()->format("m-d-Y") : "",
                 'Client Signed-up At' => isset($client->mobile_app_signed_up_at) && $client->mobile_app_signed_up_at !== "" ? $client->mobile_app_signed_up_at->get()->format("m-d-Y") : ""
