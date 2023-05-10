@@ -75,7 +75,7 @@ class ProServiceController
             'comments' => $_POST["comments"],
             'my_notes' => $_POST["myNotes"],
             'realtor_id' => $this->loggedUserId,
-            'img' => $imageDbLink,
+            'img' =>  $this->baseUri . $imageDbLink,
             'date' => new Timestamp(new DateTime()),
         ];
         $this->proService->create($data);
@@ -94,7 +94,7 @@ class ProServiceController
     {
         $id = $params['id'];
         $proService = $this->proService->find($id);
-        $image = isset($proService["img"]) && trim($proService["img"]) !== '' && file_exists($_SERVER["DOCUMENT_ROOT"] . $proService["img"]) ? $this->baseUri . $proService["img"] : $this->noImagePath;
+        $image = isset($proService["img"]) && trim($proService["img"]) !== '' ? $proService["img"] : $this->noImagePath;
         require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/pro-services/edit.phtml';
         die();
     }
@@ -123,7 +123,7 @@ class ProServiceController
             'comments' => $params["comments"] ?? "",
             'my_notes' => $params["myNotes"] ?? "",
             'realtor_id' => $this->loggedUserId,
-            'img' => $imageDbLink,
+            'img' =>  $this->baseUri . $imageDbLink,
             'date' => new Timestamp(new DateTime()),
         ];
         $finalData = [];
@@ -140,7 +140,7 @@ class ProServiceController
     {
         $id = $params["id"];
         $proService = $this->proService->find($id);
-        $image = isset($proService["img"]) && trim($proService["img"]) !== '' && file_exists($_SERVER["DOCUMENT_ROOT"] . $proService["img"]) ? $this->baseUri . $proService["img"] : $this->noImagePath;
+        $image = isset($proService["img"]) && trim($proService["img"]) !== '' ? $proService["img"] : $this->noImagePath;
         require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/pro-services/show.phtml';
         die();
     }

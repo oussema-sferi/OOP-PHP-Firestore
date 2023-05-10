@@ -70,7 +70,7 @@ class StoryController
             'title' => $title,
             'distribution' => $content,
             'realtor_id' => $this->loggedUserId,
-            'img' => $imageDbLink,
+            'img' => $this->baseUri . $imageDbLink,
             'date' => new Timestamp(new DateTime()),
         ];
         // Create and save new blog post in DB
@@ -90,7 +90,7 @@ class StoryController
     {
         $id = $params['id'];
         $story = $this->story->find($id);
-        $image = isset($story["img"]) && trim($story["img"]) !== '' && file_exists($_SERVER["DOCUMENT_ROOT"] . $story["img"]) ? $this->baseUri . $story["img"] : $this->noImagePath;
+        $image = isset($story["img"]) && trim($story["img"]) !== '' ? $story["img"] : $this->noImagePath;
         require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/stories/edit.phtml';
         die();
     }
@@ -115,7 +115,7 @@ class StoryController
         $data = [
             'title' => $title,
             'distribution' => $content,
-            'img' => $imageDbLink,
+            'img' => $this->baseUri . $imageDbLink,
             'date' => new Timestamp(new DateTime()),
         ];
         $finalData = [];
@@ -132,7 +132,7 @@ class StoryController
     {
         $id = $params["id"];
         $story = $this->story->find($id);
-        $image = isset($story["img"]) && trim($story["img"]) !== '' && file_exists($_SERVER["DOCUMENT_ROOT"] . $story["img"]) ? $this->baseUri . $story["img"] : $this->noImagePath;
+        $image = isset($story["img"]) && trim($story["img"]) !== '' ? $story["img"] : $this->noImagePath;
         require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/stories/show.phtml';
         die();
     }

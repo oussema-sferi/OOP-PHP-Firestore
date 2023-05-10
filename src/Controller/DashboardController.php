@@ -39,7 +39,7 @@ class DashboardController
             $_FILES["profilePicture"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . $imagePath
         );
         $data = [
-            'realtor_photo' => $imagePath,
+            'realtor_photo' => $this->baseUri . $imagePath,
         ];
         $finalData = [];
         foreach ($data as $key => $value)
