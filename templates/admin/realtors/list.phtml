@@ -47,6 +47,7 @@
                                 <th>Email</th>
                                 <th>Company Name</th>
                                 <th>Phone Number</th>
+                                <th>Show In App</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </thead>
@@ -57,6 +58,7 @@
                                 <th>Email</th>
                                 <th>Company Name</th>
                                 <th>Phone Number</th>
+                                <th>Show In App</th>
                                 <th class="text-center">Actions</th>
                             </tr>
                             </tfoot>
@@ -69,6 +71,20 @@
                                 $email = $user->email;
                                 $companyName = $user->realtor_sub_title;
                                 $phoneNumber = $user->phone_number;
+                                $showInApp = $user->show_in_app;
+                                $show = $showInApp ? "Yes" : "No";
+                                if($showInApp)
+                                {
+                                    $show = "Yes";
+                                    $icon = "pause";
+                                    $modalLink = "#hideFromAppUserModal$id";
+                                    $hideFromAppLink = "hide-from-app?id=$id";
+                                } else {
+                                    $show = "No";
+                                    $icon = "play";
+                                    $modalLink = "#showInAppUserModal$id";
+                                    $showInAppLink = "show-in-app?id=$id";
+                                }
                                 $addedClientsCount = count($this->user->fetchUserAddedClients($id));
                                 $showRealtorLink = "show?id=$id";
                                 $editRealtorLink = "edit?id=$id";
@@ -80,10 +96,12 @@
                                     <td>$email</td>
                                     <td>$companyName</td>
                                     <td>$phoneNumber</td>                                                                                                                                
+                                    <td>$show</td>                                                                                                                                
                                     <td class='text-center'>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$showRealtorLink><i data-feather='zoom-in'></i></a>
                                         <a class='btn btn-datatable btn-icon btn-transparent-dark me-2' href=$editRealtorLink><i data-feather='edit'></i></a>
-                                        <a class='btn btn-datatable btn-icon btn-transparent-dark' data-bs-toggle='modal' data-bs-target='#approveUserModal$id'><i data-feather='trash-2'></i></a>                                                                                                 
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark' data-bs-toggle='modal' data-bs-target='#approveUserModal$id'><i data-feather='trash-2'></i></a> 
+                                        <a class='btn btn-datatable btn-icon btn-transparent-dark' data-bs-toggle='modal' data-bs-target=$modalLink><i data-feather=$icon></i></a>                                                                                                
                                     </td>                                                                                                                          
                                 </tr>
                                 
@@ -100,6 +118,42 @@
                                             <div class='modal-footer justify-content-center'>
                                                 <a class='btn btn-secondary' type='button' data-bs-dismiss='modal'>No</a>
                                                 <a class='btn btn-success' type='button' href='$deleteRealtorLink'>Yes</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class='modal fade' id='showInAppUserModal$id' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
+                                    <div class='modal-dialog modal-dialog-centered' role='document'>
+                                        <div class='modal-content'>
+                                            <div class='modal-header d-block'>
+                                                <button class='btn-close float-end' type='button' data-bs-dismiss='modal' aria-label='Close'></button>
+                                                <h5 class='modal-title text-center' id='exampleModalCenterTitle'>Confirmation</h5>
+                                            </div>
+                                            <div class='modal-body text-center'>
+                                                Do you really want to show this realtor in the mobile application?
+                                            </div>
+                                            <div class='modal-footer justify-content-center'>
+                                                <a class='btn btn-secondary' type='button' data-bs-dismiss='modal'>No</a>
+                                                <a class='btn btn-success' type='button' href='$showInAppLink'>Yes</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class='modal fade' id='hideFromAppUserModal$id' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
+                                    <div class='modal-dialog modal-dialog-centered' role='document'>
+                                        <div class='modal-content'>
+                                            <div class='modal-header d-block'>
+                                                <button class='btn-close float-end' type='button' data-bs-dismiss='modal' aria-label='Close'></button>
+                                                <h5 class='modal-title text-center' id='exampleModalCenterTitle'>Confirmation</h5>
+                                            </div>
+                                            <div class='modal-body text-center'>
+                                                Do you really want to hide this realtor from the mobile application?
+                                            </div>
+                                            <div class='modal-footer justify-content-center'>
+                                                <a class='btn btn-secondary' type='button' data-bs-dismiss='modal'>No</a>
+                                                <a class='btn btn-success' type='button' href='$hideFromAppLink'>Yes</a>
                                             </div>
                                         </div>
                                     </div>
