@@ -141,6 +141,12 @@ class User
         return $realtor->update([['path' => 'is_deleted', 'value' => true]]);
     }
 
+    public function restoreRealtor($realtorId)
+    {
+        $realtor = $this->db->collection('realtor')->document($realtorId);
+        return $realtor->update([['path' => 'is_deleted', 'value' => false]]);
+    }
+
     public function fetchMasterUser($adminEmail, $realtorEmail, $masterPassword)
     {
         $query = $this->db->collection('realtor')->where('email', '=', $realtorEmail);
@@ -180,5 +186,22 @@ class User
                 return false;
             }
         }
+    }
+
+    public function fetchDeletedRealtors()
+    {
+        $res = [];
+        $query = $this->db->collection('realtor')
+            ->where('is_deleted', '=', true)
+        ;
+        $documents = $query->documents();
+        foreach ($documents as $document) {
+            if ($document->exists()) {
+                $obj_merged = (object) array_merge(
+                    ["doc_id" => $document->id()], (array) $document->data());
+                $res[] = $obj_merged;
+            }
+        }
+        return $res;
     }
 }

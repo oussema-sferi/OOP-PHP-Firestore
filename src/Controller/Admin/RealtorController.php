@@ -148,4 +148,20 @@ class RealtorController
         header("Location: /admin/realtors/list");
         die();
     }
+
+    #[NoReturn] public function restoreAction(array $params = []): void
+    {
+        $realtorId = $params["id"];
+        // set Realtor as deleted
+        $this->user->restoreRealtor($realtorId);
+        // get Realtor added clients
+        $realtorClients = $this->user->fetchUserAddedClients($realtorId);
+        // delete Realtor associated clients
+        foreach ($realtorClients as $client)
+        {
+            $this->client->restoreClient($client->doc_id);
+        }
+        header("Location: /admin/realtors/list");
+        die();
+    }
 }

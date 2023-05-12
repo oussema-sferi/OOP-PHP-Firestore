@@ -13,6 +13,7 @@ use App\Controller\Admin\PortalClientController as AdminPortalClientController;
 use App\Controller\Admin\RealtorController as AdminRealtorController;
 use App\Controller\Admin\MobileAppClientController as AdminMobileAppClientController;
 use App\Controller\Admin\EmailController as AdminEmailController;
+use App\Controller\Admin\TrashController as AdminTrashController;
 use App\Controller\ResetPasswordController;
 use App\Controller\MobileAppUserController;
 
@@ -205,6 +206,12 @@ $router->post($emailsBasePath . '/invitation', AdminEmailController::class . '::
 $router->get($emailsBasePath . '/reset-password', AdminEmailController::class . '::resetPasswordEmailAction');
 $router->post($emailsBasePath . '/reset-password', AdminEmailController::class . '::saveResetPasswordEmailAction');
 
+// Trash
+// Deleted Realtors List
+$trashBasePath = $adminBasePath . '/trash';
+$router->get($trashBasePath . '/realtors/list', AdminTrashController::class . '::listAction');
+// Restore Realtor
+$router->get($trashBasePath . '/realtors/restore', AdminTrashController::class . '::restoreAction');
 
 $router->get('/', function () {
     header("Location: /login");

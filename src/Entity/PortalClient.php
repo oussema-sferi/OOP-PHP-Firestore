@@ -75,6 +75,12 @@ class PortalClient
         return $client->update([['path' => 'is_deleted', 'value' => true]]);
     }
 
+    public function restoreClient($clientId)
+    {
+        $client = $this->db->collection('realtor_clients')->document($clientId);
+        return $client->update([['path' => 'is_deleted', 'value' => false]]);
+    }
+
     public function fetchAllClients(): array
     {
         $res = [];
