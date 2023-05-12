@@ -172,6 +172,10 @@ $router->post($realtorsBasePath . '/edit', AdminRealtorController::class . '::ed
 $router->get($realtorsBasePath . '/show', AdminRealtorController::class . '::showAction');
 // delete realtor
 $router->get($realtorsBasePath . '/delete', AdminRealtorController::class . '::deleteAction');
+// Show In App Realtor
+$router->get($realtorsBasePath . '/show-in-app', AdminRealtorController::class . '::showInAppAction');
+// Hide From App Realtor
+$router->get($realtorsBasePath . '/hide-from-app', AdminRealtorController::class . '::hideFromAppAction');
 
 // PORTAL CLIENTS MENU
 // list clients

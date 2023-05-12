@@ -204,4 +204,16 @@ class User
         }
         return $res;
     }
+
+    public function showInApp($realtorId)
+    {
+        $realtor = $this->db->collection('realtor')->document($realtorId);
+        return $realtor->update([['path' => 'show_in_app', 'value' => true]]);
+    }
+
+    public function hideFromApp($realtorId)
+    {
+        $realtor = $this->db->collection('realtor')->document($realtorId);
+        return $realtor->update([['path' => 'show_in_app', 'value' => false]]);
+    }
 }

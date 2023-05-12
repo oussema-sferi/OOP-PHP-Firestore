@@ -164,4 +164,20 @@ class RealtorController
         header("Location: /admin/realtors/list");
         die();
     }
+
+    #[NoReturn] public function showInAppAction(array $params = []): void
+    {
+        $realtorId = $params["id"];
+        $this->user->showInApp($realtorId);
+        header("Location: /admin/realtors/list");
+        die();
+    }
+
+    #[NoReturn] public function hideFromAppAction(array $params = []): void
+    {
+        $realtorId = $params["id"];
+        $this->user->hideFromApp($realtorId);
+        header("Location: /admin/realtors/list");
+        die();
+    }
 }
