@@ -78,12 +78,12 @@
                                     $show = "Yes";
                                     $icon = "pause";
                                     $modalLink = "#hideFromAppUserModal$id";
-                                    $hideFromAppLink = "hide-from-app?id=$id";
+                                    $hideShowAppLink = "hide-from-app?id=$id";
                                 } else {
                                     $show = "No";
                                     $icon = "play";
                                     $modalLink = "#showInAppUserModal$id";
-                                    $showInAppLink = "show-in-app?id=$id";
+                                    $hideShowAppLink = "show-in-app?id=$id";
                                 }
                                 $addedClientsCount = count($this->user->fetchUserAddedClients($id));
                                 $showRealtorLink = "show?id=$id";
@@ -135,7 +135,7 @@
                                             </div>
                                             <div class='modal-footer justify-content-center'>
                                                 <a class='btn btn-secondary' type='button' data-bs-dismiss='modal'>No</a>
-                                                <a class='btn btn-success' type='button' href='$showInAppLink'>Yes</a>
+                                                <a class='btn btn-success' type='button' href='$hideShowAppLink'>Yes</a>
                                             </div>
                                         </div>
                                     </div>
@@ -153,7 +153,7 @@
                                             </div>
                                             <div class='modal-footer justify-content-center'>
                                                 <a class='btn btn-secondary' type='button' data-bs-dismiss='modal'>No</a>
-                                                <a class='btn btn-success' type='button' href='$hideFromAppLink'>Yes</a>
+                                                <a class='btn btn-success' type='button' href='$hideShowAppLink'>Yes</a>
                                             </div>
                                         </div>
                                     </div>
