@@ -145,6 +145,7 @@ class RealtorController
         {
             $this->client->markClientAsDeleted($client->doc_id);
         }
+        $this->user->hideFromApp($realtorId);
         header("Location: /admin/realtors/list");
         die();
     }
