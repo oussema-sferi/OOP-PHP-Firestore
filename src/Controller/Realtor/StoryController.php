@@ -79,7 +79,7 @@ class StoryController
         $redirectUri = "/stories/list";
         $notificationParameters = [
             "title" => "HoneyDoo Alert",
-            "body" => "Your realtor has added a new story. Click here to read it."
+            "body" => "Your Realtor just posted a new story! Check it out!"
         ];
         // Here comes the push notifications
         $helper = new HelperService();
