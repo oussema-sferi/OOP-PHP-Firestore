@@ -75,7 +75,7 @@ class StoryController
         ];
         // Create and save new blog post in DB
         $this->story->create($data);
-        $_SESSION['story_success_flash_message'] = "Your story has just been created successfully !";
+        /*$_SESSION['story_success_flash_message'] = "Your story has just been created successfully !";*/
         $redirectUri = "/stories/list";
         $notificationParameters = [
             "title" => "HoneyDoo Alert",

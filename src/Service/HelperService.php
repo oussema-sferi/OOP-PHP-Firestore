@@ -10,37 +10,37 @@ class HelperService
         $realtorLinkedPortalClients = $database->fetchPortalClients($userId);
         /** @var PortalClient $database */
         $allMobileAppClients = $database->fetchMobileAppClients();
-        foreach ($realtorLinkedPortalClients as $userClient)
+        foreach ($realtorLinkedPortalClients as $portalClient)
         {
-            $clientOneEmail = $userClient->email_1;
-            $clientTwoEmail = $userClient->email_2;
-            $counter = 0;
+            $portalClientOneEmail = $portalClient->email_1;
+            $portalClientTwoEmail = $portalClient->email_2;
+            /*$counter = 0;*/
             foreach ($allMobileAppClients as $mobileAppClient)
             {
                 $mobileAppClientEmail = $mobileAppClient->email;
                 if(isset($mobileAppClientEmail) && trim($mobileAppClientEmail) != "")
                 {
-                    if(($clientOneEmail == $mobileAppClientEmail) || ($clientTwoEmail == $mobileAppClientEmail))
+                    if(($portalClientOneEmail == $mobileAppClientEmail) || ($portalClientTwoEmail == $mobileAppClientEmail))
                     {
                         if(isset($mobileAppClient->created_date))
                         {
-                            $database->update($userClient->doc_id, [
+                            $database->update($portalClient->doc_id, [
                                 ["path" => "mobile_app_signed_up_at", "value" => $mobileAppClient->created_date],
                                 ["path" => "notification_token", "value" => $mobileAppClient->notification_token],
                                 ]);
-                            $counter++;
+                            /*$counter++;*/
                             break;
                         }
                     }
                 }
             }
-            if($counter === 0)
+            /*if($counter === 0)
             {
                 $database->update($userClient->doc_id, [
                     ["path" => "mobile_app_signed_up_at", "value" => ""],
                     ["path" => "notification_token", "value" => ""],
                 ]);
-            }
+            }*/
         }
         if($sendNotif)
         {
@@ -52,9 +52,11 @@ class HelperService
                     $realtorLinkedMobileClientsTokens[] = $portalClient->notification_token;
                 }
             }
-            if(count($realtorLinkedMobileClientsTokens) > 0) {
+            $notifiedClientsCount = count($realtorLinkedMobileClientsTokens);
+            if($notifiedClientsCount > 0) {
                 $this->sendFCM($realtorLinkedMobileClientsTokens, $notificationParameters, $redirectUri);
             } else {
+                $_SESSION['story_success_flash_message'] = "Your story has just been created successfully ! (No clients notified)";
                 header("Location: $redirectUri");
             }
         }
@@ -89,9 +91,11 @@ class HelperService
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         // Execute
+        $notifiedClientsCount = count($tokensArray);
         if(json_decode(curl_exec($ch), true)["success"] > 0)
         {
             curl_close($ch);
+            $_SESSION['story_success_flash_message'] = "Your story has just been created successfully ! ($notifiedClientsCount Clients notified)";
             header("Location: $redirectUrl");
             die();
         }
