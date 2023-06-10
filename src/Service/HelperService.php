@@ -1,11 +1,12 @@
 <?php
 namespace App\Service;
 
+use App\Entity\MobileAppClient;
 use App\Entity\PortalClient;
 
 class HelperService
 {
-    public function clientCheckAndSaveSignUpDate($database, $userId, array $notificationParameters , string $redirectUri, bool $sendNotif = true): void
+    public function clientCheckAndSaveSignUpDate($database, $userId, array $notificationParameters , string $redirectUri, string $context, bool $sendNotif = true, MobileAppClient $mobileAppClientEntity = null): void
     {
         $realtorLinkedPortalClients = $database->fetchPortalClients($userId);
         /** @var PortalClient $database */
@@ -14,7 +15,6 @@ class HelperService
         {
             $portalClientOneEmail = $portalClient->email_1;
             $portalClientTwoEmail = $portalClient->email_2;
-            /*$counter = 0;*/
             foreach ($allMobileAppClients as $mobileAppClient)
             {
                 $mobileAppClientEmail = $mobileAppClient->email;
@@ -26,7 +26,7 @@ class HelperService
                         {
                             $database->update($portalClient->doc_id, [
                                 ["path" => "mobile_app_signed_up_at", "value" => $mobileAppClient->created_date],
-                                ["path" => "notification_token", "value" => $mobileAppClient->notification_token],
+                                /*["path" => "notification_token", "value" => $mobileAppClient->notification_token],*/
                                 ]);
                             /*$counter++;*/
                             break;
@@ -34,35 +34,41 @@ class HelperService
                     }
                 }
             }
-            /*if($counter === 0)
-            {
-                $database->update($userClient->doc_id, [
-                    ["path" => "mobile_app_signed_up_at", "value" => ""],
-                    ["path" => "notification_token", "value" => ""],
-                ]);
-            }*/
         }
         if($sendNotif)
         {
+            $realtorLinkedMobileAppUsers = $mobileAppClientEntity->fetchRealtorMobileAppClients($userId);
             $realtorLinkedMobileClientsTokens = [];
-            foreach ($realtorLinkedPortalClients as $portalClient)
+            foreach ($realtorLinkedMobileAppUsers as $mobileAppUser)
             {
-                if(isset($portalClient->notification_token) && trim($portalClient->notification_token) !== "")
+                if(isset($mobileAppUser->notification_token) && trim($mobileAppUser->notification_token) !== "")
                 {
-                    $realtorLinkedMobileClientsTokens[] = $portalClient->notification_token;
+                    $realtorLinkedMobileClientsTokens[] = $mobileAppUser->notification_token;
                 }
             }
             $notifiedClientsCount = count($realtorLinkedMobileClientsTokens);
             if($notifiedClientsCount > 0) {
-                $this->sendFCM($realtorLinkedMobileClientsTokens, $notificationParameters, $redirectUri);
+                $this->sendFCM($realtorLinkedMobileClientsTokens, $notificationParameters, $redirectUri, $context);
             } else {
-                $_SESSION['story_success_flash_message'] = "Your story has just been created successfully ! (No clients notified)";
+                if($context === "story")
+                {
+                    $_SESSION["story_success_flash_message"] = "Your story has just been created successfully! (No clients notified)";
+                } elseif ($context === "create_pro_service")
+                {
+                    $_SESSION['pro_service_success_flash_message'] = "Your pro service has just been created successfully! (No clients notified)";
+                } elseif ($context === "import_pro_services")
+                {
+                    $_SESSION['pro_service_success_flash_message'] = "Your pro services have just been imported successfully! (No clients notified)";
+                } elseif ($context === "delete_pro_service")
+                {
+                    $_SESSION['pro_service_success_flash_message'] = "Your pro service has just been deleted successfully! (No clients notified)";
+                }
                 header("Location: $redirectUri");
             }
         }
     }
 
-    public function sendFCM(array $tokensArray, array $parameters, string $redirectUrl)
+    public function sendFCM(array $tokensArray, array $parameters, string $redirectUrl, string $context): void
     {
         $url = "https://fcm.googleapis.com/fcm/send";
         // SERVER KEY
@@ -95,7 +101,19 @@ class HelperService
         if(json_decode(curl_exec($ch), true)["success"] > 0)
         {
             curl_close($ch);
-            $_SESSION['story_success_flash_message'] = "Your story has just been created successfully ! ($notifiedClientsCount Clients notified)";
+            if($context === "story")
+            {
+                $_SESSION['story_success_flash_message'] = "Your story has just been created successfully! ($notifiedClientsCount Clients notified)";
+            } elseif ($context === "create_pro_service")
+            {
+                $_SESSION['pro_service_success_flash_message'] = "Your pro service has just been created successfully! ($notifiedClientsCount Clients notified)";
+            } elseif ($context === "import_pro_services")
+            {
+                $_SESSION['pro_service_success_flash_message'] = "Your pro services have just been imported successfully! ($notifiedClientsCount Clients notified)";
+            } elseif ($context === "delete_pro_service")
+            {
+                $_SESSION['pro_service_success_flash_message'] = "Your pro service has just been deleted successfully! ($notifiedClientsCount Clients notified)";
+            }
             header("Location: $redirectUrl");
             die();
         }

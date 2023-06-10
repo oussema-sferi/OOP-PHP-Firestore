@@ -30,6 +30,21 @@ class MobileAppClient
         return $res;
     }
 
+    public function fetchRealtorMobileAppClients($realtorId): array
+    {
+        $res = [];
+        $query = $this->collection->where('realtor_id', '=', $realtorId);
+        $documents = $query->documents();
+        foreach ($documents as $document) {
+            if ($document->exists()) {
+                $obj_merged = (object) array_merge(
+                    ["doc_id" => $document->id()], (array) $document->data());
+                $res[] = $obj_merged;
+            }
+        }
+        return $res;
+    }
+
     public function find($id)
     {
         $query = $this->collection->where('uid', '=', $id);

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Controller\Realtor;
+use App\Entity\MobileAppClient;
 use App\Entity\PortalClient;
 use App\Service\AuthCheckerService;
 use App\Service\HelperService;
@@ -20,6 +21,7 @@ class StoryController
     private readonly Story $story;
     private User $user;
     private PortalClient $client;
+    private MobileAppClient $mobileAppClient;
     public function __construct()
     {
         AuthCheckerService::checkIfRealtor();
@@ -28,6 +30,7 @@ class StoryController
         $this->noImagePath = $this->baseUri . "/public/uploaded-images/stories/no-image/no-image-available.jpg";
         $this->story = new Story();
         $this->client = new PortalClient();
+        $this->mobileAppClient = new MobileAppClient();
         $this->user = new User();
     }
 
@@ -83,7 +86,7 @@ class StoryController
         ];
         // Here comes the push notifications
         $helper = new HelperService();
-        $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, $notificationParameters, $redirectUri);
+        $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, $notificationParameters, $redirectUri, "story", true, $this->mobileAppClient);
     }
 
     #[NoReturn] public function editForm(array $params = []): void

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Controller\Realtor;
+use App\Entity\MobileAppClient;
 use App\Entity\PortalClient;
 use App\Entity\ProService;
 use App\Service\AuthCheckerService;
@@ -21,6 +22,7 @@ class ProServiceController
     private string $baseUri;
     private string $noImagePath;
     private PortalClient $client;
+    private MobileAppClient $mobileAppClient;
     private ProService $proService;
     public function __construct()
     {
@@ -29,6 +31,7 @@ class ProServiceController
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
         $this->noImagePath = $this->baseUri . "/public/uploaded-images/pro-services/no-image/no-image-available.jpg";
         $this->client = new PortalClient();
+        $this->mobileAppClient = new MobileAppClient();
         $this->proService = new ProService();
     }
 
@@ -79,7 +82,7 @@ class ProServiceController
             'date' => new Timestamp(new DateTime()),
         ];
         $this->proService->create($data);
-        $_SESSION['pro_service_success_flash_message'] = "Your pro service has just been created successfully !";
+       /* $_SESSION['pro_service_success_flash_message'] = "Your pro service has just been created successfully !";*/
         $redirectUri = "/pro-services/list";
         $notificationParameters = [
             "title" => "HoneyDoo Alert",
@@ -87,7 +90,7 @@ class ProServiceController
         ];
         // Here comes the push notifications
         $helper = new HelperService();
-        $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, $notificationParameters, $redirectUri);
+        $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, $notificationParameters, $redirectUri, "create_pro_service", true, $this->mobileAppClient);
     }
 
     #[NoReturn] public function editForm(array $params = []): void
@@ -149,7 +152,7 @@ class ProServiceController
     {
         $id = $params["id"];
         $this->proService->delete($id);
-        $_SESSION['pro_service_success_flash_message'] = "Your pro service has just been deleted successfully !";
+        /*$_SESSION['pro_service_success_flash_message'] = "Your pro service has just been deleted successfully !";*/
         $redirectUri = "/pro-services/list";
         $notificationParameters = [
             "title" => "HoneyDoo Alert",
@@ -157,7 +160,7 @@ class ProServiceController
         ];
         // Here comes the push notifications
         $helper = new HelperService();
-        $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, $notificationParameters, $redirectUri);
+        $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, $notificationParameters, $redirectUri, "delete_pro_service", true, $this->mobileAppClient);
     }
 
     #[NoReturn] public function importFromFileAction(array $params = []): void
@@ -191,7 +194,7 @@ class ProServiceController
         {
             $this->proService->create($row);
         }
-        $_SESSION['pro_service_success_flash_message'] = "Your pro services have just been imported successfully !";
+        /*$_SESSION['pro_service_success_flash_message'] = "Your pro services have just been imported successfully !";*/
         $redirectUri = "/pro-services/list";
         $notificationParameters = [
             "title" => "HoneyDoo Alert",
@@ -199,7 +202,7 @@ class ProServiceController
         ];
         // Here comes the push notifications
         $helper = new HelperService();
-        $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, $notificationParameters, $redirectUri);
+        $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, $notificationParameters, $redirectUri, "import_pro_services", true, $this->mobileAppClient);
     }
 
     #[NoReturn] public function templateDownloadAction(array $params = []): void
