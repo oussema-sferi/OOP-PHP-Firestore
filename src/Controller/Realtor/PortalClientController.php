@@ -39,7 +39,7 @@ class PortalClientController
         $realtorClients = $this->client->fetchPortalClients($this->loggedUserId);
         $allMobileAppClients = $this->client->fetchMobileAppClients();
         $helper = new HelperService();
-        $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, [], "", false);
+        $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, [], "", "", false);
         $clients = $this->client->fetchPortalClients($this->loggedUserId);
         $realtor = $this->user->fetchUserById($this->loggedUserId);
         if(isset($_SESSION['portal_clients_error_flash_message'])) {

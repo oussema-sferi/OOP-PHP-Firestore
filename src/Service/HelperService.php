@@ -6,7 +6,7 @@ use App\Entity\PortalClient;
 
 class HelperService
 {
-    public function clientCheckAndSaveSignUpDate($database, $userId, array $notificationParameters , string $redirectUri, string $context, bool $sendNotif = true, MobileAppClient $mobileAppClientEntity = null): void
+    public function clientCheckAndSaveSignUpDate($database, $userId, array $notificationParameters , string $redirectUri, string $context, bool $sendNotif = true, MobileAppClient $mobileAppClientEntity = null, string $flashMessage = null): void
     {
         $realtorLinkedPortalClients = $database->fetchPortalClients($userId);
         /** @var PortalClient $database */
@@ -48,11 +48,11 @@ class HelperService
             }
             $notifiedClientsCount = count($realtorLinkedMobileClientsTokens);
             if($notifiedClientsCount > 0) {
-                $this->sendFCM($realtorLinkedMobileClientsTokens, $notificationParameters, $redirectUri, $context);
+                $this->sendFCM($realtorLinkedMobileClientsTokens, $notificationParameters, $redirectUri, $context, $flashMessage);
             } else {
                 if($context === "story")
                 {
-                    $_SESSION["story_success_flash_message"] = "Your story has just been created successfully! (No clients notified)";
+                    $_SESSION["story_success_flash_message"] = "$flashMessage just been published successfully! (No clients notified)";
                 } elseif ($context === "create_pro_service")
                 {
                     $_SESSION['pro_service_success_flash_message'] = "Your pro service has just been created successfully! (No clients notified)";
@@ -68,7 +68,7 @@ class HelperService
         }
     }
 
-    public function sendFCM(array $tokensArray, array $parameters, string $redirectUrl, string $context): void
+    public function sendFCM(array $tokensArray, array $parameters, string $redirectUrl, string $context, $flashMessage = null): void
     {
         $url = "https://fcm.googleapis.com/fcm/send";
         // SERVER KEY
@@ -103,7 +103,7 @@ class HelperService
             curl_close($ch);
             if($context === "story")
             {
-                $_SESSION['story_success_flash_message'] = "Your story has just been created successfully! ($notifiedClientsCount Clients notified)";
+                $_SESSION["story_success_flash_message"] = "$flashMessage just been published successfully! ($notifiedClientsCount Clients notified)";
             } elseif ($context === "create_pro_service")
             {
                 $_SESSION['pro_service_success_flash_message'] = "Your pro service has just been created successfully! ($notifiedClientsCount Clients notified)";

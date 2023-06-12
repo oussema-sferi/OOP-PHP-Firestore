@@ -78,15 +78,8 @@ class StoryController
         ];
         // Create and save new blog post in DB
         $this->story->create($data);
-        /*$_SESSION['story_success_flash_message'] = "Your story has just been created successfully !";*/
-        $redirectUri = "/stories/list";
-        $notificationParameters = [
-            "title" => "HoneyDoo Alert",
-            "body" => "Your Realtor just posted a new story! Check it out!"
-        ];
-        // Here comes the push notifications
-        $helper = new HelperService();
-        $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, $notificationParameters, $redirectUri, "story", true, $this->mobileAppClient);
+        $_SESSION['story_success_flash_message'] = "Your story has just been created successfully!";
+        header("Location: /stories/list");
     }
 
     #[NoReturn] public function editForm(array $params = []): void
@@ -166,7 +159,16 @@ class StoryController
             $this->story->update($storyId, $finalData);
         }
         $text = count($storiesIds) === 1 ? "Story has" : "Stories have";
-        $_SESSION['story_success_flash_message'] = "$text just been published successfully !";
-        header("Location: /stories/list");
+        /*$_SESSION['story_success_flash_message'] = "$text just been published successfully !";*/
+        /*header("Location: /stories/list");*/
+        //
+        $redirectUri = "/stories/list";
+        $notificationParameters = [
+            "title" => "HoneyDoo Alert",
+            "body" => "Your Realtor just posted a new story! Check it out!"
+        ];
+        // Here comes the push notifications
+        $helper = new HelperService();
+        $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, $notificationParameters, $redirectUri, "story", true, $this->mobileAppClient, $text);
     }
 }
