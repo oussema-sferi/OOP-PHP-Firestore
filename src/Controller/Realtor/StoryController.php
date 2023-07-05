@@ -75,8 +75,7 @@ class StoryController
             'realtor_id' => $this->loggedUserId,
             'img' => $this->baseUri . $imageDbLink,
             'date' => new Timestamp(new DateTime()),
-            'is_published' => true,
-            'published_at' => new Timestamp(new DateTime()),
+            'is_published' => false,
         ];
         // Create and save new blog post in DB
         $this->story->create($data);
