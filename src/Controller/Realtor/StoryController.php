@@ -68,9 +68,11 @@ class StoryController
         }
 
         $title = $params["title"];
+        $category = $params["category"];
         $content = $params["content"];
         $data = [
             'title' => $title,
+            'category' => $category,
             'distribution' => $content,
             'realtor_id' => $this->loggedUserId,
             'img' => $this->baseUri . $imageDbLink,

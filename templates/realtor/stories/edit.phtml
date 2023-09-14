@@ -40,7 +40,7 @@
             <div class="container-fluid px-4">
                 <form id="editBlogForm" action="/stories/edit-save?id=<?=$id?>" method="post" enctype="multipart/form-data">
                     <div class="row gx-4 mb-4">
-                        <div class="col-lg-2">
+                        <div class="col-lg-1">
                         </div>
                         <div class="col-lg-3">
                             <div class="card card-header-actions mb-4 mb-lg-0">
@@ -56,19 +56,37 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-5">
+                        <div class="col-lg-3">
+                            <div class="card mb-4">
+                                <div class="card-header">Category</div>
+                                <div class="card-body">
+                                    <select class="form-control" id="category" name="category" required>
+                                        <option value="0">Select Category</option>
+                                        <option value="Real Estate">Real Estate</option>
+                                        <option value="Lifestyle">Lifestyle</option>
+                                        <option value="DIY projects">DIY projects</option>
+                                        <option value="News">News</option>
+                                        <option value="Seasonal">Seasonal</option>
+                                        <option value="Personal">Personal</option>
+                                        <option value="Miscellaneous">Miscellaneous</option>
+                                        <option value="Monthly posts">Monthly posts</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
                             <div class="card mb-4">
                                 <div class="card-header">Title</div>
                                 <div class="card-body"><input class="form-control" id="postTitleInput" type="text" value="<?=$story["title"]?>" name="title" required/></div>
                             </div>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-1">
                         </div>
                     </div>
                     <div class="row gx-4">
-                        <div class="col-lg-2">
+                        <div class="col-lg-1">
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-lg-10">
                             <div class="card card-header-actions mb-4">
                                 <div class="card-header">
                                     Content
@@ -77,7 +95,7 @@
                                 <div class="card-body"><textarea id="postDistribution" class="lh-base form-control" type="text" rows="10" style="resize: none" name="content"></textarea></div>
                             </div>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-1">
                         </div>
                     </div>
                     <div class="text-center">
@@ -94,17 +112,20 @@
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
 <script>
-    const easyMDE = new EasyMDE({
-        element: document.getElementById('postDistribution'),
-
+    $(document).ready(function() {
+        const easyMDE = new EasyMDE({
+            element: document.getElementById('postDistribution')
+        });
+        const turndownService = new TurndownService()
+        console.log(turndownService.turndown(easyMDE.value()))
+        easyMDE.value(turndownService.turndown(<?php echo json_encode($story["distribution"]);  ?>));
+        $("#editBlogForm").submit(function (e) {
+            let postContent = $("#postDistribution").val()
+            $("#postDistribution").val(marked.parse(postContent))
+        })
+        let category = <?php if(isset($story["category"])) { echo json_encode($story["category"]);} else { echo "0";} ?>;
+        $("#category").val(category);
     });
-    const turndownService = new TurndownService()
-    console.log(turndownService.turndown(easyMDE.value()))
-    easyMDE.value(turndownService.turndown(<?php echo json_encode($story["distribution"]);  ?>));
-    $("#editBlogForm").submit(function (e) {
-        let postContent = $("#postDistribution").val()
-        $("#postDistribution").val(marked.parse(postContent))
-    })
 </script>
 </body>
 </html>

@@ -158,7 +158,7 @@
 </div>
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/scripts.phtml';?>
 <script>
-    $( document ).ready(function() {
+    $(document).ready(function() {
         let homeProType = <?php echo json_encode($proService["homePro_type"]); ?>;
         $("#homeProType").val(homeProType);
     });
