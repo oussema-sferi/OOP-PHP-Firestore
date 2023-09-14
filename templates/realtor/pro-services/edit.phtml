@@ -55,7 +55,7 @@
                                         <div class="card-header">Home Pro Type</div>
                                         <div class="card-body">
                                             <select class="form-control" id="homeProType" name="homeProType" required>
-                                                <option>Select Home Pro Type</option>
+                                                <!--<option>Select Home Pro Type</option>-->
                                                 <option value="Cleaning">Cleaning</option>
                                                 <option value="Electrical">Electrical</option>
                                                 <option value="Fencing">Fencing</option>
@@ -88,7 +88,7 @@
                                                 <option value="Holidays">Holidays</option>
                                                 <option value="Pool">Pool</option>
                                                 <option value="Radon">Radon</option>
-                                                <option value="Other">Other</option>
+                                                <!--<option value="Other">Other</option>-->
                                             </select>
                                         </div>
                                     </div>
@@ -160,7 +160,17 @@
 <script>
     $(document).ready(function() {
         let homeProType = <?php echo json_encode($proService["homePro_type"]); ?>;
-        $("#homeProType").val(homeProType);
+        function sortASC() {
+            let dropdown = $("#homeProType");
+            dropdown.append($("#homeProType option")
+                .remove().sort(function(a, b) {
+                    let at = $(a).text(),
+                        bt = $(b).text();
+                    return (at > bt) ? 1 : ((at < bt) ? -1 : 0);
+                }));
+            dropdown.prepend('<option value="0">Select Home Pro Type</option>').append('<option value="Other">Other</option>').val(homeProType)
+        }
+        sortASC()
     });
 </script>
 </body>
