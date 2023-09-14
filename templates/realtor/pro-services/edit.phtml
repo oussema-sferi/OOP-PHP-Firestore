@@ -159,7 +159,7 @@
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/scripts.phtml';?>
 <script>
     $(document).ready(function() {
-        let homeProType = <?php echo json_encode($proService["homePro_type"]); ?>;
+        let homeProType = "<?php if(isset($proService["home_pro_type"])) { echo json_encode($proService["home_pro_type"]);} else {echo "";} ?>";
         function sortASC() {
             let dropdown = $("#homeProType");
             dropdown.append($("#homeProType option")
@@ -168,7 +168,7 @@
                         bt = $(b).text();
                     return (at > bt) ? 1 : ((at < bt) ? -1 : 0);
                 }));
-            dropdown.prepend('<option value="0">Select Home Pro Type</option>').append('<option value="Other">Other</option>').val(homeProType)
+            dropdown.prepend('<option value="">Select Home Pro Type...</option>').append('<option value="Other">Other</option>').val(homeProType)
         }
         sortASC()
     });

@@ -51,7 +51,7 @@
                             <div class="col-lg-4">
                                 <div class="card mb-4">
                                     <div class="card-header">Home Pro Type</div>
-                                    <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?=$proService["homePro_type"] ?? ""?>" disabled/></div>
+                                    <div class="card-body"><input class="form-control" id="proServiceSubTitleInput" type="text" value="<?php if(isset($proService["home_pro_type"])) { echo $proService["home_pro_type"];} else {echo 'N/A'; }?>" disabled/></div>
                                 </div>
                             </div>
                         </div>
