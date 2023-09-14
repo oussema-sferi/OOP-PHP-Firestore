@@ -159,7 +159,7 @@
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/scripts.phtml';?>
 <script>
     $(document).ready(function() {
-        let homeProType = "<?php if(isset($proService["home_pro_type"])) { echo json_encode($proService["home_pro_type"]);} else {echo "";} ?>";
+        let homeProType = "<?php if(isset($proService["home_pro_type"])) { echo $proService["home_pro_type"];} else {echo "";} ?>";
         function sortASC() {
             let dropdown = $("#homeProType");
             dropdown.append($("#homeProType option")
