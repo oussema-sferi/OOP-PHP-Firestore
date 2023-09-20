@@ -80,6 +80,29 @@
                     </div>
                     <div class="col-lg-1">
                     </div>
+                    <div class="row gx-4">
+                        <div class="col-lg-1">
+                        </div>
+                        <div class="col-lg-10">
+                            <div class="card card-header-actions mb-4">
+                                <div class="card-header">
+                                    Embedded Videos
+                                    <i class="text-muted"></i>
+                                </div>
+                                <div class="card-body embedded-videos text-center">
+                                    <!--<video width="320" height="240" poster="/images/w3schools_green.jpg" controls>
+                                        <source src="https://www.youtube.com/watch?v=WDaNJW_jEBo">
+                                        <source src="movie.ogg" type="video/ogg">
+                                        Your browser does not support the video tag.
+                                    </video>-->
+                                    <h3>The first Video</h3>
+                                    <a target="_blank" href="https://www.youtube.com/watch?v=fyaI4-5849w"><img src="http://i.ytimg.com/vi/fyaI4-5849w/maxresdefault.jpg" alt="" width="520" height="240"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -90,12 +113,16 @@
 <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
-    const easyMDE = new EasyMDE({
-        element: document.getElementById('postDistributionShow'),
-        toolbar: false
-    });
-    easyMDE.markdown(easyMDE.value());
-    easyMDE.togglePreview();
+    $(document).ready(function() {
+        const easyMDE = new EasyMDE({
+            element: document.getElementById('postDistributionShow'),
+            toolbar: false
+        });
+        easyMDE.markdown(easyMDE.value());
+        easyMDE.togglePreview();
+        //
+
+    })
 </script>
 </body>
 </html>

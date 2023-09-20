@@ -89,6 +89,31 @@
                         <div class="col-lg-1">
                         </div>
                     </div>
+                    <div class="row gx-4">
+                        <div class="col-lg-1">
+                        </div>
+                        <div class="col-lg-10">
+                            <div class="card card-header-actions mb-4">
+                                <div class="card-header">
+                                    Articles
+                                    <i class="text-muted"></i>
+                                </div>
+                                <div class="card-body embedded-videos">
+                                    <!--<div class="input-group">
+                                        <input class="form-control align-middle" type="text" placeholder="Video Link...">
+                                        <span class="align-middle ms-2">
+                                            <button class="btn_round remove_node_btn_frm_field">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </span>
+                                    </div>-->
+                                    <button class="mt-2 py-3 border btn btn-outline-lite py-0 add-new-row-btn"><i class="fas fa-plus add_icon me-2"></i>New Row</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                        </div>
+                    </div>
                     <div class="text-center">
                         <div><input class="fw-500 btn btn-primary" type="submit" value="Save"></div>
                     </div>
@@ -103,10 +128,36 @@
 <script src="../../../public/js/markdown.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
-    $("#addBlogForm").submit(function (e) {
-        let postContent = $("#postDistribution").val()
-        $("#postDistribution").val(marked.parse(postContent))
-        /*console.log($("#postDistribution").val())*/
+    $(document).ready(function() {
+        $("#addBlogForm").submit(function (e) {
+            let postContent = $("#postDistribution").val()
+            $("#postDistribution").val(marked.parse(postContent))
+            /*console.log($("#postDistribution").val())*/
+        })
+        //
+        $("body").on("click",".add-new-row-btn", function (e) {
+            e.preventDefault()
+            console.log("clicked");
+            let index = $(".embedded-videos").find(".embedded-videos-row").length + 1;
+            console.log(index);
+            $(".add-new-row-btn").before(`
+            <div class="input-group mt-2 embedded-videos-row">
+                <input class="form-control align-middle" type="text" placeholder="Link..." required>
+                <span class="align-middle ms-2">
+                    <button class="btn_round remove-row-btn">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </span>
+            </div>
+            `);
+            /*$(".embedded-videos").find(".remove_node_btn_frm_field:not(:first)").prop("disabled", false);
+            $(".form_field_outer").find(".remove_node_btn_frm_field").first().prop("disabled", true); */
+            //===== delete the form fieed row
+            $("body").on("click", ".remove-row-btn", function () {
+                $(this).closest(".embedded-videos-row").remove();
+                console.log("success");
+            });
+        });
     })
 </script>
 </body>
