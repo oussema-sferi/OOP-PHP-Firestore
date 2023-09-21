@@ -34,4 +34,10 @@ class StoryArticles
     {
         return $this->collection->add($data);
     }
+
+    public function delete($id)
+    {
+        $articleRef = $this->collection->document($id);
+        return $articleRef->delete();
+    }
 }

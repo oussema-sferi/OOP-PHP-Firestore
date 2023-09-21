@@ -98,15 +98,7 @@
                                     Articles
                                     <i class="text-muted"></i>
                                 </div>
-                                <div class="card-body embedded-videos">
-                                    <!--<div class="input-group">
-                                        <input class="form-control align-middle" type="text" placeholder="Video Link...">
-                                        <span class="align-middle ms-2">
-                                            <button class="btn_round remove_node_btn_frm_field">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </span>
-                                    </div>-->
+                                <div class="card-body articles">
                                     <button class="mt-2 py-3 border btn btn-outline-lite py-0 add-new-row-btn"><i class="fas fa-plus add_icon me-2"></i>New Row</button>
                                 </div>
                             </div>
@@ -132,16 +124,14 @@
         $("#addBlogForm").submit(function (e) {
             let postContent = $("#postDistribution").val()
             $("#postDistribution").val(marked.parse(postContent))
-            /*console.log($("#postDistribution").val())*/
         })
         //
         $("body").on("click",".add-new-row-btn", function (e) {
             e.preventDefault()
-            console.log("clicked");
-            let index = $(".embedded-videos").find(".embedded-videos-row").length + 1;
+            let index = $(".articles").find(".articles-row").length + 1;
             console.log(index);
             $(".add-new-row-btn").before(`
-            <div class="input-group mt-2 embedded-videos-row">
+            <div class="input-group mt-2 articles-row">
                 <input class="form-control align-middle" type="text" placeholder="Link..." name="articles[]" required>
                 <span class="align-middle ms-2">
                     <button class="btn_round remove-row-btn">
@@ -150,11 +140,9 @@
                 </span>
             </div>
             `);
-            /*$(".embedded-videos").find(".remove_node_btn_frm_field:not(:first)").prop("disabled", false);
-            $(".form_field_outer").find(".remove_node_btn_frm_field").first().prop("disabled", true); */
-            //===== delete the form fieed row
+            //===== delete the form field row
             $("body").on("click", ".remove-row-btn", function () {
-                $(this).closest(".embedded-videos-row").remove();
+                $(this).closest(".articles-row").remove();
                 console.log("success");
             });
         });

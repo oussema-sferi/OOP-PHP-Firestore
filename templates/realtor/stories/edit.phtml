@@ -2,6 +2,7 @@
 /* @var $story
  * @var $id
  * @var $image
+ * @var $articles
  */
 ?>
 <!DOCTYPE html>
@@ -98,6 +99,36 @@
                         <div class="col-lg-1">
                         </div>
                     </div>
+                    <div class="row gx-4">
+                        <div class="col-lg-1">
+                        </div>
+                        <div class="col-lg-10">
+                            <div class="card card-header-actions mb-4">
+                                <div class="card-header">
+                                    Articles
+                                    <i class="text-muted"></i>
+                                </div>
+                                <div class="card-body articles">
+                                    <?php
+                                    foreach ($articles as $index => $article)
+                                    {
+                                    ?>
+                                    <div class="input-group mt-2 articles-row">
+                                        <input class="form-control align-middle" type="text" placeholder="Link..." name="articles[]" value="<?=$article->url?>" required>
+                                        <span class="align-middle ms-2">
+                                            <button class="btn_round remove-row-btn"><i class="fas fa-trash-alt"></i></button>
+                                        </span>
+                                    </div>
+                                    <?php
+                                    }
+                                    ?>
+                                    <button class="mt-2 py-3 border btn btn-outline-lite py-0 add-new-row-btn"><i class="fas fa-plus add_icon me-2"></i>New Row</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                        </div>
+                    </div>
                     <div class="text-center">
                         <div><input class="fw-500 btn btn-primary" type="submit" value="Save"></div>
                     </div>
@@ -125,6 +156,27 @@
         })
         let category = <?php if(isset($story["category"])) { echo json_encode($story["category"]);} else { echo "0";} ?>;
         $("#category").val(category);
+        //
+        $("body").on("click",".add-new-row-btn", function (e) {
+            e.preventDefault()
+            let index = $(".articles").find(".articles-row").length + 1;
+            console.log(index);
+            $(".add-new-row-btn").before(`
+            <div class="input-group mt-2 articles-row">
+                <input class="form-control align-middle" type="text" placeholder="Link..." name="articles[]" required>
+                <span class="align-middle ms-2">
+                    <button class="btn_round remove-row-btn">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </span>
+            </div>
+            `);
+        });
+        //===== delete the form field row
+        $("body").on("click", ".remove-row-btn", function () {
+            $(this).closest(".articles-row").remove();
+            console.log("success");
+        });
     });
 </script>
 </body>
