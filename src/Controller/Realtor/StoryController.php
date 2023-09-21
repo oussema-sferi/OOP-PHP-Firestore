@@ -86,8 +86,7 @@ class StoryController
         // Create and save new blog post in DB
         $newStoryDocId = $this->story->create($data);
         // Create Articles Links Previews
-        $articles = $params["articles"];
-        $this->fetchArticlesData($articles, $newStoryDocId);
+        if(isset($params["articles"])) $this->fetchArticlesData($params["articles"], $newStoryDocId);
         //
         $_SESSION['story_success_flash_message'] = "Your story has just been created successfully!";
         header("Location: /stories/list");
@@ -140,8 +139,7 @@ class StoryController
             $this->storyArticles->delete($article->doc_id);
         }
         // Create Articles Links Previews
-        $articles = $params["articles"];
-        $this->fetchArticlesData($articles, $id);
+        if(isset($params["articles"])) $this->fetchArticlesData($params["articles"], $id);
         $_SESSION['story_success_flash_message'] = "Your story has just been updated successfully !";
         header("Location: /stories/list");
     }
@@ -221,11 +219,14 @@ class StoryController
                     'blogPost_id' => $storyDocId,
                 ];
             } else {
+                $title = $output['title'] !== "" ? $output['title'] : 'No title available';
+                $description = $output['description'] !== "" ? $output['description'] : 'No description available';
+                $image = $output['image'] !== "" ? $output['image'] : 'https://upload.wikimedia.org/wikipedia/commons/d/dc/No_Preview_image_2.png';
                 $articleData = [
-                    'title' => $output['title'],
-                    'description' => $output['description'],
-                    'image' => $output['image'],
-                    'url' => $output['url'],
+                    'title' => $title,
+                    'description' => $description,
+                    'image' => $image,
+                    'url' => $articleUrl,
                     'site_name' => $siteName,
                     'blogPost_id' => $storyDocId,
                 ];
