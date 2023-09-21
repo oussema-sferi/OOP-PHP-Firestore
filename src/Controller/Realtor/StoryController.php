@@ -157,6 +157,12 @@ class StoryController
     #[NoReturn] public function deleteAction(array $params = []): void
     {
         $id = $params["id"];
+        // Get & Delete associated articles if exist
+        $articles = $this->storyArticles->findArticlesByStory($id);
+        foreach ($articles as $article)
+        {
+            $this->storyArticles->delete($article->doc_id);
+        }
         $this->story->delete($id);
         $_SESSION['story_success_flash_message'] = "Your story has just been deleted successfully !";
         header("Location: /stories/list");
