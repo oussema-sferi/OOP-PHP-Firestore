@@ -5,19 +5,20 @@ namespace App\Entity;
 use App\DBConfig;
 use Google\Cloud\Firestore\CollectionReference;
 
-class Story
+class StoryArticles
 {
     protected $db;
     private CollectionReference $collection;
     public function __construct()
     {
         $this->db = DBConfig::getDbConnection();
-        $this->collection = $this->db->collection('blogPost');
+        $this->collection = $this->db->collection('blogPost_articles_info');
     }
-    public function findAllByUser($userId): array
+
+    public function findArticlesByStory($storyId): array
     {
         $res = [];
-        $query = $this->collection->orderBy('date', 'DESC')->where('realtor_id', '=', $userId);
+        $query = $this->db->collection('blogPost_articles_info')->where('blogPost_id', '=', $storyId);
         $documents = $query->documents();
         foreach ($documents as $document) {
             if ($document->exists()) {
@@ -32,23 +33,5 @@ class Story
     public function create($data)
     {
         return $this->collection->add($data);
-    }
-
-    public function find($id)
-    {
-        $query = $this->collection->document($id);
-        return $query->snapshot();
-    }
-
-    public function update($id, $data)
-    {
-        $blogRef = $this->collection->document($id);
-        return $blogRef->update($data);
-    }
-
-    public function delete($id)
-    {
-        $blogRef = $this->collection->document($id);
-        return $blogRef->delete();
     }
 }
