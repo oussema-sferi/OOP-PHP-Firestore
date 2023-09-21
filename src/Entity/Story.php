@@ -31,7 +31,8 @@ class Story
 
     public function create($data)
     {
-        return $this->collection->add($data);
+        $docRef = $this->collection->add($data);
+        return $docRef->id();
     }
 
     public function find($id)

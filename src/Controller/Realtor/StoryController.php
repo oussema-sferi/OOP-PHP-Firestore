@@ -57,25 +57,6 @@ class StoryController
 
     #[NoReturn] public function createAction(array $params = []): void
     {
-        // GET Request to LINK PREVIEW API
-        $target = urlencode($params["article"]);
-        $key = "50f679feb5dc9414338baff5ef48b364";
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://api.linkpreview.net?key={$key}&q={$target}");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $output = json_decode(curl_exec($ch), true);
-        $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-
-        if ($status != 200) {
-            // something went wrong
-            print_r($status);
-            die;
-        }
-
-        var_dump($output);
-        die();
-        //
         $image = $_FILES["image"]["name"];
         if(trim($image) !== "")
         {
@@ -102,7 +83,46 @@ class StoryController
             'is_published' => false
         ];
         // Create and save new blog post in DB
-        $this->story->create($data);
+        $newStoryDocId = $this->story->create($data);
+        // Create Articles Links Previews
+        $apiKey = "50f679feb5dc9414338baff5ef48b364";
+        $articles = $params["articles"];
+        foreach ($articles as $articleUrl)
+        {
+            $parsedUrl = parse_url($articleUrl);
+            $siteName = $parsedUrl["scheme"] . "://" . $parsedUrl["host"];
+            // GET Request to LINK PREVIEW API
+            $target = urlencode($articleUrl);
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "https://api.linkpreview.net?key={$apiKey}&q={$target}");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $output = json_decode(curl_exec($ch), true);
+            $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+            // Error
+            if ($status != 200) {
+                // something went wrong
+                $articleData = [
+                    'title' => 'No title available',
+                    'description' => 'No description available',
+                    'image' => 'https://upload.wikimedia.org/wikipedia/commons/d/dc/No_Preview_image_2.png',
+                    'url' => $articleUrl,
+                    'site_name' => $siteName,
+                    'blogPost_id' => $newStoryDocId,
+                ];
+            } else {
+                $articleData = [
+                    'title' => $output['title'],
+                    'description' => $output['description'],
+                    'image' => $output['image'],
+                    'url' => $output['url'],
+                    'site_name' => $siteName,
+                    'blogPost_id' => $newStoryDocId,
+                ];
+            }
+            $this->storyArticles->create($articleData);
+        }
+        //
         $_SESSION['story_success_flash_message'] = "Your story has just been created successfully!";
         header("Location: /stories/list");
     }

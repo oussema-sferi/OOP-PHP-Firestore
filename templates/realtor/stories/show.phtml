@@ -88,7 +88,7 @@
                         foreach ($articles as $index => $article)
                         {
                         ?>
-                            <div class="col-lg-4">
+                            <div class="col-lg-4  d-flex">
                                 <div class="card card-header-actions mb-4">
                                     <div class="card-header">
                                         Article <?=$index + 1 ?>
@@ -96,7 +96,7 @@
                                     </div>
                                     <div class="card-body embedded-videos">
                                         <a href="<?=$article->url?>" target="_blank" style="text-decoration: none; color: inherit">
-                                            <img id="my-image" src="<?=$article->image?>" class="img-fluid" height="150" alt="image-preview">
+                                            <img id="my-image" src="<?=$article->image?>" height="180" width="100%" alt="image-preview">
                                             <div>
                                                 <div id="my-title" class="fw-bolder">
                                                     <?=$article->title?>
