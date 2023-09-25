@@ -81,10 +81,19 @@
                             <?php
                             foreach ($stories as $story)
                             {
+                                if(isset($story->url))
+                                {
+                                    $context = "link";
+                                } else {
+                                    $context = "custom-story";
+                                }
                                 $id = $story->doc_id;
                                 $title = $story->title;
-                                /*$content = $story->distribution;
-                                $image = isset($story->img) && trim($story->img) !== '' ? $story->img : $this->noImagePath;*/
+                                if($context !== "link")
+                                {
+                                    $content = $story->distribution;
+                                    $image = isset($story->img) && trim($story->img) !== '' ? $story->img : $this->noImagePath;
+                                }
                                 $createdAt = $story->date->get()->format("m-d-Y");
                                 $views = $story->views ?? 0;
                                 if(isset($story->user_liked)) {
@@ -112,9 +121,6 @@
                                     </td>                                                      
                                 </tr>
                                 
-                                <!-- Modal Preview Story-->
-                                
-                                
                                 <!-- Modal Delete Story-->
                                 <div class='modal fade' id='approveUserModal$id' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
                                     <div class='modal-dialog modal-dialog-centered' role='document'>
@@ -134,6 +140,32 @@
                                     </div>
                                 </div>
                                 ";
+                                if ($context !== "link")
+                                {
+                                    echo "
+                                    <!-- Modal Preview Story-->
+                                <div class='modal fade' id='previewStoryModal$id' tabindex='-1' role='dialog' aria-labelledby='exampleModalScrollableTitle' aria-hidden='true'>
+                                    <div class='modal-dialog modal-dialog-scrollable' role='document'>
+                                        <div class='modal-content'>
+                                            <div class='modal-body mt-3'>
+                                                <div class='text-center mb-3'>
+                                                    <img src='$image' alt='no-image-available' height='200px' width='300px'>
+                                                </div>
+                                                <div class='text-center mb-3'>
+                                                    <h3>$title</h3>
+                                                </div>
+                                                <div>
+                                                    $content
+                                                </div>
+                                            </div>
+                                            <div class='text-center mb-3'>
+                                            <button class='btn' style='background-color: #00b386; color: white; border-radius: 20px' type='button' data-bs-dismiss='modal'>Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    ";
+                                }
                             };
                             ?>
                             </tbody>
