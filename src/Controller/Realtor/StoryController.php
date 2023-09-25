@@ -56,6 +56,17 @@ class StoryController
         die();
     }
 
+    #[NoReturn] public function shareLinkForm(array $params = []): void
+    {
+        if (isset($_SESSION['story_fail_flash_message']))
+        {
+            $failFlashMessage = $_SESSION['story_fail_flash_message'];
+            unset($_SESSION['story_fail_flash_message']);
+        }
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/stories/link-share-form.phtml';
+        die();
+    }
+
     #[NoReturn] public function createAction(array $params = []): void
     {
         $image = $_FILES["image"]["name"];
@@ -84,12 +95,29 @@ class StoryController
             'is_published' => false
         ];
         // Create and save new blog post in DB
-        $newStoryDocId = $this->story->create($data);
+        $this->story->create($data);
         // Create Articles Links Previews
-        if(isset($params["articles"])) $this->fetchArticlesData($params["articles"], $newStoryDocId);
+        /*if(isset($params["articles"])) $this->fetchArticlesData($params["articles"], $newStoryDocId);*/
         //
         $_SESSION['story_success_flash_message'] = "Your story has just been created successfully!";
         header("Location: /stories/list");
+    }
+
+    #[NoReturn] public function shareLinkAction(array $params = []): void
+    {
+        /*var_dump($params);
+        die;*/
+        if(isset($params["link"]) && $params["link"] !== "")
+        {
+            if (filter_var($params["link"], FILTER_VALIDATE_URL) === FALSE) {
+                $_SESSION['story_fail_flash_message'] = "The provided link is invalid!";
+                header("Location: /stories/share-link");
+            } else {
+                $this->fetchLinkData($params);
+                $_SESSION['story_success_flash_message'] = "Your story has just been created successfully!";
+                header("Location: /stories/list");
+            }
+        }
     }
 
     #[NoReturn] public function editForm(array $params = []): void
@@ -132,14 +160,14 @@ class StoryController
         }
         $this->story->update($id, $finalData);
         // Get Story's associated Articles
-        $existingArticles = $this->storyArticles->findArticlesByStory($id);
+        /*$existingArticles = $this->storyArticles->findArticlesByStory($id);*/
         // Delete existing Articles
-        foreach ($existingArticles as $article)
+        /*foreach ($existingArticles as $article)
         {
             $this->storyArticles->delete($article->doc_id);
-        }
+        }*/
         // Create Articles Links Previews
-        if(isset($params["articles"])) $this->fetchArticlesData($params["articles"], $id);
+        /*if(isset($params["articles"])) $this->fetchArticlesData($params["articles"], $id);*/
         $_SESSION['story_success_flash_message'] = "Your story has just been updated successfully !";
         header("Location: /stories/list");
     }
@@ -148,9 +176,14 @@ class StoryController
     {
         $id = $params["id"];
         $story = $this->story->find($id);
-        $articles = $this->storyArticles->findArticlesByStory($id);
-        $image = isset($story["img"]) && trim($story["img"]) !== '' ? $story["img"] : $this->noImagePath;
-        require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/stories/show.phtml';
+        /*$articles = $this->storyArticles->findArticlesByStory($id);*/
+        if(isset($story["url"]))
+        {
+            require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/stories/story-link-show.phtml';
+        } else {
+            $image = isset($story["img"]) && trim($story["img"]) !== '' ? $story["img"] : $this->noImagePath;
+            require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/stories/show.phtml';
+        }
         die();
     }
 
@@ -198,46 +231,51 @@ class StoryController
         $helper = new HelperService();
         $helper->clientCheckAndSaveSignUpDate($this->client, $this->loggedUserId, $notificationParameters, $redirectUri, "story", true, $this->mobileAppClient, $text);
     }
-    private function fetchArticlesData(array $articles, string $storyDocId)
+    private function fetchLinkData(array $linkParams)
     {
         $apiKey = self::API_KEY;
-        foreach ($articles as $articleUrl)
-        {
-            $parsedUrl = parse_url($articleUrl);
-            $siteName = $parsedUrl["scheme"] . "://" . $parsedUrl["host"];
-            // GET Request to LINK PREVIEW API
-            $target = urlencode($articleUrl);
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://api.linkpreview.net?key={$apiKey}&q={$target}");
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $output = json_decode(curl_exec($ch), true);
-            $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            curl_close($ch);
-            // Error
-            if ($status != 200) {
-                // something went wrong
-                $articleData = [
-                    'title' => 'No title available',
-                    'description' => 'No description available',
-                    'image' => 'https://upload.wikimedia.org/wikipedia/commons/d/dc/No_Preview_image_2.png',
-                    'url' => $articleUrl,
-                    'site_name' => $siteName,
-                    'blogPost_id' => $storyDocId,
-                ];
-            } else {
-                $title = $output['title'] !== "" ? $output['title'] : 'No title available';
-                $description = $output['description'] !== "" ? $output['description'] : 'No description available';
-                $image = $output['image'] !== "" ? $output['image'] : 'https://upload.wikimedia.org/wikipedia/commons/d/dc/No_Preview_image_2.png';
-                $articleData = [
-                    'title' => $title,
-                    'description' => $description,
-                    'image' => $image,
-                    'url' => $articleUrl,
-                    'site_name' => $siteName,
-                    'blogPost_id' => $storyDocId,
-                ];
-            }
-            $this->storyArticles->create($articleData);
+        $link = $linkParams["link"];
+        $category = $linkParams["category"];
+        $parsedUrl = parse_url($link);
+        $siteName = $parsedUrl["scheme"] . "://" . $parsedUrl["host"];
+        // GET Request to LINK PREVIEW API
+        $target = urlencode($link);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://api.linkpreview.net?key={$apiKey}&q={$target}");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = json_decode(curl_exec($ch), true);
+        $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        // Error
+        if ($status != 200) {
+            // something went wrong
+            $shareLinkData = [
+                'title' => 'No title available',
+                'category' => $category,
+                'description' => 'No description available',
+                'realtor_id' => $this->loggedUserId,
+                'date' => new Timestamp(new DateTime()),
+                'is_published' => false,
+                'img' => 'https://upload.wikimedia.org/wikipedia/commons/d/dc/No_Preview_image_2.png',
+                'url' => $link,
+                'site_name' => $siteName,
+            ];
+        } else {
+            $title = $output['title'] !== "" ? $output['title'] : 'No title available';
+            $description = $output['description'] !== "" ? $output['description'] : 'No description available';
+            $image = $output['image'] !== "" ? $output['image'] : 'https://upload.wikimedia.org/wikipedia/commons/d/dc/No_Preview_image_2.png';
+            $shareLinkData = [
+                'title' => $title,
+                'category' => $category,
+                'description' => $description,
+                'realtor_id' => $this->loggedUserId,
+                'date' => new Timestamp(new DateTime()),
+                'is_published' => false,
+                'img' => $image,
+                'url' => $link,
+                'site_name' => $siteName,
+            ];
         }
+        $this->story->create($shareLinkData);
     }
 }

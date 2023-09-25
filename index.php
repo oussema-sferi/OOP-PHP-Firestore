@@ -90,7 +90,11 @@ $storiesBasePath = '/stories';
 $router->get($storiesBasePath . '/list', StoryController::class . '::listAction');
 // create new story
 $router->get($storiesBasePath . '/new', StoryController::class . '::addForm');
+// story: share link form
+$router->get($storiesBasePath . '/share-link', StoryController::class . '::shareLinkForm');
 $router->post($storiesBasePath . '/new-save', StoryController::class . '::createAction');
+// story: share link action
+$router->post($storiesBasePath . '/share-link', StoryController::class . '::shareLinkAction');
 // update story
 $router->get($storiesBasePath . '/edit', StoryController::class . '::editForm');
 $router->post($storiesBasePath . '/edit-save', StoryController::class . '::editSaveAction');

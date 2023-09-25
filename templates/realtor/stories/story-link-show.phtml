@@ -1,13 +1,14 @@
 <?php
 /* @var $story
  * @var $image
+ * @var $articles
  */
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/header.phtml';?>
-    <title>Custom Story Details</title>
+    <title>Story Link Preview</title>
 </head>
 <body class="nav-fixed">
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/navbar.phtml';?>
@@ -22,7 +23,7 @@
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="zoom-in"></i></div>
-                                    Custom Story Details
+                                    Story Link Preview
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
@@ -38,52 +39,44 @@
             <!-- Main page content-->
             <div class="container-fluid px-4">
                 <div class="row gx-4 mb-4">
-                    <div class="col-lg-1">
+                    <div class="col-lg-4">
                     </div>
-                    <div class="col-lg-3">
-                        <div class="card card-header-actions mb-4 mb-lg-0">
-                            <div class="card-header">
-                                Image
-                                <i class="text-muted" title="Markdown is supported within the post content editor."></i>
-                            </div>
-                            <div class="card-body">
-                                <img src='<?=$image?>' alt='no-image-available' height='150px' width='200px'>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                         <div class="card mb-4">
-                            <div class="card-header">Category</div>
+                            <div class="card-header text-center">Category</div>
                             <div class="card-body"><input class="form-control" id="postCategoryInput" type="text" value="<?php if(isset($story["category"])) { echo $story["category"];} else {echo 'N/A'; }?>" disabled/></div>
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="card mb-4">
-                            <div class="card-header">Title</div>
-                            <div class="card-body"><input class="form-control" id="postTitleInput" type="text" value="<?=$story["title"]?>" disabled/></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-1">
                     </div>
                 </div>
                 <div class="row gx-4">
-                    <div class="col-lg-1">
+                    <div class="col-lg-4">
                     </div>
-                    <div class="col-lg-10">
-                        <div class="card card-header-actions mb-4">
-                            <div class="card-header">
-                                Content
-                                <i class="text-muted" title="The post preview text shows below the post title, and is the post summary on blog pages."></i>
+                    <div class="col-lg-4">
+                        <div class="card mb-4">
+                            <div class="card-header text-center">Link Preview</div>
+                            <div class="card-body">
+                                <a href="<?=$story['url']?>" target="_blank" style="text-decoration: none; color: inherit">
+                                    <img id="my-image" src="<?=$story['img']?>" height="180" width="100%" alt="image-preview">
+                                    <div>
+                                        <div id="my-title" class="fw-bolder">
+                                            <?=$story['title']?>
+                                        </div>
+                                        <div id="my-description" class="mt-2">
+                                            <?=$story['description']?>
+                                        </div>
+                                        <div id="my-url" class="mt-2">
+                                            <?=$story['site_name']?>
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
-                            <div class="card-body"><textarea id="postDistributionShow" class="lh-base form-control" type="text" rows="10" style="resize: none" disabled><?=$story["distribution"]?></textarea></div>
                         </div>
                     </div>
-                    <div class="col-lg-1">
+                    <div class="col-lg-4">
                     </div>
                 </div>
-
-
-
             </div>
         </main>
         <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/footer.phtml';?>
@@ -101,7 +94,6 @@
         easyMDE.markdown(easyMDE.value());
         easyMDE.togglePreview();
         //
-
     })
 </script>
 </body>
