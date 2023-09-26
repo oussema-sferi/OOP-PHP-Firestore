@@ -1,8 +1,13 @@
+<?php
+/* @var $story
+ * @var $id
+ */
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/header.phtml';?>
-    <title>Custom Story</title>
+    <title>Edit Story</title>
 </head>
 <body class="nav-fixed">
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/navbar.phtml';?>
@@ -16,8 +21,8 @@
                         <div class="row align-items-center justify-content-between pt-3">
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
-                                    <div class="page-header-icon"><i data-feather="plus"></i></div>
-                                    Custom Story
+                                    <div class="page-header-icon"><i data-feather="edit"></i></div>
+                                    Edit Story
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
@@ -32,16 +37,17 @@
             </header>
             <!-- Main page content-->
             <div class="container-xl px-4 mt-4">
-                <nav class="nav nav-borders">
-                    <a class="nav-link active ms-0" href="/stories/new">Custom Story</a>
-                    <a class="nav-link" href="/stories/story-link/new">Share a Link</a>
-                </nav>
-                <hr class="mt-0 mb-4" />
-                <form id="addBlogForm" action="/stories/new" method="post" enctype="multipart/form-data">
+                <?php
+                if (isset($failFlashMessage))
+                {
+                    echo "<div class='alert alert-danger' role='alert'>$failFlashMessage</div>";
+                }
+                ?>
+                <form id="editBlogForm" action="/stories/story-link/edit?id=<?=$id?>" method="post">
                     <div class="row gx-4">
-                        <div class="col-lg-1">
+                        <div class="col-lg-4">
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="card mb-4">
                                 <div class="card-header">Category</div>
                                 <div class="card-body">
@@ -59,39 +65,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3">
-                            <div class="card card-header-actions mb-4 mb-lg-0">
-                                <div class="card-header">
-                                    Image
-                                    <i class="text-muted"></i>
-                                </div>
-                                <div class="card-body mt-3">
-                                    <input type="file" accept="image/jpeg/png" name="image">
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-lg-4">
-                            <div class="card mb-4">
-                                <div class="card-header">Title</div>
-                                <div class="card-body"><input class="form-control" id="postTitleInput" type="text" placeholder="Enter your story title..." name="title" required/></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-1">
                         </div>
                     </div>
                     <div class="row gx-4">
-                        <div class="col-lg-1">
+                        <div class="col-lg-3">
                         </div>
-                        <div class="col-lg-10">
-                            <div class="card card-header-actions mb-4">
-                                <div class="card-header">
-                                    Content
-                                    <i class="text-muted"></i>
-                                </div>
-                                <div class="card-body"><textarea id="postDistribution" class="lh-base form-control" type="text" placeholder="Enter your story content text..." rows="10" name="content"></textarea></div>
+                        <div class="col-lg-6">
+                            <div class="card mb-4">
+                                <div class="card-header">Link</div>
+                                <div class="card-body"><input class="form-control" id="postTitleInput" type="text" placeholder="Enter the link..." name="link" value="<?=$story['url']?>" required/></div>
                             </div>
                         </div>
-                        <div class="col-lg-1">
+                        <div class="col-lg-3">
                         </div>
                     </div>
                     <div class="text-center">
@@ -109,31 +95,14 @@
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
     $(document).ready(function() {
-        $("#addBlogForm").submit(function (e) {
-            let postContent = $("#postDistribution").val()
-            $("#postDistribution").val(marked.parse(postContent))
-        })
-        //
-        /*$("body").on("click",".add-new-row-btn", function (e) {
-            e.preventDefault()
-            let index = $(".articles").find(".articles-row").length + 1;
-            console.log(index);
-            $(".add-new-row-btn").before(`
-            <div class="input-group mt-2 articles-row">
-                <input class="form-control align-middle" type="text" placeholder="Link..." name="articles[]" required>
-                <span class="align-middle ms-2">
-                    <button class="btn_round remove-row-btn">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </span>
-            </div>
-            `);
-            //===== delete the form field row
-            $("body").on("click", ".remove-row-btn", function () {
-                $(this).closest(".articles-row").remove();
-                console.log("success");
-            });
-        });*/
+        <?php
+        if(isset($story["category"]))
+        {?>
+        let category = "<?php echo $story["category"]; ?>";
+        $("#category").val(category);
+        <?php
+        }
+        ?>
     })
 </script>
 </body>

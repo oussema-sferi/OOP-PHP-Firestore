@@ -39,11 +39,11 @@
                 }
                 ?>
                 <nav class="nav nav-borders">
-                    <a class="nav-link" href="/stories/new">Custom Story</a>
-                    <a class="nav-link active ms-0" href="/stories/share-link">Share a Link</a>
+                    <a class="nav-link ms-0" href="/stories/new">Custom Story</a>
+                    <a class="nav-link active" href="/stories/story-link/new">Share a Link</a>
                 </nav>
                 <hr class="mt-0 mb-4" />
-                <form id="addBlogForm" action="/stories/share-link" method="post" enctype="multipart/form-data">
+                <form id="addBlogForm" action="/stories/story-link/new" method="post">
                     <div class="row gx-4">
                         <div class="col-lg-4">
                         </div>
@@ -99,27 +99,6 @@
             let postContent = $("#postDistribution").val()
             $("#postDistribution").val(marked.parse(postContent))
         })
-        //
-        /*$("body").on("click",".add-new-row-btn", function (e) {
-            e.preventDefault()
-            let index = $(".articles").find(".articles-row").length + 1;
-            console.log(index);
-            $(".add-new-row-btn").before(`
-            <div class="input-group mt-2 articles-row">
-                <input class="form-control align-middle" type="text" placeholder="Link..." name="articles[]" required>
-                <span class="align-middle ms-2">
-                    <button class="btn_round remove-row-btn">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </span>
-            </div>
-            `);
-            //===== delete the form field row
-            $("body").on("click", ".remove-row-btn", function () {
-                $(this).closest(".articles-row").remove();
-                console.log("success");
-            });
-        });*/
     })
 </script>
 </body>

@@ -90,20 +90,26 @@ $storiesBasePath = '/stories';
 $router->get($storiesBasePath . '/list', StoryController::class . '::listAction');
 // create new story
 $router->get($storiesBasePath . '/new', StoryController::class . '::addForm');
-// story: share link form
-$router->get($storiesBasePath . '/share-link', StoryController::class . '::shareLinkForm');
-$router->post($storiesBasePath . '/new-save', StoryController::class . '::createAction');
-// story: share link action
-$router->post($storiesBasePath . '/share-link', StoryController::class . '::shareLinkAction');
+$router->post($storiesBasePath . '/new', StoryController::class . '::createAction');
 // update story
 $router->get($storiesBasePath . '/edit', StoryController::class . '::editForm');
-$router->post($storiesBasePath . '/edit-save', StoryController::class . '::editSaveAction');
+$router->post($storiesBasePath . '/edit', StoryController::class . '::editAction');
 // show story
 $router->get($storiesBasePath . '/show', StoryController::class . '::showAction');
 // delete story
 $router->get($storiesBasePath . '/delete', StoryController::class . '::deleteAction');
 // publish story
 $router->post($storiesBasePath . '/publish', StoryController::class . '::publishStoryAction');
+
+// story link : add form
+$router->get($storiesBasePath . '/story-link/new', StoryController::class . '::createStoryLinkForm');
+// story link : create action
+$router->post($storiesBasePath . '/story-link/new', StoryController::class . '::createStoryLinkAction');
+// story link : edit action
+$router->post($storiesBasePath . '/story-link/edit', StoryController::class . '::storyLinkEditAction');
+
+
+
 
 
 // Realtor PRO SERVICES
