@@ -8,7 +8,6 @@ use App\Entity\PortalClient;
 use App\Service\AuthCheckerService;
 use App\Service\HelperService;
 use App\Entity\Story;
-use App\Entity\StoryArticles;
 use App\Entity\User;
 use Google\Cloud\Core\Timestamp;
 use JetBrains\PhpStorm\NoReturn;
@@ -20,7 +19,6 @@ class StoryController
     private string $baseUri;
     private string $noImagePath;
     private readonly Story $story;
-    private readonly StoryArticles $storyArticles;
     private User $user;
     private PortalClient $client;
     private MobileAppClient $mobileAppClient;
@@ -32,7 +30,6 @@ class StoryController
         $this->baseUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
         $this->noImagePath = $this->baseUri . "/public/uploaded-images/stories/no-image/no-image-available.jpg";
         $this->story = new Story();
-        $this->storyArticles = new StoryArticles();
         $this->client = new PortalClient();
         $this->mobileAppClient = new MobileAppClient();
         $this->user = new User();
@@ -124,7 +121,6 @@ class StoryController
     {
         $id = $params['id'];
         $story = $this->story->find($id);
-        $articles = $this->storyArticles->findArticlesByStory($id);
         $image = isset($story["img"]) && trim($story["img"]) !== '' ? $story["img"] : $this->noImagePath;
         require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/stories/edit.phtml';
         die();
@@ -147,8 +143,10 @@ class StoryController
         $id = $params["id"];
         $title = $_POST["title"] ?? "";
         $content = $_POST["content"] ?? "";
+        $category = $_POST["category"] ?? "";
         $data = [
             'title' => $title,
+            'category' => $category,
             'distribution' => $content,
             'img' => $this->baseUri . $imageDbLink,
             'date' => new Timestamp(new DateTime()),
@@ -159,15 +157,6 @@ class StoryController
             if($value !== "") $finalData[] = ['path' => $key, 'value' => $value];
         }
         $this->story->update($id, $finalData);
-        // Get Story's associated Articles
-        /*$existingArticles = $this->storyArticles->findArticlesByStory($id);*/
-        // Delete existing Articles
-        /*foreach ($existingArticles as $article)
-        {
-            $this->storyArticles->delete($article->doc_id);
-        }*/
-        // Create Articles Links Previews
-        /*if(isset($params["articles"])) $this->fetchArticlesData($params["articles"], $id);*/
         $_SESSION['story_success_flash_message'] = "Your story has just been updated successfully !";
         header("Location: /stories/list");
     }
@@ -176,7 +165,6 @@ class StoryController
     {
         $id = $params["id"];
         $story = $this->story->find($id);
-        /*$articles = $this->storyArticles->findArticlesByStory($id);*/
         if(isset($story["url"]))
         {
             require_once $_SERVER["DOCUMENT_ROOT"] . '/templates/realtor/stories/story-link-show.phtml';
@@ -190,12 +178,6 @@ class StoryController
     #[NoReturn] public function deleteAction(array $params = []): void
     {
         $id = $params["id"];
-        // Get & Delete associated articles if exist
-        $articles = $this->storyArticles->findArticlesByStory($id);
-        foreach ($articles as $article)
-        {
-            $this->storyArticles->delete($article->doc_id);
-        }
         $this->story->delete($id);
         $_SESSION['story_success_flash_message'] = "Your story has just been deleted successfully !";
         header("Location: /stories/list");
