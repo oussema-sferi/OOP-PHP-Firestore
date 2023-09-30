@@ -190,7 +190,7 @@ class StoryController
         $finalData = [];
         foreach ($data as $key => $value)
         {
-            if($value !== "") $finalData[] = ['path' => $key, 'value' => $value];
+            $finalData[] = ['path' => $key, 'value' => $value];
         }
         $this->story->update($id, $finalData);
         $_SESSION['story_success_flash_message'] = "Your story has just been updated successfully !";
