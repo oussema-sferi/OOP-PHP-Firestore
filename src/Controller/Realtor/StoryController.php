@@ -70,10 +70,16 @@ class StoryController
         $title = $params["title"];
         $category = $params["category"];
         $content = $params["content"];
+        $embeddedVideo = "";
+        if(isset($params["embedded-video"]) && ($params["embedded-video"] !== "") && $this->isHTML($params["embedded-video"]))
+        {
+            $embeddedVideo = $params["embedded-video"];
+        }
         $data = [
             'title' => $title,
             'category' => $category,
             'distribution' => $content,
+            'embedded_video' => $embeddedVideo,
             'realtor_id' => $this->loggedUserId,
             'img' => $this->baseUri . $imageDbLink,
             'date' => new Timestamp(new DateTime()),
@@ -81,8 +87,6 @@ class StoryController
         ];
         // Create and save new blog post in DB
         $this->story->create($data);
-        // Create Articles Links Previews
-        /*if(isset($params["articles"])) $this->fetchArticlesData($params["articles"], $newStoryDocId);*/
         //
         $_SESSION['story_success_flash_message'] = "Your story has just been created successfully!";
         header("Location: /stories/list");
@@ -170,10 +174,16 @@ class StoryController
         $title = $_POST["title"] ?? "";
         $content = $_POST["content"] ?? "";
         $category = $_POST["category"] ?? "";
+        $embeddedVideo = "";
+        if(isset($params["embedded-video"]) && ($params["embedded-video"] !== "") && $this->isHTML($params["embedded-video"]))
+        {
+            $embeddedVideo = $params["embedded-video"];
+        }
         $data = [
             'title' => $title,
             'category' => $category,
             'distribution' => $content,
+            'embedded_video' => $embeddedVideo,
             'img' => $this->baseUri . $imageDbLink,
             'date' => new Timestamp(new DateTime()),
         ];
@@ -323,5 +333,10 @@ class StoryController
             }
             $this->story->update($linkParams["id"], $finalData);
         }
+    }
+
+    private function isHTML($string): bool
+    {
+        return $string != strip_tags($string);
     }
 }

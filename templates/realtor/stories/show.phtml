@@ -2,6 +2,12 @@
 /* @var $story
  * @var $image
  */
+if(isset($story["embedded_video"]) && $story["embedded_video"] !== "")
+{
+    $content = $story["distribution"] . $story["embedded_video"];
+} else {
+    $content = $story["distribution"];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +81,7 @@
                                 Content
                                 <i class="text-muted" title="The post preview text shows below the post title, and is the post summary on blog pages."></i>
                             </div>
-                            <div class="card-body"><textarea id="postDistributionShow" class="lh-base form-control" type="text" rows="10" style="resize: none" disabled><?=$story["distribution"]?></textarea></div>
+                            <div class="card-body"><textarea id="postDistributionShow" class="lh-base form-control" type="text" rows="10" style="resize: none" disabled><?=$content?></textarea></div>
                         </div>
                     </div>
                     <div class="col-lg-1">
@@ -101,7 +107,6 @@
         easyMDE.markdown(easyMDE.value());
         easyMDE.togglePreview();
         //
-
     })
 </script>
 </body>
