@@ -88,7 +88,7 @@
                 ?>
                 <div class="card">
                     <div class="card-body">
-                        <table id="datatablesSimple">
+                        <table id="datatablesSimpleClients">
                             <thead>
                             <tr>
                                 <th class='text-center' style='vertical-align: middle'><input type='checkbox' class="checkAll"></th>
@@ -194,14 +194,15 @@
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/templates/layout/realtor/scripts.phtml';?>
 <script>
     $( document ).ready(function() {
-        const datatablesSimple = document.getElementById('datatablesSimple');
+        const datatablesSimple = document.getElementById('datatablesSimpleClients');
         if (datatablesSimple) {
             new simpleDatatables.DataTable(datatablesSimple, {
                 /*sortable: false,*/
                 columns: [
                     { select: [1,6,7], sortable: true },
                     { select: [0,2,3,4,5,8], sortable: false },
-                ]
+                ],
+                perPageSelect: [ 5, 10, 15, 20, 25, 100, 500, 1000 ]
             });
         }
         let clientsArray = [];
